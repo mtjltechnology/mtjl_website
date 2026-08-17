@@ -43,9 +43,17 @@ if settings.app_env != "production":
 
 app.mount("/static/website", StaticFiles(directory="static/website"), name="website_static")
 
-# Em produção o Nginx serve /static/brand e /static/booking direto do disco, então
-# a aplicação não precisa montá-los. Localmente não há Nginx na frente: sem este
-# mount as logos e screenshots respondem 404 e o site fica sem imagem nenhuma.
+# Os assets de marca passam a ser servidos por esta aplicação, em qualquer ambiente.
+# Antes o Nginx mandava /static/ inteiro para o app do produto, que não tinha os
+# ícones do PedeMarket, do PilotQA nem do LarClínica: as imagens respondiam 404 em
+# produção. O site é dono da própria identidade visual, então serve os próprios
+# arquivos, e mantém aqui um superconjunto do que o produto também referencia.
+if Path("static/brand").is_dir():
+    app.mount("/static/brand", StaticFiles(directory="static/brand"), name="brand_static")
+
+# /static/booking segue com o Nginx apontando para o app do produto, que é dono
+# das capturas de tela. Localmente não há Nginx na frente, então o mount abaixo
+# cobre isso e qualquer outra pasta de static durante o desenvolvimento.
 if settings.app_env != "production" and Path("static").is_dir():
     app.mount("/static", StaticFiles(directory="static"), name="all_static_dev")
 
