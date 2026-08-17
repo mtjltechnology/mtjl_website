@@ -1,4 +1,4 @@
-/* ── Booking AI Beauty Landing Page — Light Theme ── */
+/* ── RelatifyAI Beauty Landing Page — Light Theme ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -16,17 +16,56 @@
   --bb-text:    #1e293b;
   --bb-text2:   #475569;
   --bb-muted:   #94a3b8;
+
+  --bb-font: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --bb-shadow-sm: 0 2px 8px rgba(20,50,110,.07);
+  --bb-shadow-md: 0 8px 24px rgba(20,50,110,.10);
+  --bb-shadow-lg: 0 20px 48px rgba(20,50,110,.14);
+  --bb-ease: cubic-bezier(.22,.61,.36,1);
+  --bb-ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --bb-container: 1200px;
 }
 
 html { scroll-behavior: smooth; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-family: var(--bb-font);
   background: var(--bb-body);
   color: var(--bb-text);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 a { text-decoration: none; }
 img { display: block; max-width: 100%; }
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--bb-blue);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  z-index: 9999;
+  background: var(--bb-navy);
+  color: #fff;
+  font-size: .9rem; font-weight: 600;
+  padding: .7rem 1.2rem;
+  border-radius: 8px;
+  box-shadow: var(--bb-shadow-lg);
+  transition: top .2s var(--bb-ease);
+}
+.skip-link:focus-visible { top: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
 
 /* ── Navbar (light) ── */
 .bb-navbar {
@@ -802,3 +841,727 @@ img { display: block; max-width: 100%; }
     white-space: normal;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Refino visual — tipografia, profundidade e movimento
+   Ajustes sobre a base acima. Mantém a paleta e a estrutura da página.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tipografia ─────────────────────────────────────────────────────────── */
+/* Peso 900 em display vira massa preta e some com o desenho da letra.
+   700 com tracking negativo lê maior e mais nítido no mesmo espaço. */
+.bb-hero-title {
+  font-weight: 700;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.bb-hero-sub { text-wrap: pretty; max-width: 52ch; }
+.bb-hero-badge {
+  font-weight: 600;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  backdrop-filter: blur(6px);
+}
+.bb-section-title {
+  font-weight: 700;
+  letter-spacing: -.028em;
+  line-height: 1.14;
+  text-wrap: balance;
+}
+.bb-section-sub { max-width: 62ch; text-wrap: pretty; }
+.bb-step-card h3,
+.bb-step-card p { text-wrap: pretty; }
+.bb-step-card h3 { font-weight: 600; letter-spacing: -.015em; }
+.bb-step-number { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Valores monetários e métricas em largura de dígito fixa */
+.bb-price-value,
+.bb-plan-price,
+.bb-stat-value,
+.bb-metric-value {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -.03em;
+}
+
+/* ── Contêiner ──────────────────────────────────────────────────────────── */
+/* Respiro maior em telas grandes — a página estava apertada verticalmente */
+@media (min-width: 1100px) {
+  .bb-section { padding-block: 120px 130px; }
+}
+
+/* ── Botões: retorno físico ao clique ───────────────────────────────────── */
+.bb-btn-hero-primary,
+.bb-btn-hero-outline,
+.bb-btn-nav-primary,
+.bb-navbar-mobile-cta {
+  transition:
+    transform .35s var(--bb-ease),
+    box-shadow .35s var(--bb-ease),
+    background .3s var(--bb-ease),
+    border-color .3s var(--bb-ease),
+    opacity .25s var(--bb-ease);
+}
+.bb-btn-hero-primary { box-shadow: 0 8px 26px rgba(40,120,200,.36), inset 0 1px 0 rgba(255,255,255,.22); }
+.bb-btn-hero-primary:hover { box-shadow: 0 16px 38px rgba(91,200,232,.34), inset 0 1px 0 rgba(255,255,255,.28); }
+
+.bb-btn-hero-primary:active,
+.bb-btn-hero-outline:active,
+.bb-btn-nav-primary:active,
+.bb-navbar-mobile-cta:active,
+.bb-btn-nav-ghost:active {
+  transform: translateY(0) scale(.98);
+  transition-duration: .1s;
+}
+
+.bb-btn-hero-outline { background: rgba(255,255,255,.04); backdrop-filter: blur(6px); }
+.bb-btn-hero-outline:hover { transform: translateY(-2px); }
+
+/* ── Formulários ────────────────────────────────────────────────────────── */
+.bb-form input,
+.bb-form textarea,
+.bb-form select,
+form input,
+form textarea {
+  transition: border-color .25s var(--bb-ease), box-shadow .25s var(--bb-ease), background .25s var(--bb-ease);
+}
+.bb-form input:focus,
+.bb-form textarea:focus,
+.bb-form select:focus {
+  box-shadow: 0 0 0 4px rgba(40,120,200,.14);
+}
+
+/* Mensagem de erro inline */
+.bb-form-error {
+  display: none;
+  font-size: .8rem; font-weight: 500; color: #b91c1c;
+  margin-top: .25rem;
+}
+.bb-form-error.visible { display: block; }
+
+/* ── Navbar ─────────────────────────────────────────────────────────────── */
+.bb-navbar { transition: box-shadow .3s var(--bb-ease), background .3s var(--bb-ease); }
+.bb-navbar.is-scrolled { box-shadow: 0 4px 28px rgba(20,50,110,.13); }
+
+.bb-navbar-links a[aria-current="page"],
+.bb-navbar-mobile-panel a[aria-current="page"] {
+  color: var(--bb-navy);
+  font-weight: 600;
+}
+
+/* ── Hero: viewport estável no iOS + grão ───────────────────────────────── */
+.bb-hero { min-height: 92dvh; }
+.bb-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: .45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='bbn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23bbn)' opacity='.16'/%3E%3C/svg%3E");
+}
+.bb-hero-inner { z-index: 2; }
+
+/* ── Entrada por scroll ─────────────────────────────────────────────────── */
+/* Sem suporte a animation-timeline, a regra é ignorada e nada fica oculto. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes bb-enter-up {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .bb-section-tag,
+    .bb-section-title,
+    .bb-section-sub,
+    .bb-step-card,
+    .bb-feature-card,
+    .bb-plan-card,
+    .bb-faq-item,
+    .bb-screenshot-card,
+    .bb-cta-inner {
+      animation: bb-enter-up .7s var(--bb-ease) both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 22%;
+    }
+    .bb-steps-grid > *:nth-child(2)  { animation-range: entry 5% cover 26%; }
+    .bb-steps-grid > *:nth-child(3)  { animation-range: entry 5% cover 30%; }
+  }
+}
+
+/* ── Ícones ──────────────────────────────────────────────────────────────
+   A regra base .icon vem de mtjl.css, que esta página também carrega.
+   Aqui só o dimensionamento e a cor dentro da caixa do card.
+   ──────────────────────────────────────────────────────────────────────── */
+.bb-feature-icon .icon { width: 24px; height: 24px; color: var(--bb-blue); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CAMADA "SINAL" — alinha esta página ao sistema das demais (ver mtjl.css).
+   Profundidade em vez de contorno, cor como sinal, vidro de verdade.
+   O mockup de WhatsApp fica intacto: é o ativo da página.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --void:    #060A16;
+  --canvas:  #F6F8FC;
+  --surface: #FFFFFF;
+  --ink:     #0B1222;
+  --ink-2:   #515C75;
+  --ink-3:   #6B7590;
+  --signal:  #1B5CF5;
+  --signal-2:#0B44CC;
+  --pulse:   #00C2B4;
+  --lift-1: 0 1px 2px rgba(11,18,34,.04), 0 4px 12px -2px rgba(27,92,245,.06);
+  --lift-2: 0 2px 4px rgba(11,18,34,.04), 0 12px 32px -6px rgba(27,92,245,.10);
+  --lift-3: 0 4px 8px rgba(11,18,34,.05), 0 28px 60px -12px rgba(27,92,245,.16);
+  --font-display: 'Familjen Grotesk', 'Geist', system-ui, sans-serif;
+}
+
+body { background: var(--canvas); color: var(--ink); }
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 50% at 12% 0%,  rgba(27,92,245,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 92% 22%, rgba(0,194,180,.045) 0%, transparent 62%);
+}
+body > * { position: relative; z-index: 1; }
+
+.bb-section, .bb-steps, .bb-screenshots, .bb-features, .bb-pricing { background: none; }
+@media (min-width: 1100px) { .bb-section { padding-block: 110px; } }
+
+/* ── Tipografia ─────────────────────────────────────────────────────────── */
+.bb-hero-title, .bb-section-title, .bb-step-card h3,
+.bb-feature-card h3, .bb-pricing-plan, .bb-pricing-price { font-family: var(--font-display); }
+
+.bb-hero-title { font-weight: 600; letter-spacing: -.042em; line-height: 1; }
+.bb-hero-title span {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: #A9E9F5;
+  text-shadow: 0 0 60px rgba(0,194,180,.35);
+}
+.bb-hero-sub { color: rgba(255,255,255,.68); }
+.bb-section-title {
+  color: var(--ink); font-weight: 600;
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+  letter-spacing: -.035em; line-height: 1.05; max-width: 20ch;
+}
+.bb-section-sub { color: var(--ink-2); max-width: 54ch; }
+
+.bb-section-tag {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: rgba(27,92,245,.07);
+  border: 1px solid rgba(27,92,245,.14);
+  border-radius: 999px;
+  color: var(--signal-2);
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  padding: .34rem .85rem .34rem .7rem;
+}
+.bb-section-tag::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--signal); box-shadow: 0 0 0 3px rgba(27,92,245,.16);
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.bb-hero {
+  background: var(--void);
+  min-height: 92dvh;
+}
+.bb-hero::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 5%,  rgba(27,92,245,.32) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 50% at 85% 35%, rgba(0,194,180,.15) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 108%, rgba(27,92,245,.18) 0%, transparent 65%);
+}
+.bb-hero-badge {
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.82);
+  font-weight: 500; letter-spacing: .12em;
+  backdrop-filter: blur(10px);
+}
+
+/* ── Botões ─────────────────────────────────────────────────────────────── */
+.bb-btn-hero-primary {
+  background: var(--signal);
+  font-weight: 600;
+  box-shadow: 0 2px 0 rgba(255,255,255,.14) inset, 0 8px 24px -4px rgba(27,92,245,.5);
+}
+.bb-btn-hero-primary:hover {
+  background: #2E6DFF;
+  box-shadow: 0 2px 0 rgba(255,255,255,.18) inset, 0 14px 34px -6px rgba(27,92,245,.62);
+}
+.bb-btn-hero-outline {
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+}
+.bb-btn-hero-outline:hover { border-color: rgba(0,194,180,.45); background: rgba(0,194,180,.10); }
+
+.bb-btn-nav-primary, .bb-navbar-mobile-cta, .bb-btn-pricing-primary {
+  background: var(--signal);
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px -3px rgba(27,92,245,.42);
+}
+.bb-btn-nav-primary:hover, .bb-navbar-mobile-cta:hover, .bb-btn-pricing-primary:hover {
+  background: var(--signal-2); opacity: 1;
+}
+.bb-btn-pricing-ghost {
+  background: rgba(27,92,245,.07);
+  color: var(--signal-2);
+  border-color: transparent;
+  font-weight: 600;
+}
+.bb-btn-pricing-ghost:hover { background: rgba(27,92,245,.13); }
+
+/* ── Navbar: transparente sobre o hero, vidro claro ao rolar ────────────── */
+.bb-navbar {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  transition: background .3s var(--bb-ease), border-color .3s var(--bb-ease), box-shadow .3s var(--bb-ease);
+}
+.bb-navbar .bb-btn-nav-ghost,
+.bb-navbar .bb-navbar-links a { color: rgba(255,255,255,.72); }
+.bb-navbar .bb-btn-nav-ghost:hover { color: #fff; background: rgba(255,255,255,.08); }
+.bb-navbar .bb-navbar-badge { color: rgba(255,255,255,.62); -webkit-text-fill-color: currentColor; background: none; }
+.bb-navbar .bb-navbar-brand img { filter: brightness(0) invert(1); opacity: .92; }
+.bb-navbar .bb-navbar-burger-bar,
+.bb-navbar .bb-navbar-burger-bar::before,
+.bb-navbar .bb-navbar-burger-bar::after { background: rgba(255,255,255,.85); }
+
+.bb-navbar.is-scrolled {
+  background: rgba(246,248,252,.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: rgba(11,18,34,.06);
+  box-shadow: 0 1px 24px -6px rgba(27,92,245,.14);
+}
+.bb-navbar.is-scrolled .bb-btn-nav-ghost,
+.bb-navbar.is-scrolled .bb-navbar-links a { color: var(--ink-2); }
+.bb-navbar.is-scrolled .bb-btn-nav-ghost:hover { color: var(--signal-2); background: rgba(27,92,245,.07); }
+.bb-navbar.is-scrolled .bb-navbar-badge { color: var(--ink-3); }
+.bb-navbar.is-scrolled .bb-navbar-brand img { filter: none; opacity: 1; }
+.bb-navbar.is-scrolled .bb-navbar-burger-bar,
+.bb-navbar.is-scrolled .bb-navbar-burger-bar::before,
+.bb-navbar.is-scrolled .bb-navbar-burger-bar::after { background: var(--ink); }
+
+.bb-strip {
+  background: var(--void);
+  border-block: 1px solid rgba(255,255,255,.08);
+}
+.bb-strip-item { color: rgba(255,255,255,.55); font-weight: 450; }
+.bb-strip-dot { width: 4px; height: 4px; background: var(--pulse); box-shadow: 0 0 8px rgba(0,194,180,.7); }
+
+/* ── Cards: superfície que flutua ───────────────────────────────────────── */
+.bb-feature-card, .bb-screenshot-card, .bb-pricing-card {
+  background: var(--surface);
+  border: 1px solid rgba(11,18,34,.05);
+  border-radius: var(--r-lg, 20px);
+  box-shadow: var(--lift-1);
+  transition: transform .5s var(--bb-ease), box-shadow .5s var(--bb-ease), border-color .4s var(--bb-ease);
+}
+.bb-feature-card:hover, .bb-screenshot-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--lift-3);
+  border-color: rgba(27,92,245,.16);
+}
+.bb-feature-icon {
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(27,92,245,.12), rgba(0,194,180,.10)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+  display: flex; align-items: center; justify-content: center;
+}
+.bb-feature-icon .icon { color: var(--signal-2) !important; width: 21px; height: 21px; }
+.bb-feature-card h3 { color: var(--ink); font-weight: 600; letter-spacing: -.02em; font-size: 1.05rem; }
+.bb-feature-card p, .bb-screenshot-caption { color: var(--ink-2); }
+
+/* ── Passos ─────────────────────────────────────────────────────────────── */
+.bb-step-number {
+  background: linear-gradient(160deg, rgba(27,92,245,.14), rgba(0,194,180,.11));
+  color: var(--signal-2);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-weight: 600; font-size: 1rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+}
+.bb-steps-grid::before { background: linear-gradient(90deg, var(--signal), var(--pulse)); opacity: .22; }
+.bb-step-card h3 { color: var(--ink); font-weight: 600; letter-spacing: -.02em; }
+.bb-step-card p { color: var(--ink-2); }
+
+/* ── Planos ─────────────────────────────────────────────────────────────── */
+.bb-pricing-card { padding: 2.4rem 2rem; }
+.bb-pricing-card.featured {
+  border-color: rgba(27,92,245,.28);
+  box-shadow: var(--lift-3);
+}
+.bb-pricing-popular {
+  background: var(--signal);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-weight: 600; letter-spacing: .08em;
+  box-shadow: 0 4px 14px -3px rgba(27,92,245,.5);
+}
+.bb-pricing-plan { color: var(--ink); font-weight: 600; letter-spacing: .04em; }
+.bb-pricing-price { color: var(--ink); font-weight: 600; letter-spacing: -.035em; }
+.bb-pricing-price span { color: var(--ink-3); }
+.bb-pricing-desc, .bb-pricing-features li { color: var(--ink-2); }
+.bb-pricing-features li::before { color: var(--pulse); font-weight: 700; }
+.bb-pricing-trial-badge,
+.bb-pricing-card.featured .bb-pricing-trial-badge {
+  background: rgba(0,194,180,.10) !important;
+  border: 1px solid rgba(0,194,180,.26);
+  color: #067A70 !important;
+  border-radius: 999px;
+  font-weight: 600; letter-spacing: .06em;
+}
+.bb-pricing-footnote { color: var(--ink-3); }
+
+/* ── Formulários ────────────────────────────────────────────────────────── */
+.bb-form input, .bb-form textarea, .bb-form select,
+form input, form textarea, form select {
+  background: #FBFCFE; border-color: rgba(11,18,34,.09); border-radius: 10px; color: var(--ink);
+}
+.bb-form input:focus, .bb-form textarea:focus, .bb-form select:focus {
+  border-color: var(--signal); background: #fff; box-shadow: 0 0 0 4px rgba(27,92,245,.11);
+}
+
+/* Marca em duas versões: a clara vale sobre o hero escuro, a colorida depois
+   que a navbar ganha fundo. Antes era um filtro de inversão sobre a colorida,
+   que achatava a arte em branco chapado. */
+.bb-brand-logo { height: 34px; width: auto; }
+.bb-navbar .bb-brand-logo--dark { display: none; }
+.bb-navbar .bb-brand-logo--light { display: block; }
+.bb-navbar.is-scrolled .bb-brand-logo--dark { display: block; }
+.bb-navbar.is-scrolled .bb-brand-logo--light { display: none; }
+.bb-navbar .bb-navbar-brand img { filter: none; opacity: 1; }
+
+/* ── Correção: a navbar desta página nunca fica sobre o hero ──────────────────
+   Nas páginas institucionais a navbar é `fixed` e o hero escuro passa por baixo,
+   então texto branco funciona. Aqui ela é `sticky`: ocupa espaço acima do hero e
+   fica sempre sobre o fundo claro da página. O estado transparente com texto
+   branco deixava a navegação invisível no topo.
+   ────────────────────────────────────────────────────────────────────────── */
+.bb-navbar,
+.bb-navbar.is-scrolled {
+  background: rgba(246,248,252,.86);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(11,18,34,.06);
+}
+.bb-navbar.is-scrolled { box-shadow: 0 1px 24px -6px rgba(27,92,245,.14); }
+
+.bb-navbar .bb-btn-nav-ghost,
+.bb-navbar .bb-navbar-links a { color: var(--ink-2); }
+.bb-navbar .bb-btn-nav-ghost:hover,
+.bb-navbar .bb-navbar-links a:hover { color: var(--signal-2); background: rgba(27,92,245,.07); }
+.bb-navbar .bb-navbar-badge { color: var(--ink-3); }
+.bb-navbar .bb-navbar-burger-bar,
+.bb-navbar .bb-navbar-burger-bar::before,
+.bb-navbar .bb-navbar-burger-bar::after { background: var(--ink); }
+
+/* Logo sempre na versão colorida — não há estado escuro atrás dela */
+.bb-navbar .bb-brand-logo--light,
+.bb-navbar.is-scrolled .bb-brand-logo--light { display: none; }
+.bb-navbar .bb-brand-logo--dark,
+.bb-navbar.is-scrolled .bb-brand-logo--dark { display: block; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Aparelho: encenação, aresta e vidro
+   ────────────────────────────────────────────────────────────────────────────
+   Antes era um retângulo com borda de 2px e anéis de sombra uniformes. Anel de
+   sombra é sempre igual dos quatro lados, então nunca sugere metal — metal tem
+   luz de um lado e sombra do outro. Aqui a moldura vira um pseudo-elemento com
+   degradê direcional, o vidro ganha reflexo, e o conjunto ganha sombra de
+   contato para deixar de flutuar no vazio.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.bb-phone-wrap {
+  perspective: 1800px;
+  perspective-origin: 60% 40%;
+}
+
+/* Halo ambiente: largo e suave, em vez de mancha concentrada */
+.bb-phone-wrap::after {
+  width: 420px; height: 620px;
+  background:
+    radial-gradient(ellipse 50% 45% at 50% 38%, rgba(37,211,102,.16) 0%, transparent 68%),
+    radial-gradient(ellipse 62% 55% at 50% 55%, rgba(27,92,245,.10) 0%, transparent 70%);
+  filter: blur(6px);
+}
+
+/* Sombra de contato no chão — sem ela o aparelho não tem peso */
+.bb-phone-wrap::before {
+  content: '';
+  position: absolute;
+  bottom: -26px; left: 50%;
+  width: 300px; height: 46px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.62) 0%, transparent 72%);
+  filter: blur(14px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bb-phone-outer {
+  transform: rotateY(-11deg) rotateX(2.5deg) rotateZ(-1.5deg) translateY(-6px);
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 42px 70px rgba(0,0,0,.62));
+  transition: transform .9s cubic-bezier(.22,.61,.36,1);
+}
+/* Ao aproximar, o aparelho se endireita — dá vida sem animação em laço */
+.bb-phone-wrap:hover .bb-phone-outer {
+  transform: rotateY(-4deg) rotateX(1deg) rotateZ(-.5deg) translateY(-10px);
+}
+
+/* Moldura usinada: claro na aresta superior-esquerda, escuro na inferior-direita */
+.bb-phone-outer::before {
+  content: '';
+  position: absolute;
+  inset: -9px;
+  border-radius: 55px;
+  z-index: -1;
+  background: linear-gradient(148deg,
+    #6f757f 0%, #3c4048 14%, #202329 42%,
+    #16181c 62%, #2c3037 82%, #626873 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.28),
+    inset 0 -1px 1px rgba(0,0,0,.6);
+}
+
+.bb-phone {
+  border: none;
+  border-radius: 44px;
+  /* Só a linha de vedação entre tela e moldura; o volume vem do pseudo-elemento */
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.85),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* Reflexo do vidro: uma faixa diagonal, não um brilho chapado */
+.bb-phone::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(122deg,
+    rgba(255,255,255,.10) 0%,
+    rgba(255,255,255,.04) 14%,
+    transparent 32%,
+    transparent 76%,
+    rgba(255,255,255,.045) 96%);
+}
+
+/* Botões laterais com aresta, no lugar de barras chapadas */
+.bb-phone-btn-vol,
+.bb-phone-btn-pwr {
+  width: 4px;
+  background: linear-gradient(90deg, #6b7079, #2b2e34);
+  box-shadow: none;
+}
+.bb-phone-btn-vol {
+  left: -5px;
+  box-shadow: 0 34px 0 -0px transparent;
+}
+/* o segundo botão de volume, antes simulado por box-shadow deslocada */
+.bb-phone-btn-vol::after {
+  content: '';
+  position: absolute; left: 0; top: 34px;
+  width: 4px; height: 26px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6b7079, #2b2e34);
+}
+.bb-phone-btn-pwr {
+  right: -5px;
+  background: linear-gradient(270deg, #6b7079, #2b2e34);
+}
+
+/* Marcação de leitura em azul, como no WhatsApp */
+.bb-tick { color: #53bdeb; letter-spacing: -.08em; }
+.bb-ct { opacity: .62; }
+.bb-co .bb-ct { color: #cfe9e0; }
+
+/* Trama do fundo do chat um pouco mais discreta */
+.bb-chat-body { background-color: #0a1319; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-phone-outer, .bb-phone-wrap:hover .bb-phone-outer { transition: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Aparelho no formato dos iPhone Pro atuais
+   ────────────────────────────────────────────────────────────────────────────
+   O que estava errado no anterior: a "ilha" nascia colada na borda superior,
+   lendo como notch, e a barra de status era uma faixa ACIMA dela. Nos modelos
+   com Dynamic Island o relógio e os ícones ficam nas laterais, na mesma altura
+   da ilha, que flutua descolada da borda.
+
+   Raios concêntricos: tela 50px, +4px de bezel = 54px, trilho a 13px de folga
+   = 63px. Se os três não crescem juntos, a curva "quebra" e denuncia o desenho.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.bb-phone {
+  width: 300px;
+  border-radius: 50px;
+  background: #000;
+  /* bezel preto uniforme + linha de vedação com o trilho */
+  box-shadow:
+    0 0 0 4px #04060a,
+    0 0 0 5px rgba(255,255,255,.07);
+}
+
+.bb-phone-outer::before {
+  inset: -13px;
+  border-radius: 63px;
+  /* Trilho: as faces de topo e base pegam mais luz que as laterais */
+  background: linear-gradient(146deg,
+    #8b919c 0%, #4a4f58 10%, #2a2e35 34%,
+    #1b1e23 58%, #363b43 80%, #7d838e 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.34),
+    inset 0 -1px 1px rgba(0,0,0,.65),
+    inset 1px 0 1px rgba(255,255,255,.10);
+}
+
+/* ── Barra de status ────────────────────────────────────────────────────── */
+.bb-phone-topbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: .5rem;
+  padding: 13px 22px 7px;
+  background: #1f2c33;
+}
+.bb-phone-time {
+  justify-self: start;
+  font-size: .66rem; font-weight: 700; color: #e9edef;
+  letter-spacing: .01em;
+  padding-left: .35rem;
+}
+.bb-phone-sicons { justify-self: end; padding-right: .2rem; }
+
+/* Dynamic Island: pílula solta, com o brilho da lente na borda */
+.bb-phone-island {
+  width: 86px; height: 27px;
+  border-radius: 999px;
+  background: #000;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+}
+/* sensor/câmera dentro da ilha, à direita — some se ficar sujo, mas é o que
+   diferencia a ilha de uma pílula preta qualquer */
+.bb-phone-island::after {
+  content: '';
+  position: absolute; right: 8px; top: 50%;
+  width: 9px; height: 9px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2b3a47 0%, #0d1418 55%, #05080a 100%);
+  box-shadow: inset 0 0 0 .5px rgba(120,170,220,.22);
+}
+
+/* ── Indicador de início ────────────────────────────────────────────────── */
+.bb-phone-home {
+  background: #1f2c33;
+  padding: 7px 0 9px;
+  display: flex; justify-content: center;
+}
+.bb-phone-home::before {
+  content: '';
+  width: 116px; height: 5px;
+  border-radius: 999px;
+  background: rgba(233,237,239,.85);
+}
+
+/* ── Botões do trilho ───────────────────────────────────────────────────── */
+/* Layout dos modelos Pro: à esquerda o botão de Ação acima do volume;
+   à direita o botão lateral e, abaixo, o Controle da Câmera. */
+.bb-key {
+  position: absolute;
+  width: 4px;
+  border-radius: 2px;
+  z-index: -1;   /* atrás da tela, na altura do trilho */
+}
+.bb-key--action,
+.bb-key--volup,
+.bb-key--voldn {
+  left: -16px;
+  background: linear-gradient(90deg, #9aa0aa 0%, #4c515a 55%, #23262b 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3);
+}
+.bb-key--action { top: 96px;  height: 26px; }
+.bb-key--volup  { top: 140px; height: 34px; }
+.bb-key--voldn  { top: 184px; height: 34px; }
+
+.bb-key--power,
+.bb-key--camera {
+  right: -16px;
+  background: linear-gradient(270deg, #9aa0aa 0%, #4c515a 55%, #23262b 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3);
+}
+.bb-key--power  { top: 150px; height: 56px; }
+/* O Controle da Câmera é rente ao trilho, não sobressai como os demais */
+.bb-key--camera {
+  top: 228px; height: 30px;
+  right: -14px; width: 3px;
+  background: linear-gradient(270deg, #c9ced6 0%, #6e737c 50%, #2b2e34 100%);
+}
+
+/* As regras antigas dos dois botões deixam de existir */
+.bb-phone-btn-vol, .bb-phone-btn-pwr { display: none; }
+
+/* ── Alinhamento das colunas de plano ────────────────────────────────────────
+   Reaplicado: a correção original vivia numa camada que foi removida, e a
+   regra `padding: 2.4rem 2rem` acima zerou a reserva de topo sem que isso
+   aparecesse em nenhum teste.
+
+   O card Enterprise não tem selo de teste grátis. Se o selo ficar no fluxo,
+   todo o conteúdo dele sobe e as três colunas desalinham. O selo sai do fluxo
+   e o card reserva o espaço no padding.
+   ────────────────────────────────────────────────────────────────────────── */
+.bb-pricing-card {
+  position: relative;
+  padding-top: 5.2rem;
+}
+.bb-pricing-trial-badge,
+.bb-pricing-card.featured .bb-pricing-trial-badge {
+  position: absolute;
+  top: 2.6rem; left: 2rem;
+  margin: 0;
+  width: auto;
+}
+/* O selo "mais popular" nascia acima da borda e era cortado pelo card */
+.bb-pricing-popular {
+  top: 2.5rem; right: 2rem;
+  left: auto;
+  transform: none;
+  padding: .26rem .6rem;
+}
+/* Lista empurra CTA e nota para baixo: os três botões formam uma linha só */
+.bb-pricing-features { margin-bottom: 2rem; }
+.bb-btn-pricing { margin-top: auto; }
+.bb-pricing-footnote { min-height: 3.4em; margin-bottom: 0; }
+
+/* O Enterprise não tem nota de rodapé, então o botão dele descia até o fim do
+   card e ficava 31px abaixo dos outros dois. A nota sai do fluxo e o card
+   reserva a altura dela embaixo, valendo para os três. */
+.bb-pricing-card { padding-bottom: 5.6rem; }
+.bb-pricing-footnote {
+  position: absolute;
+  left: 2rem; right: 2rem; bottom: 1.8rem;
+  min-height: 0;
+  margin: 0;
+}
+.bb-btn-pricing { margin-top: auto; margin-bottom: 0; }
+
+/* Quem estica passa a ser a lista, não a margem do botão. Com `margin-top:auto`
+   no botão, a sobra era dividida com a margem inferior da lista e o resultado
+   variava conforme a quantidade de itens de cada plano. */
+.bb-pricing-features { flex: 1 1 auto; margin-bottom: 2rem; }
+.bb-btn-pricing { margin-top: 0; }
+
+/* O card deixou de ser contêiner flex quando a camada anterior saiu. Sem isso,
+   `margin-top:auto` e `flex:1` nos filhos não têm efeito nenhum, e foi por isso
+   que as duas tentativas anteriores de alinhar os botões não mudaram nada. */
+.bb-pricing-card { display: flex; flex-direction: column; }

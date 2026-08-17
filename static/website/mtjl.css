@@ -9,16 +9,81 @@
   --white:  #FFFFFF;
   --gray:   #64748B;
   --dark:   #0A1A3E;
+
+  /* Tipografia */
+  --font-sans: 'Geist', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Sombras tintadas no azul da marca — nunca preto puro */
+  --shadow-xs: 0 1px 2px rgba(13,44,110,.06);
+  --shadow-sm: 0 2px 8px rgba(13,44,110,.07);
+  --shadow-md: 0 8px 24px rgba(13,44,110,.09);
+  --shadow-lg: 0 20px 48px rgba(13,44,110,.13);
+  --shadow-xl: 0 32px 72px rgba(13,44,110,.18);
+
+  /* Raio: mais fechado nos elementos internos, mais aberto nos contêineres */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* Escala de z-index — evita números arbitrários espalhados pelo CSS */
+  --z-base: 1;
+  --z-dropdown: 110;
+  --z-nav: 100;
+  --z-panel: 99;
+  --z-modal: 2000;
+
+  --container: 1240px;
+  --ease-out: cubic-bezier(.22,.61,.36,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   color: #1e293b;
   background: var(--white);
   line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Acessibilidade base ─────────────────────────────────────────────────── */
+
+/* Anel de foco visível e consistente em tudo que recebe teclado */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* Link "pular para o conteúdo" — invisível até receber foco por teclado */
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  z-index: calc(var(--z-modal) + 1);
+  background: var(--navy);
+  color: var(--white);
+  font-size: .9rem; font-weight: 600;
+  padding: .7rem 1.2rem;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  box-shadow: var(--shadow-lg);
+  transition: top .2s var(--ease-out);
+}
+.skip-link:focus-visible { top: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }
 
 /* ── Navbar ── */
@@ -260,44 +325,63 @@ body {
 
 /* ── Hero ── */
 .hero {
-  min-height: 100vh;
+  /* dvh, não vh: evita o pulo de layout quando a barra do Safari iOS recolhe */
+  min-height: 100dvh;
   display: flex; align-items: center;
   background: linear-gradient(135deg, var(--dark) 0%, var(--navy) 45%, #1a4a99 70%, #1e6fbf 100%);
   position: relative; overflow: hidden;
-  padding: 120px 6% 80px;
+  padding-block: 140px 100px;
+  padding-inline: max(6%, calc((100% - var(--container)) / 2));
 }
 
 .hero::before {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 60% at 80% 50%, rgba(0,201,200,.08) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(41,171,226,.1) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 60% at 80% 50%, rgba(0,201,200,.10) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(41,171,226,.12) 0%, transparent 60%);
+}
+
+/* Grão sobre o hero — quebra a chapada digital do gradiente */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
 }
 
 .hero-inner {
-  position: relative; z-index: 1;
+  position: relative; z-index: var(--z-base);
   max-width: 680px;
 }
 
 .hero-badge {
-  display: inline-flex; align-items: center; gap: .5rem;
-  background: rgba(0,201,200,.15);
-  border: 1px solid rgba(0,201,200,.3);
-  color: var(--cyan);
-  font-size: .82rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-  padding: .35rem 1rem; border-radius: 50px;
-  margin-bottom: 1.6rem;
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: rgba(0,201,200,.12);
+  border: 1px solid rgba(0,201,200,.28);
+  color: #7fe9e8;
+  font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+  padding: .4rem 1rem; border-radius: var(--r-pill);
+  margin-bottom: 1.8rem;
+  backdrop-filter: blur(6px);
 }
 
-.hero-badge::before { content: '●'; font-size: .5rem; }
+.hero-badge::before {
+  content: '';
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,201,200,.22);
+}
 
 .hero h1 {
-  font-size: clamp(2.2rem, 5vw, 3.6rem);
-  font-weight: 800;
+  font-size: clamp(2.4rem, 5.4vw, 4rem);
+  font-weight: 700;
   color: var(--white);
-  line-height: 1.18;
-  margin-bottom: 1.4rem;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+  margin-bottom: 1.5rem;
 }
 
 .hero h1 span {
@@ -317,29 +401,48 @@ body {
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
 .btn-primary {
-  display: inline-block;
+  display: inline-flex; align-items: center; gap: .7rem;
   background: linear-gradient(135deg, var(--sky), var(--cyan));
   color: var(--white);
-  font-weight: 700; font-size: 1rem;
-  padding: .85rem 2.2rem;
-  border-radius: 50px;
+  font-weight: 600; font-size: 1rem;
+  letter-spacing: -.01em;
+  padding: .9rem 1rem .9rem 1.9rem;
+  border-radius: var(--r-pill);
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(41,171,226,.35);
-  transition: transform .2s, box-shadow .2s;
+  /* Sombra tintada no ciano do próprio botão, não preto genérico */
+  box-shadow: 0 8px 24px rgba(41,171,226,.32), inset 0 1px 0 rgba(255,255,255,.25);
+  transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(41,171,226,.45); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(41,171,226,.42), inset 0 1px 0 rgba(255,255,255,.3); }
+/* Feedback de clique: o botão "afunda" — simula pressão física */
+.btn-primary:active { transform: translateY(0) scale(.98); transition-duration: .1s; }
+
+/* Seta encapsulada no próprio círculo, encostada na borda interna do botão */
+.btn-primary::after {
+  content: '→';
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  font-size: .95rem; line-height: 1;
+  transition: transform .35s var(--ease-spring), background .25s var(--ease-out);
+}
+.btn-primary:hover::after { transform: translate(3px, -1px) scale(1.06); background: rgba(255,255,255,.28); }
 
 .btn-outline {
-  display: inline-block;
-  border: 2px solid rgba(255,255,255,.35);
+  display: inline-flex; align-items: center;
+  border: 1px solid rgba(255,255,255,.28);
+  background: rgba(255,255,255,.04);
   color: var(--white);
-  font-weight: 600; font-size: 1rem;
-  padding: .85rem 2.2rem;
-  border-radius: 50px;
+  font-weight: 500; font-size: 1rem;
+  padding: .9rem 2.1rem;
+  border-radius: var(--r-pill);
   text-decoration: none;
-  transition: border-color .2s, background .2s;
+  backdrop-filter: blur(6px);
+  transition: border-color .3s var(--ease-out), background .3s var(--ease-out), transform .3s var(--ease-out);
 }
-.btn-outline:hover { border-color: var(--cyan); background: rgba(0,201,200,.08); }
+.btn-outline:hover { border-color: rgba(0,201,200,.55); background: rgba(0,201,200,.10); transform: translateY(-2px); }
+.btn-outline:active { transform: translateY(0) scale(.98); transition-duration: .1s; }
 
 .hero-visual {
   position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
@@ -375,7 +478,13 @@ body {
 .strip-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
 
 /* ── Section base ── */
-section { padding: 90px 6%; }
+/* O padding lateral trava o conteúdo em --container sem precisar de wrapper no
+   HTML: em telas estreitas vale 6%, em telas largas vale a sobra dividida em
+   dois. Padding inferior um pouco maior que o superior — correção óptica. */
+section {
+  padding-block: 90px 100px;
+  padding-inline: max(6%, calc((100% - var(--container)) / 2));
+}
 
 .section-tag {
   display: inline-block;
@@ -384,15 +493,18 @@ section { padding: 90px 6%; }
 }
 
 .section-title {
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-  font-weight: 800; color: var(--navy);
-  margin-bottom: 1rem; line-height: 1.2;
+  font-size: clamp(1.9rem, 3.5vw, 2.7rem);
+  font-weight: 700; color: var(--navy);
+  margin-bottom: 1rem; line-height: 1.15;
+  letter-spacing: -.025em;
+  text-wrap: balance;
 }
 
 .section-sub {
   font-size: 1.05rem; color: var(--gray);
-  max-width: 560px; line-height: 1.7;
+  max-width: 62ch; line-height: 1.7;
   margin-bottom: 3rem;
+  text-wrap: pretty;
 }
 .contact-section .section-sub,
 #produtos .section-sub,
@@ -420,12 +532,19 @@ section { padding: 90px 6%; }
 
 .product-card {
   background: var(--white);
-  border-radius: 20px;
+  border-radius: var(--r-xl);
   padding: 32px 28px;
   border: 1.5px solid #e2ecf9;
-  transition: transform .25s, box-shadow .25s, border-color .25s;
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out), border-color .35s var(--ease-out);
   position: relative; overflow: hidden;
+  /* Empurra o bloco de links pro rodapé — CTAs alinhados entre cards de
+     alturas diferentes, em vez de flutuarem em Y aleatório */
+  display: flex; flex-direction: column;
 }
+.product-card .product-links,
+.product-card .beauty-links,
+.product-card .larclinica-links,
+.product-card .pilotqa-links { margin-top: auto; }
 .product-card::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 4px;
@@ -527,8 +646,14 @@ section { padding: 90px 6%; }
 }
 .stat-card:nth-child(3) .stat-label,
 .stat-card:nth-child(3) .stat-value { color: var(--white); }
-.stat-value { font-size: 2.2rem; font-weight: 800; color: var(--navy); line-height: 1; }
-.stat-label { font-size: .85rem; color: var(--gray); margin-top: .4rem; }
+.stat-value {
+  font-size: 2.4rem; font-weight: 700; color: var(--navy); line-height: 1;
+  /* Números em largura fixa: colunas de dígitos não "dançam" entre os cards */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -.03em;
+}
+.stat-label { font-size: .82rem; color: var(--gray); margin-top: .5rem; text-wrap: balance; }
 
 /* ── Serviços ── */
 .services-section { background: var(--light); text-align: center; }
@@ -545,21 +670,39 @@ section { padding: 90px 6%; }
   grid-template-columns: repeat(3, 1fr);
   max-width: 1100px;
 }
+/* Card "double-bezel": a casca externa é o filete claro, o núcleo é o branco.
+   O gradiente na borda dá a impressão de luz batendo de cima. */
 .service-card {
-  background: var(--white);
-  border-radius: 20px; padding: 2rem 1.5rem;
-  box-shadow: 0 2px 16px rgba(13,44,110,.06);
-  border: 1px solid #e8f0fb;
-  transition: transform .2s, box-shadow .2s;
+  position: relative;
+  background:
+    linear-gradient(var(--white), var(--white)) padding-box,
+    linear-gradient(160deg, #dbe8fa, #eef4fd 45%, #dbe8fa) border-box;
+  border: 1px solid transparent;
+  border-radius: var(--r-xl); padding: 2.2rem 1.7rem;
+  box-shadow: var(--shadow-sm);
+  /* Cards de conteúdo variável: o CTA/último bloco encosta no rodapé do card */
+  display: flex; flex-direction: column;
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
 }
-.service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(13,44,110,.1); }
-.service-icon { font-size: 2rem; margin-bottom: 1rem; }
+.service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+.service-icon {
+  font-size: 1.5rem; line-height: 1;
+  width: 52px; height: 52px;
+  margin: 0 auto 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--r-md);
+  background: linear-gradient(150deg, #eaf3fd, #dcebfa);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
 .service-card h3 {
-  font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: .6rem;
+  font-size: 1.02rem; font-weight: 600; color: var(--navy); margin-bottom: .6rem;
   line-height: 1.3; min-height: 2.6rem;
+  letter-spacing: -.015em;
+  text-wrap: balance;
   display: flex; align-items: center; justify-content: center;
 }
-.service-card p  { font-size: .875rem; color: var(--gray); line-height: 1.65; }
+.service-card p  { font-size: .885rem; color: var(--gray); line-height: 1.7; text-wrap: pretty; }
 
 /* ── CTA ── */
 .cta-section {
@@ -791,7 +934,7 @@ footer {
 }
 .pqmodal-form button[type="submit"]:hover { opacity: .85; }
 
-/* ── BookingAI Beauty featured card ──────────────────────────────────────── */
+/* ── RelatifyAI Beauty featured card ──────────────────────────────────────── */
 .product-card--beauty {
   background: var(--white);
   border: 1.5px solid var(--sky);
@@ -1283,3 +1426,1754 @@ footer {
   .lc-page .navbar-burger { display: flex; }
 }
 
+/* ════════════════════════════════════════════════════════════════════════════
+   Entrada por scroll
+   O elemento sobe e desfoca de leve ao entrar na viewport. Só transform e
+   opacity/filter — nada que force recálculo de layout.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition:
+    opacity .8s var(--ease-out),
+    transform .8s var(--ease-out),
+    filter .8s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Sem JS, nada pode ficar invisível: o conteúdo aparece normalmente */
+.no-js .reveal { opacity: 1; transform: none; filter: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; filter: none; }
+}
+
+/* ── Refinos de superfície e estado ──────────────────────────────────────── */
+
+/* Pressão física nos botões e links de ação restantes */
+.btn-contact:active,
+.product-link:active,
+.beauty-btn-primary:active,
+.beauty-btn-ghost:active,
+.larclinica-btn-primary:active,
+.pilotqa-btn-contact:active,
+.btn-outline-light:active,
+.nav-cta:active {
+  transform: scale(.98);
+  transition-duration: .1s;
+}
+
+.btn-contact {
+  transition: background .25s var(--ease-out), transform .25s var(--ease-out), box-shadow .25s var(--ease-out);
+  box-shadow: 0 6px 18px rgba(41,171,226,.26);
+}
+.btn-contact:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(41,171,226,.34); }
+
+/* Campos de formulário: foco com halo, não só troca de cor da borda */
+.contact-form input,
+.contact-form textarea,
+.pqmodal-form input,
+.pqmodal-form textarea {
+  transition: border-color .25s var(--ease-out), box-shadow .25s var(--ease-out), background .25s var(--ease-out);
+}
+.contact-form input:focus,
+.contact-form textarea:focus,
+.pqmodal-form input:focus,
+.pqmodal-form textarea:focus {
+  box-shadow: 0 0 0 4px rgba(41,171,226,.14);
+}
+/* Campo obrigatório preenchido com valor inválido — só depois de o usuário sair */
+.contact-form input:not(:placeholder-shown):invalid,
+.pqmodal-form input:not(:placeholder-shown):invalid {
+  border-color: #f0a5a5;
+}
+
+/* Mensagem de erro inline dos formulários */
+.form-error {
+  display: none;
+  font-size: .8rem;
+  font-weight: 500;
+  color: #b91c1c;
+  margin-top: .1rem;
+}
+.form-error.visible { display: block; }
+
+/* Botão em envio: some o texto, entra o indicador */
+.btn-contact[aria-busy="true"],
+.pqmodal-form button[aria-busy="true"] {
+  opacity: .75;
+  pointer-events: none;
+}
+
+/* Item de navegação da página atual */
+.navbar-nav a[aria-current="page"],
+.navbar-mobile-panel a[aria-current="page"] {
+  color: var(--blue);
+  font-weight: 600;
+}
+.navbar-nav a[aria-current="page"]::after {
+  content: '';
+  display: block;
+  height: 2px;
+  margin-top: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--sky), var(--cyan));
+}
+
+/* Navbar ganha peso só depois que a página rola */
+.navbar {
+  transition: box-shadow .3s var(--ease-out), background .3s var(--ease-out);
+}
+.navbar.is-scrolled {
+  box-shadow: 0 4px 28px rgba(13,44,110,.14);
+  background: rgba(255,255,255,.92);
+}
+
+/* Faixa de especialidades e CTA escuro: mesmo grão do hero, mesma família */
+.strip { position: relative; }
+.cta-section { position: relative; overflow: hidden; }
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: .45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n2)' opacity='.16'/%3E%3C/svg%3E");
+}
+.cta-section > * { position: relative; z-index: var(--z-base); }
+.cta-section h2 {
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+/* Rodapé: linha de topo em degradê em vez de filete cinza chapado */
+footer {
+  border-top: none;
+  background:
+    linear-gradient(90deg, transparent, rgba(41,171,226,.35), rgba(0,201,200,.35), transparent) top / 100% 1px no-repeat,
+    var(--white);
+}
+.footer-links a {
+  position: relative;
+  transition: color .25s var(--ease-out);
+}
+.footer-links a::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s var(--ease-out);
+}
+.footer-links a:hover::after { transform: scaleX(1); }
+
+/* Cards de produto sem CTA (RelatifyAI Dental/Medical/Vet/Aviation): a etiqueta
+   "em breve" precisa encostar no rodapé como os CTAs dos demais */
+.product-card > .product-badge { margin-top: auto; align-self: flex-start; }
+
+.product-name { letter-spacing: -.015em; font-weight: 650; text-wrap: balance; }
+.product-desc { text-wrap: pretty; }
+
+/* Hierarquia de peso: 500/600 em vez de só 400/700 */
+.navbar-nav a,
+.navbar-dropdown-toggle { font-weight: 500; }
+.hero p { text-wrap: pretty; font-weight: 400; }
+.hero-card-value { font-weight: 600; letter-spacing: -.01em; }
+
+/* Respiro maior entre seções em telas grandes */
+@media (min-width: 1100px) {
+  section { padding-block: 120px 130px; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Animação dirigida por scroll — sem JS
+   Onde o navegador suporta `animation-timeline`, o conteúdo entra com fade-up.
+   Onde não suporta, a regra inteira é ignorada e tudo aparece normalmente:
+   nunca existe estado em que o conteúdo fique invisível por falta de suporte.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+
+    @keyframes enter-up {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .section-tag,
+    .section-title,
+    .section-sub,
+    .product-card,
+    .service-card,
+    .stat-card,
+    .about-feature,
+    .lc-diff-card,
+    .contact-card,
+    .cta-section h2,
+    .cta-section p,
+    .cta-actions {
+      animation: enter-up .7s var(--ease-out) both;
+      animation-timeline: view();
+      /* Começa quando o elemento entra 5% na tela e termina aos 22% —
+         o movimento acontece na entrada, não durante toda a rolagem */
+      animation-range: entry 5% cover 22%;
+    }
+
+    /* Cascata dentro das grades: cada card entra logo depois do anterior */
+    .products-grid > *,
+    .services-grid > *,
+    .lc-diff-grid > *,
+    .about-visual > * {
+      animation-range: entry 5% cover calc(22% + 4% * var(--i, 0));
+    }
+    .products-grid > *:nth-child(1),  .services-grid > *:nth-child(1),
+    .lc-diff-grid > *:nth-child(1),   .about-visual > *:nth-child(1)  { --i: 0; }
+    .products-grid > *:nth-child(2),  .services-grid > *:nth-child(2),
+    .lc-diff-grid > *:nth-child(2),   .about-visual > *:nth-child(2)  { --i: 1; }
+    .products-grid > *:nth-child(3),  .services-grid > *:nth-child(3),
+    .lc-diff-grid > *:nth-child(3),   .about-visual > *:nth-child(3)  { --i: 2; }
+    .products-grid > *:nth-child(4),  .services-grid > *:nth-child(4),
+    .lc-diff-grid > *:nth-child(4),   .about-visual > *:nth-child(4)  { --i: 3; }
+    .products-grid > *:nth-child(n+5),
+    .services-grid > *:nth-child(n+5),
+    .lc-diff-grid > *:nth-child(n+5) { --i: 4; }
+
+    /* Hero entra na carga da página, não por scroll */
+    @keyframes hero-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .hero-badge   { animation: hero-in .7s var(--ease-out) .05s both; }
+    .hero h1      { animation: hero-in .7s var(--ease-out) .15s both; }
+    .hero p       { animation: hero-in .7s var(--ease-out) .25s both; }
+    .hero-actions { animation: hero-in .7s var(--ease-out) .35s both; }
+    .hero-visual  { animation: hero-in .9s var(--ease-out) .45s both; }
+  }
+}
+
+/* ── Ícones ──────────────────────────────────────────────────────────────
+   Sprite em /static/website/icons.svg, traço 1.5 uniforme.
+   <svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#code"/></svg>
+   ──────────────────────────────────────────────────────────────────────── */
+.icon {
+  width: 1.35em; height: 1.35em;
+  display: block;
+  flex-shrink: 0;
+  color: currentColor;
+  /* Alinhamento óptico: o traço centralizado matematicamente lê alto demais */
+  transform: translateY(.5px);
+}
+
+/* Caixa do ícone nos cards de serviço/produto */
+.service-icon .icon,
+.product-icon .icon,
+.hero-card-icon .icon { width: 24px; height: 24px; color: var(--navy); }
+
+.product-icon .icon { color: #1f4f8f; }
+.feature-icon .icon { width: 22px; height: 22px; color: #fff; }
+.hero-card-icon .icon { color: var(--cyan); }
+
+.service-icon .icon { color: var(--blue); }
+.lc-page .service-icon .icon { color: var(--lc-green-dark); }
+.lc-page .product-icon .icon,
+.lc-page .lc-diff-num .icon { color: var(--lc-green-dark); }
+
+/* Itens de lista com marca de verificação vetorial */
+.lc-check-list li::before { content: none; }
+.lc-check-list li {
+  display: flex; align-items: flex-start; gap: .5rem;
+  padding-left: 0;
+}
+.lc-check-list .icon { width: 15px; height: 15px; color: var(--lc-green); margin-top: .28em; }
+
+/* Impressão e captura de página inteira não avançam a timeline de scroll:
+   sem isto, o conteúdo animado sairia em branco no papel/PDF. */
+@media print {
+  *, *::before, *::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CAMADA "SINAL"
+   ────────────────────────────────────────────────────────────────────────────
+   O ofício da MTJL é provar que software funciona. Esse mundo tem linguagem
+   visual própria — asserção, cobertura, latência, status — e é dela que sai o
+   desenho, em vez de uma estética genérica de landing page.
+
+   Três decisões:
+   1. Profundidade, não contorno. Superfície flutua sobre sombra ambiente
+      tingida no azul da marca; luz vem de dentro do elemento.
+   2. Cor como sinal. Azul vivo = ação; teal = passou/vivo. Cada cor significa
+      algo, nenhuma é enfeite.
+   3. Assinatura cinética: a faixa de asserções sob o hero corre de verdade.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Fundo profundo — azul-quase-preto, nunca preto puro */
+  --void:    #060A16;
+  --void-2:  #0B1226;
+  --depth:   #0E1730;
+
+  /* Claro */
+  --canvas:  #F6F8FC;
+  --surface: #FFFFFF;
+  --haze:    #E9EFFA;
+
+  /* Tinta */
+  --ink:     #0B1222;
+  --ink-2:   #515C75;
+  --ink-3:   #6B7590;
+
+  /* Sinal */
+  --signal:  #1B5CF5;
+  --signal-2:#0B44CC;
+  --pulse:   #00C2B4;
+
+  --font-display: 'Familjen Grotesk', 'Geist', system-ui, sans-serif;
+
+  /* Sombra ambiente tingida no azul — nunca preto neutro */
+  --lift-1: 0 1px 2px rgba(11,18,34,.04), 0 4px 12px -2px rgba(27,92,245,.06);
+  --lift-2: 0 2px 4px rgba(11,18,34,.04), 0 12px 32px -6px rgba(27,92,245,.10);
+  --lift-3: 0 4px 8px rgba(11,18,34,.05), 0 28px 60px -12px rgba(27,92,245,.16);
+  --lift-4: 0 8px 16px rgba(11,18,34,.06), 0 48px 96px -20px rgba(27,92,245,.22);
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+/* Lavagem de cor no fundo da página: dá atmosfera sem pintar seção por seção */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 50% at 12% 0%,   rgba(27,92,245,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 92% 22%,  rgba(0,194,180,.045) 0%, transparent 62%),
+    radial-gradient(ellipse 80% 45% at 45% 78%,  rgba(27,92,245,.035) 0%, transparent 60%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* ── Tipografia ─────────────────────────────────────────────────────────── */
+h1, h2, h3, .section-title, .hero h1, .product-name, .beauty-name,
+.larclinica-name, .pilotqa-name, .cta-section h2, .stat-value {
+  font-family: var(--font-display);
+}
+
+.section-title {
+  color: var(--ink);
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -.035em;
+  line-height: 1.04;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+.section-sub {
+  color: var(--ink-2);
+  font-size: 1.08rem;
+  line-height: 1.7;
+  max-width: 54ch;
+  margin-bottom: 3.6rem;
+}
+
+/* Rótulo de seção: cápsula com ponto de sinal */
+.section-tag {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: rgba(27,92,245,.07);
+  border: 1px solid rgba(27,92,245,.14);
+  border-radius: var(--r-pill);
+  color: var(--signal-2);
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .1em;
+  padding: .34rem .85rem .34rem .7rem;
+  margin-bottom: 1.5rem;
+}
+.section-tag::before {
+  content: '';
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px rgba(27,92,245,.16);
+}
+
+/* ── Seções: sem alternância chapada de fundo ───────────────────────────── */
+section, #produtos, #sobre, .services-section, .contact-section { background: none; }
+.services-section, #produtos, #servicos, #tipos-de-teste, .contact-section { text-align: left; }
+.contact-section .section-sub, #produtos .section-sub,
+#servicos .section-sub, #tipos-de-teste .section-sub { margin-left: 0; margin-right: 0; }
+
+/* ── Superfície padrão: card que flutua ─────────────────────────────────── */
+.service-card, .product-card, .lc-diff-card, .contact-card,
+.product-card--beauty, .product-card--larclinica, .product-card--pilotqa {
+  background: var(--surface);
+  border: 1px solid rgba(11,18,34,.05);
+  border-radius: var(--r-lg);
+  box-shadow: var(--lift-1);
+  transition:
+    transform .5s var(--ease-out),
+    box-shadow .5s var(--ease-out),
+    border-color .4s var(--ease-out);
+}
+.service-card:hover, .product-card:hover, .lc-diff-card:hover,
+.product-card--beauty:hover, .product-card--larclinica:hover, .product-card--pilotqa:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--lift-3);
+  border-color: rgba(27,92,245,.16);
+}
+
+/* ── Serviços ───────────────────────────────────────────────────────────── */
+.services-grid { grid-template-columns: repeat(3, 1fr); max-width: none; margin-top: 0; gap: 1.25rem; }
+#tipos-de-teste .services-grid { grid-template-columns: repeat(4, 1fr); max-width: none; }
+.ia-grid { grid-template-columns: repeat(3, 1fr); max-width: none; }
+
+.service-card { padding: 2.1rem 1.8rem; display: flex; flex-direction: column; }
+
+/* Poço do ícone: luz vinda de dentro, não caixa pastel chapada */
+.service-icon {
+  width: 46px; height: 46px;
+  margin: 0 0 1.5rem;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    linear-gradient(160deg, rgba(27,92,245,.12), rgba(0,194,180,.10));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -1px 0 rgba(27,92,245,.10);
+  font-size: 1.3rem;
+}
+.service-icon .icon { width: 21px; height: 21px; color: var(--signal-2); }
+
+.service-card h3 {
+  display: block; min-height: 0; text-align: left;
+  color: var(--ink);
+  font-size: 1.1rem; font-weight: 600;
+  letter-spacing: -.02em; line-height: 1.28;
+  margin-bottom: .7rem;
+}
+.service-card p { color: var(--ink-2); font-size: .92rem; line-height: 1.72; }
+
+/* ── Produtos ───────────────────────────────────────────────────────────── */
+.products-grid { grid-template-columns: repeat(12, 1fr); gap: 1.25rem; }
+.products-grid > .product-card { grid-column: span 6; }
+.products-grid > .product-card:nth-child(n+3) { grid-column: span 3; }
+
+.product-card { padding: 2.2rem 2rem; }
+.product-card::before {
+  /* fio de luz no topo, revelado no hover */
+  height: 2px;
+  background: linear-gradient(90deg, var(--signal), var(--pulse));
+  opacity: 0;
+}
+.product-card:hover::before { opacity: 1; }
+.product-card.featured::before, .product-card--beauty::before { opacity: 0; display: block; }
+
+.product-icon, .beauty-logo-wrap, .larclinica-logo-wrap, .pilotqa-logo-wrap {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.65);
+  margin-bottom: 1.4rem;
+}
+.product-icon .icon { color: var(--ink); }
+.product-name, .beauty-name, .larclinica-name, .pilotqa-name {
+  color: var(--ink); font-size: 1.2rem; font-weight: 600; letter-spacing: -.025em;
+}
+.beauty-tagline, .larclinica-tagline, .pilotqa-tagline { color: var(--ink-3); font-size: .8rem; }
+.product-desc, .beauty-desc, .larclinica-desc, .pilotqa-desc {
+  color: var(--ink-2); font-size: .93rem; line-height: 1.7;
+}
+.beauty-glow {
+  background: radial-gradient(circle, rgba(27,92,245,.10) 0%, transparent 70%);
+}
+.larclinica-glow {
+  background: radial-gradient(circle, rgba(12,165,98,.12) 0%, transparent 70%);
+}
+
+/* Etiqueta de estado */
+.product-badge {
+  border-radius: var(--r-pill);
+  font-size: .7rem; font-weight: 600; letter-spacing: .06em;
+  padding: .3rem .8rem;
+}
+.badge-soon { background: rgba(11,18,34,.05); color: var(--ink-3); }
+
+/* Botão dentro do card */
+.beauty-btn-primary, .larclinica-btn-primary {
+  border-radius: var(--r-pill);
+  font-weight: 600; font-size: .92rem;
+  padding: .8rem 1.4rem;
+  box-shadow: 0 4px 14px -2px rgba(27,92,245,.3);
+}
+.beauty-btn-primary { background: var(--signal); }
+.beauty-btn-primary:hover { background: var(--signal-2); box-shadow: 0 10px 24px -4px rgba(27,92,245,.42); }
+.larclinica-btn-primary { box-shadow: 0 4px 14px -2px rgba(12,165,98,.32); }
+.beauty-btn-ghost, .product-link--access, .pilotqa-btn-contact {
+  border-radius: var(--r-pill);
+  background: rgba(27,92,245,.07);
+  color: var(--signal-2);
+  font-weight: 600;
+}
+.beauty-btn-ghost:hover, .product-link--access:hover, .pilotqa-btn-contact:hover {
+  background: rgba(27,92,245,.13);
+}
+.product-link {
+  background: var(--signal);
+  border-radius: var(--r-pill);
+  padding: .5rem 1.2rem;
+  box-shadow: 0 4px 12px -2px rgba(27,92,245,.28);
+}
+.product-link:hover { background: var(--signal-2); }
+
+/* ── Hero: profundidade real, não degradê de quatro paradas ─────────────── */
+.hero {
+  background: var(--void);
+  padding-block: 150px 0;
+}
+.hero::before {
+  /* malha de luz: três focos em vez de um degradê linear atravessando a tela */
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at 18% 8%,  rgba(27,92,245,.34) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 50% at 82% 30%, rgba(0,194,180,.16) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 108%, rgba(27,92,245,.20) 0%, transparent 65%);
+}
+.hero-inner { max-width: 760px; padding-bottom: 90px; }
+
+.hero-badge {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.82);
+  font-size: .74rem; font-weight: 500; letter-spacing: .12em;
+  padding: .42rem 1rem .42rem .85rem;
+  backdrop-filter: blur(10px);
+}
+.hero-badge::before {
+  background: var(--pulse);
+  box-shadow: 0 0 0 3px rgba(0,194,180,.2), 0 0 12px rgba(0,194,180,.8);
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 6.2vw, 4.8rem);
+  font-weight: 600;
+  letter-spacing: -.042em;
+  line-height: 1;
+  color: #fff;
+}
+/* Sem recorte de degradê no texto — o brilho vem de trás da palavra */
+.hero h1 span {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: #fff;
+  position: relative;
+  text-shadow: 0 0 44px rgba(0,194,180,.45), 0 0 90px rgba(27,92,245,.35);
+}
+.hero p { color: rgba(255,255,255,.66); font-size: 1.12rem; max-width: 46ch; line-height: 1.72; }
+
+/* Botão primário: sinal sólido com halo, sem degradê arco-íris */
+.btn-primary {
+  background: var(--signal);
+  font-weight: 600;
+  box-shadow: 0 2px 0 rgba(255,255,255,.14) inset, 0 8px 24px -4px rgba(27,92,245,.5);
+}
+.btn-primary:hover {
+  background: #2E6DFF;
+  box-shadow: 0 2px 0 rgba(255,255,255,.18) inset, 0 14px 34px -6px rgba(27,92,245,.62);
+}
+.btn-primary::after { background: rgba(255,255,255,.2); }
+
+.btn-outline {
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.05);
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+.btn-outline:hover { border-color: rgba(0,194,180,.45); background: rgba(0,194,180,.10); }
+
+/* Painel do hero: vidro de verdade — filete interno claro + sombra interna */
+.hero-visual {
+  position: static;
+  transform: none;
+  width: 100%;
+  max-width: none;
+  margin-top: 3.5rem;
+  opacity: 1;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
+  border-top-left-radius: var(--r-lg);
+  border-top-right-radius: var(--r-lg);
+  border-bottom: none;
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+}
+.hero-card {
+  background: rgba(255,255,255,.028);
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  padding: 1.7rem 1.6rem 2rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07);
+}
+.hero-card-icon { margin-bottom: 2.2rem; }
+.hero-card-icon .icon { width: 20px; height: 20px; color: var(--pulse); }
+.hero-card-label {
+  color: rgba(255,255,255,.44);
+  font-family: var(--font-mono);
+  font-size: .66rem; letter-spacing: .1em;
+}
+.hero-card-value { color: #fff; font-size: 1rem; font-weight: 500; letter-spacing: -.015em; }
+
+@media (max-width: 900px) {
+  .hero-visual { display: grid; grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ASSINATURA — faixa de asserções
+   A suíte de testes é o que a empresa vende. A faixa mostra resultado de
+   execução correndo, em monoespaçada, com glifo de aprovação e tempo. Ocupa o
+   lugar da fileira de chips decorativa que havia antes.
+   ════════════════════════════════════════════════════════════════════════════ */
+.strip {
+  background: var(--void);
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 0;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  /* esmaece nas duas pontas: sugere fluxo contínuo, sem corte seco */
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.strip-track {
+  display: flex;
+  align-items: center;
+  gap: 2.75rem;
+  width: max-content;
+  padding: .95rem 0;
+  animation: strip-run 42s linear infinite;
+}
+.strip:hover .strip-track { animation-play-state: paused; }
+
+@keyframes strip-run {
+  /* a trilha tem duas cópias da lista; -50% devolve ao ponto de partida */
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.strip-item {
+  display: inline-flex; align-items: center; gap: .55rem;
+  color: rgba(255,255,255,.5);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  font-weight: 400;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.strip-item .icon { width: 13px; height: 13px; color: var(--pulse); flex-shrink: 0; }
+.strip-dot { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .strip-track { animation: none; }
+}
+
+/* ── Sobre: painéis de medida ───────────────────────────────────────────── */
+.about-grid { grid-template-columns: 1.1fr .9fr; gap: 5rem; align-items: start; }
+.about-visual { gap: 1rem; }
+.stat-card,
+.stat-card:nth-child(2),
+.stat-card:nth-child(3) {
+  background: var(--surface) !important;
+  border: 1px solid rgba(11,18,34,.05);
+  border-radius: var(--r-md);
+  box-shadow: var(--lift-1);
+  text-align: left;
+  padding: 1.7rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+/* Faixa de sinal na base do painel: leitura de instrumento */
+.stat-card::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: linear-gradient(90deg, var(--signal), var(--pulse));
+  opacity: .5;
+}
+.stat-value,
+.stat-card:nth-child(2) .stat-value,
+.stat-card:nth-child(3) .stat-value {
+  color: var(--ink) !important;
+  font-size: 2.3rem; font-weight: 600; letter-spacing: -.045em;
+}
+.stat-label,
+.stat-card:nth-child(2) .stat-label,
+.stat-card:nth-child(3) .stat-label {
+  color: var(--ink-3) !important;
+  font-family: var(--font-mono);
+  font-size: .7rem; letter-spacing: .04em; line-height: 1.5;
+  margin-top: .8rem;
+}
+
+.feature-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(27,92,245,.14), rgba(0,194,180,.11)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+}
+.feature-icon .icon { color: var(--signal-2) !important; width: 20px; height: 20px; }
+.feature-text h3, .feature-text h4 { color: var(--ink); font-weight: 600; letter-spacing: -.018em; font-size: 1.02rem; }
+.feature-text p { color: var(--ink-2); }
+.about-features { gap: 1.8rem; }
+
+/* ── CTA: mesma profundidade do hero ────────────────────────────────────── */
+.cta-section {
+  background: var(--void);
+  text-align: left;
+  border-radius: var(--r-xl);
+  margin: 0 max(6%, calc((100% - var(--container)) / 2)) 100px;
+  padding: 90px 4.5rem;
+  overflow: hidden;
+}
+.cta-section::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 70% at 88% 20%, rgba(0,194,180,.20) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 80% at 10% 100%, rgba(27,92,245,.28) 0%, transparent 64%);
+}
+.cta-section h2 {
+  font-weight: 600; letter-spacing: -.038em; line-height: 1.05;
+  max-width: 22ch; font-size: clamp(2rem, 3.6vw, 3rem);
+}
+.cta-section p { color: rgba(255,255,255,.66); margin-left: 0; margin-right: 0; max-width: 48ch; }
+.cta-actions { justify-content: flex-start; }
+.btn-outline-light {
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.05);
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+.btn-outline-light:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.4); }
+
+/* ── Contato ────────────────────────────────────────────────────────────── */
+.contact-card {
+  margin: 0;
+  max-width: 640px;
+  padding: 2.6rem;
+  box-shadow: var(--lift-2);
+}
+.contact-form label { color: var(--ink-2); font-size: .8rem; font-weight: 600; }
+.contact-form input, .contact-form textarea {
+  background: #FBFCFE;
+  border: 1px solid rgba(11,18,34,.09);
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-size: .96rem;
+  padding: .82rem 1rem;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+  border-color: var(--signal);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(27,92,245,.11);
+}
+.contact-success {
+  background: rgba(0,194,180,.08);
+  border: 1px solid rgba(0,194,180,.28);
+  color: #067A70;
+  border-radius: var(--r-sm);
+}
+.btn-contact {
+  background: var(--signal);
+  font-weight: 600;
+  box-shadow: 0 8px 22px -4px rgba(27,92,245,.42);
+}
+.btn-contact:hover { background: #2E6DFF; box-shadow: 0 14px 32px -6px rgba(27,92,245,.55); }
+
+/* ── Navbar: vidro flutuante ────────────────────────────────────────────── */
+.navbar {
+  background: rgba(246,248,252,.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: none;
+  border-bottom: 1px solid rgba(11,18,34,.05);
+}
+.navbar.is-scrolled {
+  background: rgba(246,248,252,.86);
+  box-shadow: 0 1px 24px -6px rgba(27,92,245,.14);
+}
+.navbar-nav a, .navbar-dropdown-toggle { color: var(--ink-2); font-size: .9rem; font-weight: 500; letter-spacing: 0; }
+.navbar-nav a:hover, .navbar-dropdown-toggle:hover { color: var(--signal-2); }
+.navbar-dropdown-menu {
+  background: rgba(255,255,255,.9);
+  border: 1px solid rgba(11,18,34,.06);
+  border-radius: var(--r-md);
+  box-shadow: var(--lift-3);
+}
+.navbar-dropdown-menu li a { color: var(--ink-2); border-radius: 8px; }
+.navbar-dropdown-menu li a:hover { background: rgba(27,92,245,.07); color: var(--signal-2); }
+.nav-cta {
+  background: var(--signal) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 14px -3px rgba(27,92,245,.42);
+}
+.nav-cta:hover { background: var(--signal-2) !important; opacity: 1; }
+.navbar-mobile-panel { background: rgba(246,248,252,.98); border-bottom-color: rgba(11,18,34,.06); }
+.navbar-mobile-panel a, .navbar-mobile-panel .navbar-mobile-dropdown-toggle { color: var(--ink); }
+
+/* ── Rodapé ─────────────────────────────────────────────────────────────── */
+footer { background: none; border-top: 1px solid rgba(11,18,34,.06); }
+.footer-links a { color: var(--ink-3); }
+.footer-links a:hover { color: var(--signal-2); }
+.footer-copy { color: var(--ink-3); border-top-color: rgba(11,18,34,.06); }
+
+/* ── Modal ──────────────────────────────────────────────────────────────── */
+.pqmodal { border-radius: var(--r-lg); box-shadow: var(--lift-4); }
+.pqmodal-tag { color: var(--signal-2); font-weight: 600; letter-spacing: .1em; }
+.pqmodal-title { color: var(--ink); font-family: var(--font-display); font-weight: 600; letter-spacing: -.02em; font-size: 1.2rem; }
+.pqmodal-header { border-bottom-color: rgba(11,18,34,.06); }
+.pqmodal-form label { color: var(--ink-2); font-weight: 600; }
+.pqmodal-form input, .pqmodal-form textarea {
+  background: #FBFCFE; border-color: rgba(11,18,34,.09); border-radius: var(--r-sm); color: var(--ink);
+}
+.pqmodal-form input:focus, .pqmodal-form textarea:focus {
+  border-color: var(--signal); box-shadow: 0 0 0 4px rgba(27,92,245,.11);
+}
+.pqmodal-form button[type="submit"] {
+  background: var(--signal);
+  font-weight: 600;
+  box-shadow: 0 8px 22px -4px rgba(27,92,245,.42);
+}
+.pqmodal-form button[type="submit"]:hover { background: #2E6DFF; opacity: 1; }
+
+/* ── LarClínica: mesmo sistema, sinal verde ─────────────────────────────── */
+.lc-page {
+  --signal: #0CA562;
+  --signal-2: #087a49;
+  --pulse: #34D399;
+  --lift-1: 0 1px 2px rgba(4,35,26,.04), 0 4px 12px -2px rgba(12,165,98,.07);
+  --lift-2: 0 2px 4px rgba(4,35,26,.04), 0 12px 32px -6px rgba(12,165,98,.11);
+  --lift-3: 0 4px 8px rgba(4,35,26,.05), 0 28px 60px -12px rgba(12,165,98,.18);
+}
+.lc-page .hero { background: #04180F; }
+.lc-page .hero::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 18% 8%,  rgba(12,165,98,.34) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 50% at 82% 30%, rgba(52,211,153,.16) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 108%, rgba(12,165,98,.20) 0%, transparent 65%);
+}
+.lc-page .strip { background: #04180F; }
+.lc-page .cta-section { background: #04180F; }
+.lc-page .cta-section::after {
+  background:
+    radial-gradient(ellipse 50% 70% at 88% 20%, rgba(52,211,153,.20) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 80% at 10% 100%, rgba(12,165,98,.28) 0%, transparent 64%);
+}
+.lc-page .service-icon,
+.lc-page .feature-icon {
+  background: linear-gradient(160deg, rgba(12,165,98,.14), rgba(52,211,153,.11)) !important;
+}
+.lc-page .service-icon .icon,
+.lc-page .feature-icon .icon,
+.lc-page .product-icon .icon { color: var(--lc-green-dark) !important; }
+.lc-page .stat-card::after { background: linear-gradient(90deg, var(--lc-green), #34D399); }
+
+.lc-diff-grid { gap: 1.25rem; margin-top: 2.5rem; }
+.lc-diff-card { padding: 2rem 1.7rem; }
+.lc-diff-num {
+  background: linear-gradient(160deg, rgba(12,165,98,.16), rgba(52,211,153,.12));
+  color: var(--lc-green-dark);
+  font-family: var(--font-mono);
+  font-weight: 600; font-size: .82rem;
+  width: 36px; height: 36px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+}
+.lc-diff-card h3 { color: var(--ink); font-weight: 600; letter-spacing: -.018em; }
+.lc-diff-card p { color: var(--ink-2); }
+.lc-overview-grid, .lc-stats-grid { gap: 1.25rem; }
+.lc-check-list li { color: var(--ink-2); font-size: .88rem; }
+.lc-check-list .icon { color: var(--lc-green); }
+.lc-page .lc-stats-grid .stat-card:nth-child(1),
+.lc-page .lc-stats-grid .stat-card:nth-child(2),
+.lc-page .lc-stats-grid .stat-card:nth-child(3),
+.lc-page .lc-stats-grid .stat-card:nth-child(4) {
+  background: var(--surface) !important;
+}
+.lc-page .lc-stats-grid .stat-value { color: var(--ink) !important; }
+.lc-page .lc-stats-grid .stat-label { color: var(--ink-3) !important; }
+
+/* ── Destaque em texto corrido ──────────────────────────────────────────── */
+.hl { color: var(--signal-2); font-weight: 600; }
+.inline-link {
+  color: var(--signal-2); font-weight: 600;
+  border-bottom: 1px solid rgba(27,92,245,.3);
+  transition: border-color .25s var(--ease-out);
+}
+.inline-link:hover { border-color: var(--signal); }
+
+/* ── Responsivo ─────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .services-grid, #tipos-de-teste .services-grid, .ia-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1000px) {
+  .products-grid > .product-card,
+  .products-grid > .product-card:nth-child(n+3) { grid-column: span 6; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .about-visual { max-width: none; }
+}
+@media (max-width: 700px) {
+  .services-grid, #tipos-de-teste .services-grid, .ia-grid { grid-template-columns: 1fr; }
+  .products-grid > .product-card,
+  .products-grid > .product-card:nth-child(n+3) { grid-column: span 12; }
+  .cta-section { margin-inline: 5%; padding: 60px 1.6rem; border-radius: var(--r-lg); }
+  .contact-card { padding: 1.8rem 1.4rem; }
+  .hero { padding-block: 120px 0; }
+}
+
+.strip-list {
+  display: flex;
+  align-items: center;
+  gap: 2.75rem;
+  list-style: none;
+  margin: 0; padding: 0 1.4rem 0 0;
+}
+
+/* ── Correções de empilhamento e ancoragem do hero ──────────────────────── */
+
+/* O hero era flex em linha: o painel virava item ao lado do texto. Passa a
+   coluna, texto em cima e painel ancorado na base, encostado na faixa. */
+.hero {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+.hero-inner { margin-top: auto; }
+
+/* O ::before é posicionado e pintava sobre o painel (conteúdo sem
+   posicionamento), apagando o efeito de vidro. Sobe o painel de camada. */
+.hero-visual {
+  position: relative;
+  z-index: var(--z-base);
+  margin-top: 4.5rem;
+}
+
+/* O halo atrás da palavra virava uma mancha retangular. Fica mais suave e a
+   palavra recupera cor — o acento se perdia em branco sobre branco. */
+.hero h1 span {
+  color: #A9E9F5;
+  text-shadow: 0 0 60px rgba(0,194,180,.35);
+}
+
+/* Navbar transparente sobre o hero escuro; ganha vidro claro ao rolar.
+   Sem isso, o vidro claro sobre fundo escuro lê como laje cinza. */
+.navbar {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+}
+.navbar .navbar-nav a,
+.navbar .navbar-dropdown-toggle { color: rgba(255,255,255,.72); }
+.navbar .navbar-nav a:hover,
+.navbar .navbar-dropdown-toggle:hover { color: #fff; }
+.navbar .navbar-burger-bar,
+.navbar .navbar-burger-bar::before,
+.navbar .navbar-burger-bar::after { background: rgba(255,255,255,.85); }
+
+.navbar.is-scrolled {
+  background: rgba(246,248,252,.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: rgba(11,18,34,.06);
+  box-shadow: 0 1px 24px -6px rgba(27,92,245,.14);
+}
+.navbar.is-scrolled .navbar-nav a,
+.navbar.is-scrolled .navbar-dropdown-toggle { color: var(--ink-2); }
+.navbar.is-scrolled .navbar-nav a:hover,
+.navbar.is-scrolled .navbar-dropdown-toggle:hover { color: var(--signal-2); }
+.navbar.is-scrolled .navbar-burger-bar,
+.navbar.is-scrolled .navbar-burger-bar::before,
+.navbar.is-scrolled .navbar-burger-bar::after { background: var(--ink); }
+
+/* A logo é escura: sobre o hero precisa de contraste invertido */
+.navbar:not(.is-scrolled) .navbar-logo { filter: brightness(0) invert(1); opacity: .92; }
+
+/* Altura pelo conteúdo, não pela viewport: com o painel ancorado na base, o
+   100dvh empurrava o instrumento para fora da dobra. */
+.hero { min-height: 0; padding-block: 132px 0; }
+.hero-inner { padding-bottom: 0; }
+.hero-visual { margin-top: 4rem; }
+
+/* Os CTAs dos cards eram `display:block`, então esticavam por toda a largura
+   do card. Num card de meia página isso vira uma barra desproporcional. */
+.beauty-btn-primary,
+.beauty-btn-ghost,
+.larclinica-btn-primary,
+.pilotqa-btn-contact,
+.product-link--access {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  width: auto;
+  text-align: left;
+}
+.beauty-links, .larclinica-links, .pilotqa-links {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .7rem;
+}
+
+/* O painel de CTA precisa de contexto de posicionamento próprio, senão o brilho
+   do ::after se ancora no elemento posicionado mais próximo acima. */
+.cta-section { position: relative; margin-bottom: 40px; }
+.cta-actions a { text-decoration: none; }
+
+/* Entre o painel escuro e a seção seguinte somavam-se margem e padding: mais de
+   200px de vazio. */
+.contact-section { padding-top: 60px; }
+
+/* Contato em duas colunas: o texto ocupava a largura toda e o formulário ficava
+   sozinho à esquerda, com metade da tela vazia ao lado. */
+.contact-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 5rem;
+  align-items: start;
+}
+.contact-section > .section-tag,
+.contact-section > .section-title,
+.contact-section > .section-sub,
+.contact-section > .contact-success { grid-column: 1; }
+.contact-section > .section-sub { margin-bottom: 0; }
+.contact-card {
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  max-width: none;
+  align-self: start;
+}
+@media (max-width: 900px) {
+  .contact-section { grid-template-columns: 1fr; }
+  .contact-section > .contact-card { grid-column: 1; grid-row: auto; margin-top: 2.5rem; }
+}
+
+/* A duração fixa fazia a faixa acelerar conforme itens eram acrescentados:
+   a animação percorre sempre -50%, então mais conteúdo = mais px por segundo.
+   O valor acompanha a contagem para a velocidade de leitura ficar constante. */
+.strip-track { animation-duration: 58s; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Hero em duas colunas + painel de instrumento
+   ────────────────────────────────────────────────────────────────────────────
+   A regra original do painel é `position:absolute; right:6%`. Ao trocar só o
+   `position` para relativo, o `right` continuou valendo — e em elemento
+   relativo ele desloca, deixando o painel 6% à esquerda do eixo do conteúdo.
+   Daí o desalinhamento. Aqui o offset é zerado e o painel passa a ocupar a
+   coluna da direita, que antes ficava vazia ao lado do texto.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.hero {
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  min-height: 88dvh;
+  padding-block: 130px 90px;
+}
+.hero-inner {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 640px;
+  margin-top: 0;
+}
+
+.hero-visual {
+  right: auto; top: auto; bottom: auto; left: auto;
+  flex: 0 0 clamp(320px, 33%, 430px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .9rem;
+  margin: 0;
+  width: auto;
+  background: none;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  backdrop-filter: none;
+}
+
+/* Cada cartão é um painel de vidro próprio: filete interno claro em cima,
+   brilho do sinal atrás do ícone, e deslocamento lateral no hover. */
+.hero-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 1rem;
+  align-items: center;
+  padding: 1.15rem 1.3rem;
+  min-height: 0;
+  background: linear-gradient(150deg, rgba(255,255,255,.075), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    0 12px 32px -14px rgba(0,0,0,.7);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  transition: transform .45s var(--ease-out), border-color .45s var(--ease-out), background .45s var(--ease-out);
+}
+.hero-card:hover {
+  transform: translateX(5px);
+  border-color: rgba(0,194,180,.34);
+  background: linear-gradient(150deg, rgba(255,255,255,.1), rgba(255,255,255,.04));
+}
+
+/* Poço do ícone com halo — o brilho vem de trás, não do traço */
+.hero-card-icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 44px; height: 44px;
+  margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  background: radial-gradient(circle at 50% 45%, rgba(0,194,180,.26), rgba(27,92,245,.14) 65%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
+}
+.hero-card-icon .icon { width: 20px; height: 20px; color: #7FF0E4; }
+
+.hero-card-label {
+  grid-column: 2; grid-row: 1;
+  color: rgba(255,255,255,.42);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .13em;
+  margin: 0;
+}
+.hero-card-value {
+  grid-column: 2; grid-row: 2;
+  font-family: var(--font-display);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+  margin-top: .12rem;
+}
+
+/* Fio de sinal na base, revelado no hover */
+.hero-card::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pulse), transparent);
+  opacity: 0;
+  transition: opacity .45s var(--ease-out);
+}
+.hero-card:hover::after { opacity: .75; }
+
+@media (max-width: 980px) {
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    padding-block: 120px 70px;
+  }
+  .hero-inner { max-width: none; }
+  .hero-visual { flex: none; margin-top: 3rem; }
+}
+
+/* Em coluna o `flex-end` encostava o conteúdo na base; em linha ele encosta na
+   direita e desalinha o texto do eixo da página. */
+.hero { justify-content: space-between; }
+@media (max-width: 980px) { .hero { justify-content: flex-start; } }
+
+/* O menu suspenso tem fundo claro próprio. A regra que pinta a navegação de
+   branco sobre o hero escuro estava alcançando os links dele também, deixando
+   texto branco sobre painel branco. */
+.navbar .navbar-dropdown-menu li a,
+.navbar.is-scrolled .navbar-dropdown-menu li a { color: var(--ink-2); }
+.navbar .navbar-dropdown-menu li a:hover,
+.navbar.is-scrolled .navbar-dropdown-menu li a:hover { color: var(--signal-2); background: rgba(27,92,245,.07); }
+
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LarClínica — verde-petróleo
+   ────────────────────────────────────────────────────────────────────────────
+   A base de paletas do skill devolve, para saúde, sempre a mesma combinação:
+   ciano #0891B2 com verde e fundo #ECFEFF. É o azul-medicinal de catálogo, o
+   mesmo de qualquer portal de convênio. O que se aproveita dali é o texto:
+   #134E4A e #164E63, verdes-petróleo profundos. É esse tom que carrega
+   sobriedade, e é dele que a escala abaixo parte.
+
+   Por que petróleo e não o verde-esmeralda anterior: esmeralda #0CA562 é
+   saturado e jovem, lê como startup. Petróleo é o verde dos centros
+   cirúrgicos — mesma família cromática, leitura institucional. Continua verde,
+   como você preferia, mas rebaixado.
+
+   O acento é menta, não o próprio petróleo aclarado: contraste de saturação
+   entre os dois é o que dá o brilho sem precisar de cor berrante.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --lc-50:  #F1F8F6;
+  --lc-100: #D9EDE7;
+  --lc-300: #7BD5C0;   /* menta — acento sobre o escuro */
+  --lc-500: #2E9C8A;
+  --lc-700: #0B6B5F;   /* texto e botão sobre papel — 6,0:1 */
+  --lc-900: #0C3B38;   /* petróleo — fundo do hero */
+  --lc-950: #082B29;
+
+  --lc-green:      var(--lc-500);
+  --lc-green-dark: var(--lc-700);
+}
+
+.lc-page {
+  --signal:   var(--lc-700);
+  --signal-2: #085249;
+  --pulse:    var(--lc-300);
+  --lift-1: 0 1px 2px rgba(8,43,41,.04), 0 4px 12px -2px rgba(11,107,95,.08);
+  --lift-2: 0 2px 4px rgba(8,43,41,.04), 0 12px 32px -6px rgba(11,107,95,.12);
+  --lift-3: 0 4px 8px rgba(8,43,41,.05), 0 28px 60px -12px rgba(11,107,95,.19);
+  --lift-4: 0 8px 16px rgba(8,43,41,.06), 0 48px 96px -20px rgba(11,107,95,.24);
+  --shadow-md: 0 8px 24px rgba(8,43,41,.09);
+  --shadow-lg: 0 20px 48px rgba(8,43,41,.13);
+  --shadow-xl: 0 32px 72px rgba(8,43,41,.18);
+}
+
+/* Lavagem de fundo da página */
+body.lc-page::before {
+  background:
+    radial-gradient(ellipse 90% 50% at 12% 0%,  rgba(11,107,95,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 92% 22%, rgba(123,213,192,.07) 0%, transparent 62%),
+    radial-gradient(ellipse 80% 45% at 45% 78%, rgba(11,107,95,.035) 0%, transparent 60%);
+}
+
+/* ── Blocos escuros ─────────────────────────────────────────────────────── */
+.lc-page .hero,
+.lc-page .strip,
+.lc-page .cta-section { background: var(--lc-900); }
+
+.lc-page .hero::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 18% 6%,   rgba(46,156,138,.34) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 50% at 84% 30%,  rgba(123,213,192,.16) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(8,43,41,.55) 0%, transparent 66%);
+}
+.lc-page .cta-section::after {
+  background:
+    radial-gradient(ellipse 50% 70% at 88% 20%,  rgba(123,213,192,.18) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 80% at 10% 100%, rgba(46,156,138,.30) 0%, transparent 64%);
+}
+
+/* ── Sobre o escuro ─────────────────────────────────────────────────────── */
+.lc-page .hero h1 span {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  color: var(--lc-300);
+  text-shadow: 0 0 56px rgba(123,213,192,.3);
+}
+.lc-page .hero-badge {
+  background: rgba(123,213,192,.08);
+  border-color: rgba(123,213,192,.2);
+  color: rgba(255,255,255,.8);
+}
+.lc-page .hero-badge::before {
+  background: var(--lc-300);
+  box-shadow: 0 0 0 3px rgba(123,213,192,.2), 0 0 12px rgba(123,213,192,.8);
+}
+.lc-page .hero-card-icon {
+  background: radial-gradient(circle at 50% 45%, rgba(123,213,192,.26), rgba(46,156,138,.14) 65%, transparent);
+}
+.lc-page .hero-card-icon .icon { color: #A5E6D6; }
+.lc-page .hero-card:hover { border-color: rgba(123,213,192,.32); }
+.lc-page .hero-card::after {
+  background: linear-gradient(90deg, transparent, var(--lc-300), transparent);
+}
+.lc-page .strip-item .icon { color: var(--lc-300); }
+.lc-page .btn-outline:hover { border-color: rgba(123,213,192,.48); background: rgba(123,213,192,.1); }
+
+/* ── Sobre o papel ──────────────────────────────────────────────────────── */
+.lc-page .section-tag {
+  background: rgba(11,107,95,.08);
+  border-color: rgba(11,107,95,.18);
+  color: var(--lc-700);
+}
+.lc-page .section-tag::before {
+  background: var(--lc-500);
+  box-shadow: 0 0 0 3px rgba(46,156,138,.18);
+}
+.lc-page .service-icon,
+.lc-page .feature-icon {
+  background: linear-gradient(160deg, rgba(11,107,95,.12), rgba(123,213,192,.2)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(11,107,95,.1);
+}
+.lc-page .service-icon .icon,
+.lc-page .feature-icon .icon,
+.lc-page .product-icon .icon,
+.lc-page .lc-diff-num .icon { color: var(--lc-700) !important; }
+
+.lc-page .service-card:hover,
+.lc-page .lc-diff-card:hover { border-color: rgba(11,107,95,.2); }
+.lc-page .stat-card::after {
+  background: linear-gradient(90deg, var(--lc-700), var(--lc-300));
+}
+.lc-diff-num {
+  background: linear-gradient(160deg, rgba(11,107,95,.14), rgba(123,213,192,.22));
+  color: var(--lc-700);
+}
+.lc-check-list .icon,
+.lc-check-list li::before { color: var(--lc-500); }
+.lc-page .navbar-dropdown-menu,
+.lc-page .pqmodal { box-shadow: var(--lift-4); }
+.lc-page .navbar.is-scrolled { box-shadow: 0 1px 24px -6px rgba(11,107,95,.18); }
+
+/* ── Botões ─────────────────────────────────────────────────────────────── */
+.lc-page .btn-primary,
+.lc-page .btn-contact {
+  background: var(--lc-700);
+  box-shadow: 0 2px 0 rgba(255,255,255,.13) inset, 0 8px 24px -4px rgba(11,107,95,.5);
+}
+.lc-page .btn-primary:hover,
+.lc-page .btn-contact:hover {
+  background: #0E8375;
+  box-shadow: 0 2px 0 rgba(255,255,255,.17) inset, 0 14px 34px -6px rgba(11,107,95,.6);
+}
+/* `--paper` foi definido numa camada anterior que deixou de existir. Variável
+   inexistente invalida a declaração, e o fundo caía para transparente: texto
+   quase preto sobre painel escuro, 1,39:1. Cor literal para não repetir. */
+.lc-page .cta-section .btn-primary {
+  background: #FFFFFF;
+  color: var(--lc-950);
+  box-shadow: 0 2px 0 rgba(255,255,255,.5) inset, 0 10px 28px -6px rgba(0,0,0,.42);
+}
+.lc-page .cta-section .btn-primary:hover { background: #EAF6F3; }
+.lc-page .cta-section .btn-primary::after { background: rgba(8,43,41,.12); }
+.lc-page .cta-section .btn-primary:hover { background: #fff; }
+
+.larclinica-btn-primary {
+  background: var(--lc-700);
+  box-shadow: 0 4px 14px -2px rgba(11,107,95,.34);
+}
+.larclinica-btn-primary:hover { background: #0E8375; }
+
+/* ── Card da LarClínica na home ─────────────────────────────────────────── */
+.product-card--larclinica { box-shadow: var(--lift-1); }
+.product-card--larclinica:hover { box-shadow: var(--lift-3); border-color: rgba(11,107,95,.22); }
+.larclinica-glow { background: radial-gradient(circle, rgba(11,107,95,.12) 0%, transparent 70%); }
+.larclinica-logo-wrap {
+  background: linear-gradient(160deg, rgba(11,107,95,.1), rgba(123,213,192,.18)) !important;
+}
+
+/* ── Formulário e modal ─────────────────────────────────────────────────── */
+.lc-page .contact-form input:focus,
+.lc-page .contact-form textarea:focus,
+.lc-page .pqmodal-form input:focus,
+.lc-page .pqmodal-form textarea:focus {
+  border-color: var(--lc-700);
+  box-shadow: 0 0 0 4px rgba(11,107,95,.14);
+}
+.lc-page .pqmodal-tag { color: var(--lc-700); }
+.lc-page .pqmodal-form button[type="submit"] {
+  background: var(--lc-700);
+  box-shadow: 0 8px 22px -4px rgba(11,107,95,.45);
+}
+.lc-page .pqmodal-form button[type="submit"]:hover { background: #0E8375; }
+
+/* Etiquetas de recurso nos cards de produto: nomear cada frente faz mais
+   trabalho de venda que um parágrafo listando todas. A cor acompanha o
+   produto, a forma é compartilhada. */
+.product-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin: 0 0 1.4rem;
+  padding: 0;
+}
+.product-tags li {
+  font-size: .74rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+  border-radius: var(--r-pill);
+  padding: .26rem .7rem;
+}
+.larclinica-tags li {
+  color: var(--lc-700);
+  background: rgba(11,107,95,.08);
+  border: 1px solid rgba(11,107,95,.14);
+}
+.beauty-tags li {
+  color: var(--signal-2);
+  background: rgba(27,92,245,.07);
+  border: 1px solid rgba(27,92,245,.14);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PedeMarket — azul da logo MTJL
+   ────────────────────────────────────────────────────────────────────────────
+   Escala derivada da própria logo: #004AAD é o azul da palavra MTJL, #38B6FF
+   é o segundo ponto. Âmbar e bordô foram tentativas anteriores, ambas
+   recusadas. Como o RelatifyAI Beauty já usa azul, a separação aqui vem da
+   profundidade: #004AAD é navy institucional, o do Beauty é um azul vivo.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --pm-100: #D9ECFF;
+  --pm-300: #38B6FF;   /* 2º ponto da logo, acento sobre o escuro */
+  --pm-500: #0A6FD6;
+  --pm-700: #004AAD;   /* azul da palavra MTJL, 7,4:1 sobre papel */
+  --pm-900: #032A63;
+  --pm-950: #03153A;   /* fundo do hero, da faixa e do CTA */
+}
+
+.pm-page {
+  --signal:   var(--pm-700);
+  --signal-2: #003B8A;
+  --pulse:    var(--pm-300);
+  --lift-1: 0 1px 2px rgba(3,21,58,.04), 0 4px 12px -2px rgba(0,74,173,.08);
+  --lift-2: 0 2px 4px rgba(3,21,58,.04), 0 12px 32px -6px rgba(0,74,173,.12);
+  --lift-3: 0 4px 8px rgba(3,21,58,.05), 0 28px 60px -12px rgba(0,74,173,.19);
+  --lift-4: 0 8px 16px rgba(3,21,58,.06), 0 48px 96px -20px rgba(0,74,173,.24);
+  --shadow-md: 0 8px 24px rgba(3,21,58,.09);
+  --shadow-lg: 0 20px 48px rgba(3,21,58,.13);
+  --shadow-xl: 0 32px 72px rgba(3,21,58,.18);
+}
+
+body.pm-page::before {
+  background:
+    radial-gradient(ellipse 90% 50% at 12% 0%,  rgba(0,74,173,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 92% 22%, rgba(56,182,255,.08) 0%, transparent 62%),
+    radial-gradient(ellipse 80% 45% at 45% 78%, rgba(0,74,173,.035) 0%, transparent 60%);
+}
+
+.pm-page .hero,
+.pm-page .strip,
+.pm-page .cta-section { background: var(--pm-950); }
+
+.pm-page .hero::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 18% 6%,   rgba(10,111,214,.34) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 50% at 84% 30%,  rgba(56,182,255,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(3,21,58,.55) 0%, transparent 66%);
+}
+.pm-page .cta-section::after {
+  background:
+    radial-gradient(ellipse 50% 70% at 88% 20%,  rgba(56,182,255,.2) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 80% at 10% 100%, rgba(10,111,214,.3) 0%, transparent 64%);
+}
+
+/* Sobre o escuro */
+.pm-page .hero h1 span {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  color: var(--pm-300);
+  text-shadow: 0 0 56px rgba(56,182,255,.3);
+}
+.pm-page .hero-badge {
+  background: rgba(56,182,255,.09);
+  border-color: rgba(56,182,255,.22);
+  color: rgba(255,255,255,.82);
+}
+.pm-page .hero-badge::before {
+  background: var(--pm-300);
+  box-shadow: 0 0 0 3px rgba(56,182,255,.2), 0 0 12px rgba(56,182,255,.8);
+}
+.pm-page .hero-card-icon {
+  background: radial-gradient(circle at 50% 45%, rgba(56,182,255,.26), rgba(10,111,214,.16) 65%, transparent);
+}
+.pm-page .hero-card-icon .icon { color: #A5DBFF; }
+.pm-page .hero-card:hover { border-color: rgba(56,182,255,.34); }
+.pm-page .hero-card::after {
+  background: linear-gradient(90deg, transparent, var(--pm-300), transparent);
+}
+.pm-page .strip-item .icon { color: var(--pm-300); }
+.pm-page .btn-outline:hover { border-color: rgba(56,182,255,.5); background: rgba(56,182,255,.1); }
+
+/* Sobre o papel */
+.pm-page .section-tag {
+  background: rgba(0,74,173,.08);
+  border-color: rgba(0,74,173,.18);
+  color: var(--pm-700);
+}
+.pm-page .section-tag::before {
+  background: var(--pm-500);
+  box-shadow: 0 0 0 3px rgba(10,111,214,.18);
+}
+.pm-page .service-icon,
+.pm-page .feature-icon {
+  background: linear-gradient(160deg, rgba(0,74,173,.12), rgba(56,182,255,.22)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(0,74,173,.1);
+}
+.pm-page .service-icon .icon,
+.pm-page .feature-icon .icon { color: var(--pm-700) !important; }
+.pm-page .service-card:hover { border-color: rgba(0,74,173,.2); }
+.pm-page .lc-check-list .icon,
+.pm-page .lc-check-list li::before { color: var(--pm-500); }
+.pm-page .navbar-dropdown-menu,
+.pm-page .pqmodal { box-shadow: var(--lift-4); }
+.pm-page .navbar.is-scrolled { box-shadow: 0 1px 24px -6px rgba(0,74,173,.18); }
+
+/* Botões */
+.pm-page .btn-primary,
+.pm-page .btn-contact {
+  background: var(--pm-700);
+  box-shadow: 0 2px 0 rgba(255,255,255,.13) inset, 0 8px 24px -4px rgba(0,74,173,.5);
+}
+.pm-page .btn-primary:hover,
+.pm-page .btn-contact:hover {
+  background: #0A5AC4;
+  box-shadow: 0 2px 0 rgba(255,255,255,.17) inset, 0 14px 34px -6px rgba(0,74,173,.6);
+}
+.pm-page .cta-section .btn-primary { background: #FFFFFF; color: var(--pm-950); }
+.pm-page .cta-section .btn-primary:hover { background: #EEF6FF; }
+.pm-page .cta-section .btn-primary::after { background: rgba(3,21,58,.12); }
+
+.pm-page .pqmodal-tag { color: var(--pm-700); }
+.pm-page .pqmodal-form input:focus,
+.pm-page .pqmodal-form textarea:focus {
+  border-color: var(--pm-700);
+  box-shadow: 0 0 0 4px rgba(0,74,173,.14);
+}
+.pm-page .pqmodal-form button[type="submit"] {
+  background: var(--pm-700);
+  box-shadow: 0 8px 22px -4px rgba(0,74,173,.45);
+}
+.pm-page .pqmodal-form button[type="submit"]:hover { background: #0A5AC4; }
+
+/* Card na home */
+/* Sem borda colorida: os quatro destaques da grade precisam ter o mesmo peso
+   visual, e a cor do produto já aparece no ícone, nas etiquetas e no botão. */
+.product-card--pedemarket:hover { border-color: rgba(0,74,173,.24); }
+.pedemarket-glow {
+  position: absolute; top: -60px; right: -60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(10,111,214,.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.pedemarket-logo-wrap {
+  background: linear-gradient(160deg, rgba(0,74,173,.1), rgba(56,182,255,.22)) !important;
+}
+.pedemarket-logo-wrap .icon { color: var(--pm-700); width: 24px; height: 24px; }
+.pedemarket-btn-primary {
+  background: var(--pm-700);
+  box-shadow: 0 4px 14px -2px rgba(0,74,173,.34);
+}
+.pedemarket-btn-primary:hover { background: #003B8A; }
+.pedemarket-tags li {
+  color: var(--pm-700);
+  background: rgba(0,74,173,.08);
+  border: 1px solid rgba(0,74,173,.16);
+}
+
+/* Com quatro produtos no ar, os destaques passam a ocupar duas linhas de dois;
+   os previstos continuam em quatro colunas abaixo. */
+.products-grid > .product-card:nth-child(-n+4) { grid-column: span 6; }
+.products-grid > .product-card:nth-child(n+5)  { grid-column: span 3; }
+
+.pilotqa-btn-primary {
+  display: inline-flex; align-items: center; gap: .45rem;
+  background: var(--signal);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-weight: 600; font-size: .92rem;
+  padding: .8rem 1.4rem;
+  text-decoration: none;
+  box-shadow: 0 4px 14px -2px rgba(27,92,245,.3);
+  transition: background .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.pilotqa-btn-primary:hover { background: var(--signal-2); transform: translateY(-1px); }
+.pilotqa-tags li {
+  color: var(--signal-2);
+  background: rgba(27,92,245,.07);
+  border: 1px solid rgba(27,92,245,.14);
+}
+.pilotqa-logo-wrap .icon { color: var(--signal-2); width: 24px; height: 24px; }
+
+/* O card do PilotQA usava o mesmo azul do RelatifyAI Beauty. Lado a lado na
+   grade, dois produtos diferentes liam como variação um do outro. Índigo
+   mantém a leitura de ferramenta técnica e separa os dois. */
+.pilotqa-logo-wrap {
+  background: linear-gradient(160deg, rgba(79,70,229,.12), rgba(129,140,248,.2)) !important;
+}
+.pilotqa-logo-wrap .icon { color: #4338CA; }
+.pilotqa-tags li {
+  color: #4338CA;
+  background: rgba(79,70,229,.07);
+  border: 1px solid rgba(79,70,229,.16);
+}
+.pilotqa-btn-primary {
+  background: #4F46E5;
+  box-shadow: 0 4px 14px -2px rgba(79,70,229,.32);
+}
+.pilotqa-btn-primary:hover { background: #4338CA; }
+.product-card--pilotqa:hover { border-color: rgba(79,70,229,.24); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PilotQA AI — índigo
+   Quarta família do site. Precisa se separar do azul do RelatifyAI Beauty e do
+   navy do PedeMarket: índigo puxa para o violeta e resolve isso sem sair do
+   registro de ferramenta técnica.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --pq-300: #A5B4FC;
+  --pq-500: #6366F1;
+  --pq-700: #4338CA;   /* texto e botão sobre papel, 7,2:1 */
+  --pq-950: #14133A;   /* fundo do hero, da faixa e do CTA */
+}
+
+.pq-page {
+  --signal:   var(--pq-700);
+  --signal-2: #312E81;
+  --pulse:    var(--pq-300);
+  --lift-1: 0 1px 2px rgba(20,19,58,.04), 0 4px 12px -2px rgba(67,56,202,.08);
+  --lift-2: 0 2px 4px rgba(20,19,58,.04), 0 12px 32px -6px rgba(67,56,202,.12);
+  --lift-3: 0 4px 8px rgba(20,19,58,.05), 0 28px 60px -12px rgba(67,56,202,.19);
+  --lift-4: 0 8px 16px rgba(20,19,58,.06), 0 48px 96px -20px rgba(67,56,202,.24);
+}
+
+body.pq-page::before {
+  background:
+    radial-gradient(ellipse 90% 50% at 12% 0%,  rgba(67,56,202,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 92% 22%, rgba(165,180,252,.1) 0%, transparent 62%);
+}
+
+.pq-page .hero,
+.pq-page .strip,
+.pq-page .cta-section { background: var(--pq-950); }
+
+.pq-page .hero::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 18% 6%,   rgba(99,102,241,.36) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 50% at 84% 30%,  rgba(165,180,252,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(20,19,58,.55) 0%, transparent 66%);
+}
+.pq-page .cta-section::after {
+  background:
+    radial-gradient(ellipse 50% 70% at 88% 20%,  rgba(165,180,252,.2) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 80% at 10% 100%, rgba(99,102,241,.32) 0%, transparent 64%);
+}
+
+.pq-page .hero h1 span {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  color: var(--pq-300);
+  text-shadow: 0 0 56px rgba(165,180,252,.3);
+}
+.pq-page .hero-badge {
+  background: rgba(165,180,252,.09);
+  border-color: rgba(165,180,252,.22);
+  color: rgba(255,255,255,.82);
+}
+.pq-page .hero-badge::before {
+  background: var(--pq-300);
+  box-shadow: 0 0 0 3px rgba(165,180,252,.2), 0 0 12px rgba(165,180,252,.8);
+}
+.pq-page .hero-card-icon {
+  background: radial-gradient(circle at 50% 45%, rgba(165,180,252,.26), rgba(99,102,241,.16) 65%, transparent);
+}
+.pq-page .hero-card-icon .icon { color: #C7D2FE; }
+.pq-page .hero-card:hover { border-color: rgba(165,180,252,.34); }
+.pq-page .hero-card::after { background: linear-gradient(90deg, transparent, var(--pq-300), transparent); }
+.pq-page .strip-item .icon { color: var(--pq-300); }
+.pq-page .btn-outline:hover { border-color: rgba(165,180,252,.5); background: rgba(165,180,252,.1); }
+
+.pq-page .section-tag {
+  background: rgba(67,56,202,.08);
+  border-color: rgba(67,56,202,.18);
+  color: var(--pq-700);
+}
+.pq-page .section-tag::before {
+  background: var(--pq-500);
+  box-shadow: 0 0 0 3px rgba(99,102,241,.18);
+}
+.pq-page .service-icon,
+.pq-page .feature-icon {
+  background: linear-gradient(160deg, rgba(67,56,202,.12), rgba(165,180,252,.24)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(67,56,202,.1);
+}
+.pq-page .service-icon .icon,
+.pq-page .feature-icon .icon { color: var(--pq-700) !important; }
+.pq-page .service-card:hover { border-color: rgba(67,56,202,.2); }
+.pq-page .lc-check-list .icon,
+.pq-page .lc-check-list li::before { color: var(--pq-500); }
+
+.pq-page .btn-primary,
+.pq-page .btn-contact {
+  background: var(--pq-700);
+  box-shadow: 0 2px 0 rgba(255,255,255,.13) inset, 0 8px 24px -4px rgba(67,56,202,.5);
+}
+.pq-page .btn-primary:hover,
+.pq-page .btn-contact:hover { background: #4F46E5; }
+.pq-page .cta-section .btn-primary { background: #FFFFFF; color: var(--pq-950); }
+.pq-page .cta-section .btn-primary:hover { background: #EEF0FF; }
+.pq-page .cta-section .btn-primary::after { background: rgba(20,19,58,.12); }
+.pq-page .pqmodal-tag { color: var(--pq-700); }
+.pq-page .pqmodal-form input:focus,
+.pq-page .pqmodal-form textarea:focus {
+  border-color: var(--pq-700);
+  box-shadow: 0 0 0 4px rgba(67,56,202,.14);
+}
+.pq-page .pqmodal-form button[type="submit"] {
+  background: var(--pq-700);
+  box-shadow: 0 8px 22px -4px rgba(67,56,202,.45);
+}
+.pq-page .pqmodal-form button[type="submit"]:hover { background: #4F46E5; }
+.pq-nota { font-size: .78rem; color: var(--ink-3); margin: -.4rem 0 .2rem; }
+
+
+/* Logos de produto nos cards. O ícone do PilotQA já vem com fundo próprio e
+   canto arredondado, então a moldura sai; o do PedeMarket é traço sobre
+   transparente e continua no poço tingido, como os demais. */
+.pedemarket-logo-wrap img { width: 28px; height: 28px; object-fit: contain; display: block; }
+
+.pilotqa-logo-wrap {
+  background: none !important;
+  box-shadow: none;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.pilotqa-logo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Nota de rodapé da seção de IA na página de QA. Tinha cor branca em style
+   inline, de quando a seção era escura: virou texto branco sobre papel branco,
+   1,03:1 de contraste, invisível. */
+.qa-nota {
+  margin: 3rem auto 0;
+  max-width: 64ch;
+  color: var(--ink-2);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* Rótulo do painel de consultoria media 4,48:1, logo abaixo do mínimo */
+#consultoria .stat-label { color: var(--ink-2) !important; }
