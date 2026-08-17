@@ -25,3 +25,10 @@ ENV/
 # Ferramentas de skill instaladas localmente, não fazem parte do site
 .agents/
 skills-lock.json
+
+# Skills instaladas nesta máquina: symlinks para .agents/, que já é ignorado
+.claude/skills/
+
+# Capturas de tela do app do produto, copiadas só para o preview local.
+# Em produção o Nginx serve /static/booking/ direto do app do produto.
+static/booking/
