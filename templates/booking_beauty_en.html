@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking AI Beauty — Book Clients on WhatsApp, 24/7</title>
+  <meta name="description" content="AI agent that automatically replies and books appointments on WhatsApp 24/7 for salons and barbershops. Try it free for 14 days, no credit card required." />
+  <link rel="canonical" href="https://mtjltechnology.com/en/booking_beauty" />
+  <link rel="alternate" hreflang="pt-BR" href="https://mtjltechnology.com/booking_beauty" />
+  <link rel="alternate" hreflang="en" href="https://mtjltechnology.com/en/booking_beauty" />
+  <link rel="alternate" hreflang="es" href="https://mtjltechnology.com/es/booking_beauty" />
+  <link rel="alternate" hreflang="x-default" href="https://mtjltechnology.com/booking_beauty" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Booking AI Beauty — Book Clients on WhatsApp, 24/7" />
+  <meta property="og:description" content="AI agent that automatically replies and books appointments on WhatsApp 24/7 for salons and barbershops. Try it free for 14 days, no credit card required." />
+  <meta property="og:image" content="https://mtjltechnology.com/static/booking/screenshots/dashboard.png" />
+  <meta property="og:url" content="https://mtjltechnology.com/en/booking_beauty" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Booking AI Beauty — Book Clients on WhatsApp, 24/7" />
+  <meta name="twitter:description" content="AI agent that automatically replies and books appointments on WhatsApp 24/7 for salons and barbershops. Try it free for 14 days, no credit card required." />
+  <meta name="twitter:image" content="https://mtjltechnology.com/static/booking/screenshots/dashboard.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Booking AI Beauty",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://mtjltechnology.com/en/booking_beauty",
+    "description": "AI agent that automatically replies and books appointments on WhatsApp 24/7 for salons and barbershops.",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Starter",
+        "price": "79.00",
+        "priceCurrency": "BRL",
+        "url": "https://mtjltechnology.com/en/booking_beauty#planos"
+      },
+      {
+        "@type": "Offer",
+        "name": "Pro",
+        "price": "197.00",
+        "priceCurrency": "BRL",
+        "url": "https://mtjltechnology.com/en/booking_beauty#planos"
+      },
+      {
+        "@type": "Offer",
+        "name": "Enterprise",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "description": "Contact us"
+        },
+        "url": "https://mtjltechnology.com/en/booking_beauty#planos"
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=36" />
+  <link rel="stylesheet" href="/static/website/booking_beauty.css?v=13" />
+  <link rel="icon" type="image/png" href="/static/brand/mtjl-technology-logo-transparent.png" />
+  <!-- reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lda4PwsAAAAAOl9PtGMUv5qzfivP3PgqAjQgufx"></script>
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="bb-navbar" aria-label="Main navigation">
+  <div class="bb-navbar-inner">
+    <a href="https://mtjltechnology.com/en" class="bb-navbar-brand">
+      <img src="/static/brand/bookingai-beauty-logo.svg" alt="Booking AI Beauty" width="330" height="72" onerror="this.style.display='none'" />
+      <span class="bb-navbar-badge">Booking AI Beauty</span>
+    </a>
+    <div class="bb-navbar-links">
+      <a href="#como-funciona" class="bb-btn-nav-ghost">How it works</a>
+      <a href="#funcionalidades" class="bb-btn-nav-ghost">Features</a>
+      <a href="#planos" class="bb-btn-nav-ghost">Pricing</a>
+    </div>
+    <div class="bb-navbar-actions">
+      <div class="lang-switcher">
+        <a href="/booking_beauty" class="lang-flag" title="Português" aria-label="Português">🇧🇷</a>
+        <a href="/en/booking_beauty" class="lang-flag lang-flag--active" title="English" aria-label="English">🇺🇸</a>
+        <a href="/es/booking_beauty" class="lang-flag" title="Español" aria-label="Español">🇪🇸</a>
+      </div>
+      <a href="https://mtjltechnology.com/booking_beauty/login" class="bb-btn-nav-ghost bb-navbar-desktop-only">Sign in</a>
+      <button type="button" onclick="openBBModal()" class="bb-btn-nav-primary bb-navbar-desktop-only">Talk to an expert</button>
+      <button type="button" class="bb-navbar-burger" id="bb-navbar-burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="bb-navbar-mobile-panel">
+        <span class="bb-navbar-burger-bar"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Mobile nav panel ── -->
+<div class="bb-navbar-mobile-panel" id="bb-navbar-mobile-panel">
+  <ul>
+    <li><a href="#como-funciona">How it works</a></li>
+    <li><a href="#funcionalidades">Features</a></li>
+    <li><a href="#planos">Pricing</a></li>
+    <li><a href="https://mtjltechnology.com/booking_beauty/login">Sign in</a></li>
+  </ul>
+  <button type="button" onclick="openBBModal()" class="bb-navbar-mobile-cta">Talk to an expert</button>
+</div>
+
+<!-- ── Hero ── -->
+<section class="bb-hero" aria-labelledby="hero-title">
+  <div class="bb-hero-inner">
+
+    <div class="bb-hero-text">
+      <div class="bb-hero-badge">✦ Stop replying to customers by hand</div>
+      <h1 class="bb-hero-title" id="hero-title">
+        Whoever replies<br>
+        <span>first, books the slot.</span>
+      </h1>
+      <p class="bb-hero-sub">
+        Every unanswered message is a lost booking. Booking AI Beauty is the AI that runs your salon or barbershop's WhatsApp, 24/7 — while you do what you love.
+      </p>
+      <div class="bb-hero-cta">
+        <a href="#planos" class="bb-btn-hero-primary">
+          I want to see it in action →
+        </a>
+        <button type="button" onclick="openBBModal()" class="bb-btn-hero-outline">Talk to us</button>
+      </div>
+    </div>
+
+    <!-- WhatsApp Mockup Premium -->
+    <div class="bb-phone-wrap" aria-hidden="true">
+      <div class="bb-phone-outer">
+        <div class="bb-phone-btn-vol"></div>
+        <div class="bb-phone-btn-pwr"></div>
+        <div class="bb-phone">
+
+          <!-- Status bar -->
+          <div class="bb-phone-statusbar">
+            <span class="bb-phone-time">09:47</span>
+            <div class="bb-phone-sicons">
+              <svg width="13" height="10" viewBox="0 0 13 10" fill="currentColor"><rect x="0" y="5" width="2" height="5" rx="1" opacity=".35"/><rect x="3.2" y="3" width="2" height="7" rx="1" opacity=".55"/><rect x="6.4" y="1.5" width="2" height="8.5" rx="1" opacity=".75"/><rect x="9.6" y="0" width="2.5" height="10" rx="1"/></svg>
+              <svg width="12" height="9" viewBox="0 0 12 9" fill="currentColor"><path d="M6 1.8C7.5 1.8 8.9 2.4 9.9 3.4L11.1 2.2C9.8.8 7.99 0 6 0S2.2.8.9 2.2L2.1 3.4C3.1 2.4 4.5 1.8 6 1.8z" opacity=".5"/><path d="M6 4.5c.8 0 1.6.3 2.1.9L9.3 4.2C8.4 3.2 7.3 2.7 6 2.7s-2.4.5-3.3 1.5L3.9 5.4C4.4 4.8 5.2 4.5 6 4.5z" opacity=".75"/><circle cx="6" cy="7.5" r="1.5"/></svg>
+              <div class="bb-phone-battery"><div class="bb-phone-batt-fill"></div></div>
+            </div>
+          </div>
+
+          <!-- Dynamic island pill -->
+          <div class="bb-phone-island"><div class="bb-phone-pill"></div></div>
+
+          <!-- WhatsApp Header -->
+          <div class="bb-phone-header">
+            <span class="bb-phone-back">‹</span>
+            <div class="bb-phone-av-wrap">
+              <div class="bb-phone-av">💚</div>
+              <div class="bb-phone-av-dot"></div>
+            </div>
+            <div class="bb-phone-info">
+              <div class="bb-phone-name">Salão Bella — AI</div>
+              <div class="bb-phone-online">online now</div>
+            </div>
+            <div class="bb-phone-hactions">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6.72 6.72l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+            </div>
+          </div>
+
+          <!-- Chat body -->
+          <div class="bb-chat-body" id="bb-chat">
+            <div class="bb-anim-el bb-ci" id="bb-m1">
+              Hi! Do you have a slot tomorrow for a coloring?
+              <div class="bb-ct">09:47</div>
+            </div>
+            <div class="bb-anim-el bb-typing" id="bb-t1">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="bb-anim-el bb-co" id="bb-m2">
+              Hello! 🌿 We have tomorrow at 10am with Vanessa — Full Color $&nbsp;55 (1h40min). Shall I confirm it for you?
+              <div class="bb-ct">09:47 ✓✓</div>
+            </div>
+            <div class="bb-anim-el bb-ci" id="bb-m3">
+              Yes, please confirm!
+              <div class="bb-ct">09:48</div>
+            </div>
+            <div class="bb-anim-el bb-typing" id="bb-t2">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="bb-anim-el bb-co" id="bb-m4">
+              ✅ Booked! Tomorrow at 10am with Vanessa. See you then! 💚
+              <div class="bb-ct">09:48 ✓✓</div>
+            </div>
+          </div>
+
+          <!-- Input bar -->
+          <div class="bb-phone-inputbar">
+            <div class="bb-phone-inputfield">
+              <span class="bb-phone-emoji-ico">😊</span>
+              <span class="bb-phone-placeholder">Message</span>
+              <span class="bb-phone-attach-ico">📎</span>
+            </div>
+            <div class="bb-phone-mic">🎤</div>
+          </div>
+
+        </div><!-- .bb-phone -->
+      </div><!-- .bb-phone-outer -->
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Strip ── -->
+<div class="bb-strip" aria-label="Product highlights">
+  <div class="bb-strip-item"><span class="bb-strip-dot"></span> Zero unanswered customers</div>
+  <div class="bb-strip-item"><span class="bb-strip-dot"></span> A full chair every day</div>
+  <div class="bb-strip-item"><span class="bb-strip-dot"></span> Bookings in seconds</div>
+  <div class="bb-strip-item"><span class="bb-strip-dot"></span> Works 24/7 — even overnight</div>
+  <div class="bb-strip-item"><span class="bb-strip-dot"></span> Full history for every client</div>
+  <div class="bb-strip-item"><span class="bb-strip-dot"></span> Know exactly how much you're billing today</div>
+</div>
+
+<!-- ── How it works ── -->
+<section class="bb-section bb-steps" id="como-funciona">
+  <div class="bb-section-inner">
+    <div style="text-align:center;margin-bottom:1rem">
+      <span class="bb-section-tag">How it works</span>
+      <h2 class="bb-section-title" style="text-align:center">How do you stop losing customers?</h2>
+    </div>
+    <div class="bb-steps-grid">
+
+      <div class="bb-step-card">
+        <div class="bb-step-number">1</div>
+        <h3>Customer sends a message</h3>
+        <p>At 11pm on a Saturday, while you're asleep. Weekend, holiday, late night — the customer won't wait, and your competitor will reply.</p>
+      </div>
+
+      <div class="bb-step-card">
+        <div class="bb-step-number">2</div>
+        <h3>Your salon or barbershop replies instantly</h3>
+        <p>In seconds, the time slot is confirmed and the chair reserved — without you ever putting down what you're doing or checking your phone.</p>
+      </div>
+
+      <div class="bb-step-card">
+        <div class="bb-step-number">3</div>
+        <h3>You just show up — and earn more</h3>
+        <p>The chair is already full when you arrive. Zero missed messages. Zero empty slots from a missed reply.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Screenshots ── -->
+<section class="bb-section bb-screenshots" id="screenshots">
+  <div class="bb-section-inner">
+    <div style="text-align:center;margin-bottom:1rem">
+      <span class="bb-section-tag">Complete system</span>
+      <h2 class="bb-section-title" style="text-align:center">The system behind a fully booked salon</h2>
+      <p class="bb-section-sub" style="margin:0 auto;text-align:center">
+        Schedule, clients, revenue, and conversations — all in one place.
+      </p>
+    </div>
+
+    <div class="bb-screenshots-grid">
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/dashboard.png?v=2','Dashboard — real-time overview of your salon')" role="button" tabindex="0" aria-label="Open screenshot: Dashboard">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/dashboard.png?v=2" alt="Booking AI Beauty dashboard" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>📊</div><span>dashboard.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Dashboard — real-time overview of your salon</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/conversas.png?v=2','Conversations — AI replying to customers on WhatsApp')" role="button" tabindex="0" aria-label="Open screenshot: Conversations">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/conversas.png?v=2" alt="AI conversations on WhatsApp" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>💬</div><span>conversas.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Conversations — AI replying to customers on WhatsApp</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/agenda_mes.png?v=2','Monthly schedule — all bookings on one map')" role="button" tabindex="0" aria-label="Open screenshot: Monthly schedule">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/agenda_mes.png?v=2" alt="Monthly schedule" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>📅</div><span>agenda_mes.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Monthly schedule — all bookings on one map</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/agenda_semana.png?v=2','Weekly schedule — view by professional')" role="button" tabindex="0" aria-label="Open screenshot: Weekly schedule">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/agenda_semana.png?v=2" alt="Weekly schedule" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>📆</div><span>agenda_semana.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Weekly schedule — view by professional</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/agenda_dia.png?v=2','Daily schedule — details of every appointment')" role="button" tabindex="0" aria-label="Open screenshot: Daily schedule">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/agenda_dia.png?v=2" alt="Daily schedule" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>🗓️</div><span>agenda_dia.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Daily schedule — details of every appointment</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/clientes.png?v=2','Client CRM — history and loyalty tags')" role="button" tabindex="0" aria-label="Open screenshot: Clients">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/clientes.png?v=2" alt="Client CRM" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>👥</div><span>clientes.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Client CRM — history and loyalty tags</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/relatorios.png?v=3','Financial reports — revenue, average ticket, AI conversion, and more')" role="button" tabindex="0" aria-label="Open screenshot: Reports">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/relatorios.png?v=3" alt="Financial reports" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>📈</div><span>relatorios.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Financial reports — revenue, average ticket, AI conversion, and more</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/assinaturas.png?v=2','Subscription plans — loyalty for your clients')" role="button" tabindex="0" aria-label="Open screenshot: Subscriptions">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/assinaturas.png?v=2" alt="Subscription plans" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>🔄</div><span>assinaturas.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Subscription plans — loyalty for your clients</div>
+      </div>
+
+      <div class="bb-screenshot-card" onclick="openLightbox('/static/booking/screenshots/filiais.png?v=2','Multi-location — centralized management')" role="button" tabindex="0" aria-label="Open screenshot: Locations">
+        <div class="bb-screenshot-img-wrap">
+          <img src="/static/booking/screenshots/filiais.png?v=2" alt="Multi-location management" width="1440" height="820" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\'bb-screenshot-placeholder\'><div class=\'bb-screenshot-placeholder-icon\'>🏢</div><span>filiais.png</span></div>'" />
+        </div>
+        <div class="bb-screenshot-caption">Multi-location — centralized management</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section class="bb-section bb-features" id="funcionalidades">
+  <div class="bb-section-inner">
+    <div style="text-align:center;margin-bottom:1rem">
+      <span class="bb-section-tag">Why it works</span>
+      <h2 class="bb-section-title" style="text-align:center">More bookings. Less manual work.</h2>
+      <p class="bb-section-sub" style="margin:0 auto;text-align:center">
+        No hassle. Your salon up and running from day one.
+      </p>
+    </div>
+    <div class="bb-features-grid">
+
+      <div class="bb-feature-card">
+        <div class="bb-feature-icon">💬</div>
+        <h3>No customer left unanswered</h3>
+        <p>While you're with a client in the chair, your salon's or barbershop's WhatsApp replies, offers time slots, and confirms the booking — on its own.</p>
+      </div>
+
+      <div class="bb-feature-card">
+        <div class="bb-feature-icon">📅</div>
+        <h3>A full chair, no spreadsheet</h3>
+        <p>See every professional's day in real time. No paper, no WhatsApp group chats, no scheduling mix-ups.</p>
+      </div>
+
+      <div class="bb-feature-card">
+        <div class="bb-feature-icon">👥</div>
+        <h3>Your client feels remembered</h3>
+        <p>A full history of every visit and favorite service. A client who feels special won't go to a competitor.</p>
+      </div>
+
+      <div class="bb-feature-card">
+        <div class="bb-feature-icon">📊</div>
+        <h3>Know exactly how much you're billing</h3>
+        <p>Monthly revenue, average ticket, which services pay off the most. Decisions made like a salon or barbershop owner — not by guesswork.</p>
+      </div>
+
+      <div class="bb-feature-card">
+        <div class="bb-feature-icon">🔄</div>
+        <h3>Loyal clients, every month</h3>
+        <p>Create monthly plans for your regulars. Guaranteed revenue every month, even during the slowest weeks.</p>
+      </div>
+
+      <div class="bb-feature-card">
+        <div class="bb-feature-icon">🏢</div>
+        <h3>More than one location? No problem</h3>
+        <p>Manage every location from a single dashboard. What works at one location works at all of them — with no extra effort.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Pricing ── -->
+<section class="bb-section bb-pricing" id="planos">
+  <div class="bb-pricing-inner">
+    <div style="text-align:center;margin-bottom:1rem">
+      <span class="bb-section-tag">Pricing</span>
+      <h2 class="bb-section-title" style="text-align:center">Get started today. No hassle.</h2>
+      <p class="bb-section-sub" style="margin:0 auto;text-align:center">
+        14-day free trial. No credit card required. See it in action before you pay.
+      </p>
+    </div>
+    <div class="bb-pricing-grid">
+
+      <!-- Starter -->
+      <div class="bb-pricing-card">
+        <div class="bb-pricing-trial-badge">14-day free trial</div>
+        <div class="bb-pricing-plan">Starter</div>
+        <div class="bb-pricing-price">R$&nbsp;79<span>/mo</span></div>
+        <p class="bb-pricing-desc">Ideal for those just starting to grow</p>
+        <ul class="bb-pricing-features">
+          <li>1 location</li>
+          <li>AI on WhatsApp 24/7</li>
+          <li>Full scheduling</li>
+          <li>Client CRM</li>
+          <li>250 conversations/mo*</li>
+          <li>Email support</li>
+        </ul>
+        <button type="button" onclick="openSubscribeModal('bb_starter')" class="bb-btn-pricing bb-btn-pricing-ghost">
+          Start for free →
+        </button>
+        <p class="bb-pricing-footnote">* Once the limit is reached, WhatsApp stops replying until next month</p>
+      </div>
+
+      <!-- Pro -->
+      <div class="bb-pricing-card featured">
+        <div class="bb-pricing-popular">Most popular</div>
+        <div class="bb-pricing-trial-badge">14-day free trial</div>
+        <div class="bb-pricing-plan">Pro</div>
+        <div class="bb-pricing-price">R$&nbsp;197<span>/mo</span></div>
+        <p class="bb-pricing-desc">For salons that want to grow faster</p>
+        <ul class="bb-pricing-features">
+          <li>1 location</li>
+          <li>Everything in Starter</li>
+          <li>Subscription plans</li>
+          <li>Advanced reports</li>
+          <li>800 conversations/mo*</li>
+          <li>Priority support</li>
+        </ul>
+        <button type="button" onclick="openSubscribeModal('bb_pro')" class="bb-btn-pricing bb-btn-pricing-primary">
+          Start for free →
+        </button>
+        <p class="bb-pricing-footnote">* Per-conversation fee for usage beyond the monthly limit</p>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="bb-pricing-card">
+        <div class="bb-pricing-plan">Enterprise</div>
+        <div class="bb-pricing-price" style="font-size:1.8rem;line-height:1.3">Contact us</div>
+        <p class="bb-pricing-desc">For chains with multiple locations</p>
+        <ul class="bb-pricing-features">
+          <li>Everything in Pro</li>
+          <li>Multiple locations</li>
+          <li>Centralized dashboard</li>
+          <li>1,500 conversations/mo*</li>
+          <li>Unlimited professionals</li>
+          <li>Consolidated reports per location</li>
+          <li>Custom contract</li>
+        </ul>
+        <button type="button" onclick="openBBModal()" class="bb-btn-pricing bb-btn-pricing-ghost">
+          Talk to an expert →
+        </button>
+        <p class="bb-pricing-footnote">* Per-conversation fee for usage beyond limit, per contract</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Final CTA ── -->
+<section class="bb-final-cta" id="contato">
+  <h2>Stop losing customers<br>over missed replies.</h2>
+  <p>
+    Every ignored message is a booking that went to your competitor. Start using Booking AI Beauty now — free for 14 days.
+  </p>
+  <a href="#planos" class="bb-btn-hero-primary">
+    Get started →
+  </a>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="bb-footer">
+  <a href="https://mtjltechnology.com/en">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" width="150" height="80" />
+  </a>
+  <p>© 2026 MTJL Technology · Booking AI Beauty</p>
+  <a href="https://mtjltechnology.com/en">← Back to main site</a>
+</footer>
+
+<!-- ── Lightbox ── -->
+<div class="bb-lightbox" id="bb-lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+  <button class="bb-lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+  <img class="bb-lightbox-img" id="bb-lightbox-img" src="" alt="" />
+  <p class="bb-lightbox-soon" id="bb-lightbox-soon" style="display:none">📸 Screenshot coming soon</p>
+  <div class="bb-lightbox-caption" id="bb-lightbox-caption"></div>
+</div>
+
+<!-- ── Subscribe modal ── -->
+<div class="bb-modal-backdrop" id="bb-subscribe-backdrop" onclick="closeSubscribeModal()"></div>
+<div class="bb-modal" id="bb-subscribe-modal" role="dialog" aria-modal="true" aria-labelledby="bb-subscribe-title">
+  <div class="bb-modal-header">
+    <div>
+      <p class="bb-modal-tag">Booking AI Beauty</p>
+      <h3 class="bb-modal-title" id="bb-subscribe-title">Subscribe to a plan</h3>
+    </div>
+    <button class="bb-modal-close" onclick="closeSubscribeModal()" aria-label="Close">✕</button>
+  </div>
+  <div class="bb-modal-body">
+    <div id="bb-subscribe-success" style="display:none;text-align:center;padding:2rem 0">
+      <div class="bb-modal-success">Signup successful!<br><br>You'll receive an email shortly with access to the system, and you can start your 14-day free trial.</div>
+    </div>
+    <div id="bb-subscribe-form-wrap">
+      {% if bb_error %}
+      <div class="bb-modal-field-error" style="margin-bottom:1rem">{{ bb_error }}</div>
+      {% endif %}
+      <form method="POST" action="/booking_beauty/subscribe" class="bb-modal-form" id="bb-subscribe-form">
+        <input type="hidden" name="lang" value="en" />
+        <input type="hidden" name="plan" id="bb-subscribe-plan" value="bb_starter" />
+        <!-- honeypot: invisible to humans, filled by bots -->
+        <input type="text" name="website" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label>Name or Salon Name<input type="text" name="name" placeholder="Your name or salon name" required /></label>
+        <label>Email<input type="email" name="email" placeholder="you@email.com" required /></label>
+        <label>Phone / WhatsApp<input type="tel" name="phone" placeholder="+1 (555) 123-4567" /></label>
+        <label style="display:flex;flex-direction:row;align-items:center;gap:8px;cursor:pointer;font-weight:normal;">
+          <input type="checkbox" name="accept_terms" required style="flex-shrink:0;width:16px;height:16px;" />
+          <span>I have read and agree to the <a href="/booking_beauty/termos" target="_blank" style="color:#0b55b7;font-weight:600;">Terms of Service</a></span>
+        </label>
+        <input type="hidden" name="recaptcha_token" id="bb-recaptcha-token">
+        <button type="submit" id="bb-subscribe-btn">Start 14-day free trial →</button>
+      </form>
+      <p class="bb-modal-note">14-day free trial · No credit card required · Cancel anytime</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Contact modal ── -->
+<div class="bb-modal-backdrop" id="bb-modal-backdrop" onclick="closeBBModal()"></div>
+<div class="bb-modal" id="bb-modal" role="dialog" aria-modal="true" aria-labelledby="bb-modal-title">
+  <div class="bb-modal-header">
+    <div>
+      <p class="bb-modal-tag">Booking AI Beauty</p>
+      <h3 class="bb-modal-title" id="bb-modal-title">Talk to an expert</h3>
+    </div>
+    <button class="bb-modal-close" onclick="closeBBModal()" aria-label="Close">✕</button>
+  </div>
+  <div class="bb-modal-body">
+    {% if bb_sent %}
+      <div class="bb-modal-success">Message sent! We'll get back to you shortly.</div>
+    {% endif %}
+    <form method="POST" action="/booking_beauty_contact" class="bb-modal-form">
+      <input type="hidden" name="lang" value="en" />
+      <!-- honeypot: invisible to humans, filled by bots -->
+      <input type="text" name="website" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>
+        Name
+        <input type="text" name="name" placeholder="Your name" required />
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" placeholder="you@email.com" required />
+      </label>
+      <label>
+        WhatsApp
+        <input type="tel" name="whatsapp" placeholder="+1 (555) 123-4567" />
+      </label>
+      <label>
+        Message
+        <textarea name="message" rows="4" required>I want to learn more about Booking AI Beauty</textarea>
+      </label>
+      <button type="submit">Send message →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  /* ── Contact modal ── */
+  function openBBModal() {
+    document.getElementById('bb-modal').classList.add('open');
+    document.getElementById('bb-modal-backdrop').classList.add('open');
+  }
+  function closeBBModal() {
+    document.getElementById('bb-modal').classList.remove('open');
+    document.getElementById('bb-modal-backdrop').classList.remove('open');
+  }
+  {% if bb_sent %}
+  window.addEventListener('load', function() {
+    openBBModal();
+    history.replaceState(null, '', '/en/booking_beauty');
+  });
+  {% endif %}
+  {% if bb_error %}
+  window.addEventListener('load', function() {
+    document.getElementById('bb-subscribe-modal').classList.add('open');
+    document.getElementById('bb-subscribe-backdrop').classList.add('open');
+    history.replaceState(null, '', '/en/booking_beauty');
+  });
+  {% endif %}
+  {% if bb_subscribed %}
+  window.addEventListener('load', function() {
+    document.getElementById('bb-subscribe-success').style.display = 'block';
+    document.getElementById('bb-subscribe-form-wrap').style.display = 'none';
+    document.getElementById('bb-subscribe-modal').classList.add('open');
+    document.getElementById('bb-subscribe-backdrop').classList.add('open');
+    history.replaceState(null, '', '/en/booking_beauty');
+  });
+  {% endif %}
+
+  /* ── Subscribe modal ── */
+  var bbPlanLabels = {
+    bb_starter: 'Start Starter — 14-day free trial',
+    bb_pro:     'Start Pro — 14-day free trial'
+  };
+  var bbPlanTitles = {
+    bb_starter: 'Starter — R$ 79/mo',
+    bb_pro:     'Pro — R$ 197/mo'
+  };
+  function openSubscribeModal(plan) {
+    document.getElementById('bb-subscribe-plan').value = plan;
+    document.getElementById('bb-subscribe-title').textContent = bbPlanTitles[plan];
+    document.getElementById('bb-subscribe-btn').textContent = bbPlanLabels[plan] + ' →';
+    document.getElementById('bb-subscribe-modal').classList.add('open');
+    document.getElementById('bb-subscribe-backdrop').classList.add('open');
+  }
+  function closeSubscribeModal() {
+    document.getElementById('bb-subscribe-modal').classList.remove('open');
+    document.getElementById('bb-subscribe-backdrop').classList.remove('open');
+    document.getElementById('bb-subscribe-success').style.display = 'none';
+    document.getElementById('bb-subscribe-form-wrap').style.display = '';
+  }
+
+  /* ── reCAPTCHA v3 on the subscribe form ── */
+  document.getElementById('bb-subscribe-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    if (typeof grecaptcha === 'undefined') { form.submit(); return; }
+    grecaptcha.ready(function() {
+      grecaptcha.execute('6Lda4PwsAAAAAOl9PtGMUv5qzfivP3PgqAjQgufx', {action: 'bb_subscribe'}).then(function(token) {
+        document.getElementById('bb-recaptcha-token').value = token;
+        form.submit();
+      }).catch(function() { form.submit(); });
+    });
+  });
+
+  /* ── Lightbox with fallback for missing images ── */
+  function openLightbox(src, caption) {
+    var lb  = document.getElementById('bb-lightbox');
+    var img = document.getElementById('bb-lightbox-img');
+    var cap = document.getElementById('bb-lightbox-caption');
+    var soon = document.getElementById('bb-lightbox-soon');
+
+    var test = new Image();
+    test.onload = function() {
+      img.src = src; img.alt = caption;
+      img.style.display = 'block';
+      soon.style.display = 'none';
+      cap.textContent = caption;
+    };
+    test.onerror = function() {
+      img.style.display = 'none';
+      soon.style.display = 'block';
+      cap.textContent = caption + ' — coming soon';
+    };
+    test.src = src;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('bb-lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('bb-lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeLightbox(); closeBBModal(); closeSubscribeModal(); }
+  });
+
+  document.querySelectorAll('.bb-screenshot-card').forEach(function(card) {
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+  });
+
+  /* ── Mobile hamburger menu ── */
+  (function () {
+    var burger = document.getElementById('bb-navbar-burger');
+    var panel = document.getElementById('bb-navbar-mobile-panel');
+    if (!burger || !panel) return;
+
+    function closePanel() {
+      panel.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+    function openPanel() {
+      panel.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+    }
+
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) closePanel();
+      else openPanel();
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closePanel);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.contains(e.target) && !burger.contains(e.target)) closePanel();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePanel();
+    });
+  })();
+</script>
+
+<script>
+// WhatsApp chat animation loop
+(function () {
+  var STEPS = [
+    { show: 'bb-m1', at: 0 },
+    { show: 'bb-t1', at: 900 },
+    { hide: 'bb-t1', at: 2500 },
+    { show: 'bb-m2', at: 2700 },
+    { show: 'bb-m3', at: 5400 },
+    { show: 'bb-t2', at: 6200 },
+    { hide: 'bb-t2', at: 7700 },
+    { show: 'bb-m4', at: 7900 },
+  ];
+  var LOOP = 12500;
+  var timers = [];
+
+  function clear() { timers.forEach(clearTimeout); timers = []; }
+
+  function reset() {
+    ['bb-m1','bb-t1','bb-m2','bb-m3','bb-t2','bb-m4'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.remove('bb-visible');
+    });
+  }
+
+  function run() {
+    clear(); reset();
+    STEPS.forEach(function(s) {
+      timers.push(setTimeout(function() {
+        var el = document.getElementById(s.show || s.hide);
+        if (!el) return;
+        if (s.show) el.classList.add('bb-visible');
+        else el.classList.remove('bb-visible');
+      }, s.at));
+    });
+    timers.push(setTimeout(run, LOOP));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else { run(); }
+})();
+</script>
+</body>
+</html>

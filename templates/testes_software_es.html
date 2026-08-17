@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pruebas de Software — MTJL Technology</title>
+  <meta name="description" content="Consultoría y ejecución de pruebas de software: manuales, automatizadas, de regresión, rendimiento y seguridad — con IA en todo el proceso de calidad." />
+  <link rel="canonical" href="https://mtjltechnology.com/es/qualityassurance" />
+  <link rel="alternate" hreflang="pt-BR" href="https://mtjltechnology.com/qualityassurance" />
+  <link rel="alternate" hreflang="en" href="https://mtjltechnology.com/en/qualityassurance" />
+  <link rel="alternate" hreflang="es" href="https://mtjltechnology.com/es/qualityassurance" />
+  <link rel="alternate" hreflang="x-default" href="https://mtjltechnology.com/qualityassurance" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Pruebas de Software — MTJL Technology" />
+  <meta property="og:description" content="Consultoría y ejecución de pruebas de software: manuales, automatizadas, de regresión, rendimiento y seguridad — con IA en todo el proceso de calidad." />
+  <meta property="og:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <meta property="og:url" content="https://mtjltechnology.com/es/qualityassurance" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pruebas de Software — MTJL Technology" />
+  <meta name="twitter:description" content="Consultoría y ejecución de pruebas de software: manuales, automatizadas, de regresión, rendimiento y seguridad — con IA en todo el proceso de calidad." />
+  <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "MTJL Technology — Pruebas de Software",
+    "description": "Consultoría y ejecución de pruebas de software: pruebas manuales, automatizadas, de regresión, de rendimiento y de seguridad, con Inteligencia Artificial en todo el proceso de calidad.",
+    "url": "https://mtjltechnology.com/es/qualityassurance",
+    "provider": {
+      "@type": "Organization",
+      "name": "MTJL Technology",
+      "url": "https://mtjltechnology.com/"
+    },
+    "areaServed": ["BR", "US"]
+  }
+  </script>
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=45" />
+  <link rel="icon" type="image/png" href="/static/brand/mtjl-technology-logo-transparent.png" />
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="navbar">
+  <a href="https://mtjltechnology.com/es" style="display:flex;align-items:center">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="navbar-logo" width="150" height="80" />
+  </a>
+  <ul class="navbar-nav">
+    <li><a href="#tipos-de-teste">Tipos de Prueba</a></li>
+    <li><a href="#ia-em-testes">IA en Pruebas</a></li>
+    <li><a href="#consultoria">Consultoría</a></li>
+    <li><a href="#contato" onclick="openTSModal();return false;">Contacto</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <a href="/qualityassurance" class="lang-flag" title="Português" aria-label="Português">🇧🇷</a>
+    <a href="/en/qualityassurance" class="lang-flag" title="English" aria-label="English">🇺🇸</a>
+    <a href="/es/qualityassurance" class="lang-flag lang-flag--active" title="Español" aria-label="Español">🇪🇸</a>
+  </div>
+  <button type="button" class="navbar-burger" id="navbar-burger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navbar-mobile-panel">
+    <span class="navbar-burger-bar"></span>
+  </button>
+</nav>
+
+<!-- ── Mobile nav panel ── -->
+<div class="navbar-mobile-panel" id="navbar-mobile-panel">
+  <ul>
+    <li><a href="#tipos-de-teste">Tipos de Prueba</a></li>
+    <li><a href="#ia-em-testes">IA en Pruebas</a></li>
+    <li><a href="#consultoria">Consultoría</a></li>
+    <li><a href="#contato" onclick="openTSModal();return false;">Contacto</a></li>
+  </ul>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-badge">✦ Powered by AI</div>
+    <h1>Pruebas de Software que <span>garantizan calidad real</span></h1>
+    <p>Combinamos pruebas manuales, automatización e Inteligencia Artificial en todo el proceso de calidad — para reducir bugs en producción, eliminar retrabajo y dar a tu equipo la confianza para lanzar más rápido.</p>
+    <div class="hero-actions">
+      <button type="button" onclick="openTSModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Hablar con un especialista</button>
+      <a href="#tipos-de-teste" class="btn-outline">Ver tipos de pruebas</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-card">
+      <div class="hero-card-icon">🧪</div>
+      <div class="hero-card-label">Pruebas Manuales</div>
+      <div class="hero-card-value">Validación especializada</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon">🤖</div>
+      <div class="hero-card-label">Automatización</div>
+      <div class="hero-card-value">Regresión continua</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon">⚡</div>
+      <div class="hero-card-label">Rendimiento</div>
+      <div class="hero-card-value">Pruebas de carga</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon">🧠</div>
+      <div class="hero-card-label">IA aplicada a QA</div>
+      <div class="hero-card-value">Cobertura ampliada</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Strip ── -->
+<div class="strip">
+  <div class="strip-item"><span class="strip-dot"></span> Pruebas Manuales</div>
+  <div class="strip-item"><span class="strip-dot"></span> Automatización de Pruebas</div>
+  <div class="strip-item"><span class="strip-dot"></span> Pruebas de Rendimiento</div>
+  <div class="strip-item"><span class="strip-dot"></span> Pruebas de Regresión</div>
+  <div class="strip-item"><span class="strip-dot"></span> Pruebas de API</div>
+  <div class="strip-item"><span class="strip-dot"></span> IA aplicada a QA</div>
+  <div class="strip-item"><span class="strip-dot"></span> Consultoría en Calidad</div>
+</div>
+
+<!-- ── Tipos de prueba ── -->
+<section id="tipos-de-teste" class="services-section">
+  <span class="section-tag">Cobertura completa</span>
+  <h2 class="section-title">Tipos de pruebas que cubrimos</h2>
+  <p class="section-sub">De la validación manual a la automatización inteligente — elegimos la estrategia correcta para cada etapa de tu producto.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🧪</div>
+      <h3>Pruebas Manuales</h3>
+      <p>Validación exploratoria y funcional realizada por especialistas, ideal para flujos críticos y experiencia de usuario.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <h3>Pruebas Automatizadas</h3>
+      <p>Suites de regresión automatizadas que se ejecutan en cada despliegue, reduciendo el retrabajo manual y acelerando las entregas.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔁</div>
+      <h3>Pruebas de Regresión</h3>
+      <p>Garantía de que las nuevas entregas no rompen funcionalidades ya existentes en tu producto.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔌</div>
+      <h3>Pruebas de API</h3>
+      <p>Validación de contratos, rendimiento y seguridad de endpoints REST y GraphQL.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <h3>Pruebas de Rendimiento y Carga</h3>
+      <p>Simulación de tráfico real para identificar límites y cuellos de botella antes de llegar a producción.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛡️</div>
+      <h3>Pruebas de Seguridad (básico)</h3>
+      <p>Verificación de vulnerabilidades comunes (OWASP) integrada al ciclo de pruebas de tu proyecto.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧭</div>
+      <h3>Pruebas End-to-End</h3>
+      <p>Validación de recorridos completos del usuario, de principio a fin del flujo, en un entorno real.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧠</div>
+      <h3>Pruebas Exploratorias con IA</h3>
+      <p>La IA sugiere escenarios de prueba no previstos por el equipo, ampliando la cobertura más allá de lo obvio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── IA en todo el proceso de pruebas ── -->
+<section id="ia-em-testes" style="background:var(--dark);text-align:center">
+  <span class="section-tag">Inteligencia Artificial</span>
+  <h2 class="section-title" style="color:var(--white)">IA en todo el proceso de pruebas</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto;color:rgba(255,255,255,.75)">
+    Vamos más allá de generar y ejecutar pruebas automatizadas: usamos IA para hacer todo el ciclo de calidad más inteligente.
+  </p>
+
+  <div class="services-grid ia-grid">
+    <div class="service-card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)">
+      <div class="service-icon">📊</div>
+      <h3 style="color:var(--white)">Análisis predictivo de riesgo</h3>
+      <p style="color:rgba(255,255,255,.7)">La IA analiza el código y señala las áreas con mayor probabilidad de generar bugs, incluso antes de probar.</p>
+    </div>
+    <div class="service-card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)">
+      <div class="service-icon">🎯</div>
+      <h3 style="color:var(--white)">Priorización inteligente</h3>
+      <p style="color:rgba(255,255,255,.7)">Definimos qué pruebas ejecutar primero según el impacto y la probabilidad de fallo, optimizando tiempo y costo.</p>
+    </div>
+    <div class="service-card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)">
+      <div class="service-icon">📈</div>
+      <h3 style="color:var(--white)">Cobertura en mejora continua</h3>
+      <p style="color:rgba(255,255,255,.7)">Aprendemos de patrones de bugs anteriores para ampliar y refinar la cobertura de pruebas con el tiempo.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:3rem;color:rgba(255,255,255,.75);font-size:1rem;max-width:640px;margin-left:auto;margin-right:auto">
+    Una de las herramientas que usamos internamente en este proceso es <strong style="color:var(--cyan)">PilotQA AI</strong>, nuestro propio producto de automatización de pruebas con IA.
+    <a href="/es/pilotqa_ai" style="color:var(--sky);font-weight:700;text-decoration:none">Conoce PilotQA AI →</a>
+  </p>
+</section>
+
+<!-- ── Consultoría ── -->
+<section id="consultoria">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Consultoría en Calidad</span>
+      <h2 class="section-title">Consultoría en Calidad y Pruebas de Software</h2>
+      <p class="section-sub">Ayudamos a equipos que quieren estructurar o madurar su área de QA — desde el diagnóstico inicial hasta la implementación de una estrategia de pruebas sólida y sostenible.</p>
+
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="feature-icon">🔍</div>
+          <div class="feature-text">
+            <h4>Diagnóstico del proceso actual</h4>
+            <p>Evaluamos cómo tu equipo prueba hoy e identificamos brechas de cobertura, proceso y herramientas.</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="feature-icon">🗺️</div>
+          <div class="feature-text">
+            <h4>Definición de estrategia de pruebas</h4>
+            <p>Diseñamos un plan claro: qué automatizar, qué mantener manual y en qué orden priorizar.</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="feature-icon">⚙️</div>
+          <div class="feature-text">
+            <h4>Implementación de automatización</h4>
+            <p>Nos involucramos para implementar suites de automatización integradas a tu pipeline de despliegue.</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="feature-icon">🎓</div>
+          <div class="feature-text">
+            <h4>Capacitación del equipo</h4>
+            <p>Capacitamos a tu equipo para mantener y evolucionar las pruebas con autonomía después de la consultoría.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-visual">
+      <div class="stat-card">
+        <div class="stat-value">QA</div>
+        <div class="stat-label">Diagnóstico y estrategia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">IA</div>
+        <div class="stat-label">En cada etapa de prueba</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">CI/CD</div>
+        <div class="stat-label">Automatización integrada</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="font-size:1.4rem">Mentoría</div>
+        <div class="stat-label">Capacitación del equipo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <h2>¿Listo para elevar la calidad de tu software?</h2>
+  <p>Habla con nuestro equipo y descubre el mejor camino entre pruebas manuales, automatización y consultoría en calidad para tu proyecto.</p>
+  <div class="cta-actions">
+    <button type="button" onclick="openTSModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Hablar con un especialista</button>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <a href="https://mtjltechnology.com/es">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="footer-logo" width="150" height="80" />
+  </a>
+  <nav class="footer-links">
+    <a href="https://mtjltechnology.com/es">Inicio</a>
+    <a href="#tipos-de-teste">Tipos de Prueba</a>
+    <a href="#consultoria">Consultoría</a>
+    <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
+  </nav>
+  <p class="footer-copy">© 2026 MTJL Technology. Todos los derechos reservados. Curitiba, Paraná, Brasil.</p>
+</footer>
+
+<!-- ── Contact Modal ── -->
+<div class="pqmodal-backdrop" id="ts-modal-backdrop" onclick="closeTSModal()"></div>
+<div class="pqmodal" id="ts-modal" role="dialog" aria-modal="true">
+  <div class="pqmodal-header">
+    <div>
+      <p class="pqmodal-tag">Pruebas de Software</p>
+      <h3 class="pqmodal-title">Hablar con un especialista</h3>
+    </div>
+    <button class="pqmodal-close" onclick="closeTSModal()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="pqmodal-body">
+    {% if sent %}
+      <div class="pqmodal-success">¡Mensaje enviado! Te responderemos pronto.</div>
+    {% endif %}
+    <form method="POST" action="/qualityassurance_contact" class="pqmodal-form">
+      <input type="hidden" name="lang" value="es" />
+      <label>Nombre<input type="text" name="name" placeholder="Tu nombre" required /></label>
+      <label>Correo electrónico<input type="email" name="email" placeholder="tu@email.com" required /></label>
+      <label>¿Cómo podemos ayudarte?<textarea name="message" placeholder="Cuéntanos un poco sobre tu proyecto o equipo de QA" rows="4" required></textarea></label>
+      <button type="submit">Enviar mensaje →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openTSModal()  { document.getElementById('ts-modal').classList.add('open'); document.getElementById('ts-modal-backdrop').classList.add('open'); }
+  function closeTSModal() { document.getElementById('ts-modal').classList.remove('open'); document.getElementById('ts-modal-backdrop').classList.remove('open'); }
+  {% if sent %}window.addEventListener('load', openTSModal);{% endif %}
+
+  // Menú hamburguesa móvil
+  (function () {
+    var burger = document.getElementById('navbar-burger');
+    var panel = document.getElementById('navbar-mobile-panel');
+    if (!burger || !panel) return;
+
+    function closePanel() {
+      panel.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+    function openPanel() {
+      panel.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+    }
+
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) closePanel();
+      else openPanel();
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closePanel);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.contains(e.target) && !burger.contains(e.target)) closePanel();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePanel();
+    });
+  })();
+</script>
+</body>
+</html>

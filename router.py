@@ -1,0 +1,449 @@
+import re
+from datetime import datetime, timedelta, timezone
+from xml.sax.saxutils import escape
+
+import httpx
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.templating import Jinja2Templates
+from sqlmodel import Session, select
+
+from config import settings
+from db import get_session
+from limiter import limiter
+from models import PilotQASubscriber
+from services.asaas import PLANS, create_customer, create_subscription, get_subscription_payment_link, update_customer
+from services.email import send_contact_email, send_pilotqa_contact_email, send_pilotqa_token_email
+from services.token import generate_pilotqa_token
+
+router = APIRouter()
+
+templates = Jinja2Templates(directory="templates", auto_reload=settings.app_env != "production")
+
+
+def _to_brt(dt):
+    if dt is None:
+        return dt
+    return dt + timedelta(hours=-3)
+
+
+templates.env.filters["brt"] = _to_brt
+
+
+SITE_BASE_URL = "https://mtjltechnology.com"
+
+_SITEMAP_PAGES = [
+    {"slug": "", "en": "/en", "es": "/es"},
+    {"slug": "booking_beauty", "en": "/en/booking_beauty", "es": "/es/booking_beauty"},
+    {"slug": "qualityassurance", "en": "/en/qualityassurance", "es": "/es/qualityassurance"},
+    {"slug": "larclinica", "en": "/larclinica", "es": "/larclinica"},
+]
+
+
+# ── Bloqueio de e-mails de teste/descartáveis ───────────────────────────────────
+# Mesma lista de booking/routers/auth.py::_is_blocked_email no repo do produto —
+# duplicada aqui porque os dois serviços não compartilham módulos Python.
+
+_BLOCKED_EMAIL_DOMAINS = {
+    "teste.com", "test.com", "testing.com", "testando.com",
+    "example.com", "example.org", "example.net",
+    "qa.com", "dev.com", "fake.com", "dummy.com",
+    "lixo.com", "temp.com", "noreply.com",
+    "mailtest.com", "emailtest.com",
+}
+
+_BLOCKED_EMAIL_LOCAL_PATTERN = re.compile(
+    r"^(teste|test|testing|testando|qa|dummy|fake|lixo|temp|noreply|abc123|xxx|asdf|qwerty)\d*$",
+    re.IGNORECASE,
+)
+
+
+def _is_blocked_email(email: str) -> bool:
+    email = email.strip().lower()
+    if "@" not in email:
+        return False
+    local, domain = email.rsplit("@", 1)
+    if domain in _BLOCKED_EMAIL_DOMAINS:
+        return True
+    if _BLOCKED_EMAIL_LOCAL_PATTERN.match(local):
+        return True
+    return False
+
+
+def _client_ip(request: Request):
+    forwarded_for = request.headers.get("x-forwarded-for")
+    if forwarded_for:
+        return forwarded_for.split(",", 1)[0].strip() or None
+    real_ip = request.headers.get("x-real-ip")
+    if real_ip:
+        return real_ip.strip() or None
+    return request.client.host if request.client else None
+
+
+@router.get("/sitemap.xml")
+def sitemap_xml():
+    lastmod = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    url_entries = []
+    for page in _SITEMAP_PAGES:
+        pt_path = f"/{page['slug']}" if page["slug"] else "/"
+        variants = {
+            "pt-BR": pt_path,
+            "en": page["en"],
+            "es": page["es"],
+        }
+        for path in variants.values():
+            loc = SITE_BASE_URL + path
+            alternates = "\n".join(
+                f'    <xhtml:link rel="alternate" hreflang="{alt_lang}" href="{escape(SITE_BASE_URL + alt_path)}" />'
+                for alt_lang, alt_path in variants.items()
+            )
+            alternates += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{escape(SITE_BASE_URL + pt_path)}" />'
+            url_entries.append(
+                f"  <url>\n"
+                f"    <loc>{escape(loc)}</loc>\n"
+                f"{alternates}\n"
+                f"    <lastmod>{lastmod}</lastmod>\n"
+                f"  </url>"
+            )
+
+    xml_body = "\n".join(url_entries)
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+        f"{xml_body}\n"
+        "</urlset>"
+    )
+    return Response(content=xml, media_type="application/xml")
+
+
+@router.get("/", response_class=HTMLResponse)
+def home(request: Request, sent: bool = False, pq_sent: bool = False):
+    return templates.TemplateResponse("home.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
+
+
+@router.get("/en", response_class=HTMLResponse)
+def home_en(request: Request, sent: bool = False, pq_sent: bool = False):
+    return templates.TemplateResponse("home_en.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
+
+
+@router.get("/es", response_class=HTMLResponse)
+def home_es(request: Request, sent: bool = False, pq_sent: bool = False):
+    return templates.TemplateResponse("home_es.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
+
+
+@router.get("/pilotqa_ai")
+def pilotqa():
+    return RedirectResponse("/", status_code=302)
+
+
+@router.get("/en/pilotqa_ai")
+def pilotqa_en():
+    return RedirectResponse("/en", status_code=302)
+
+
+@router.get("/es/pilotqa_ai")
+def pilotqa_es():
+    return RedirectResponse("/es", status_code=302)
+
+
+@router.get("/larclinica", response_class=HTMLResponse)
+def larclinica(request: Request, sent: bool = False):
+    return templates.TemplateResponse("larclinica.html", {"request": request, "sent": sent})
+
+
+@router.post("/larclinica_contact")
+@limiter.limit("5/minute")
+def larclinica_contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    organization: str = Form(default=""),
+    message: str = Form(...),
+    lang: str = Form(default="pt"),
+):
+    redirect_url = "/larclinica?sent=1"
+    if _is_blocked_email(email):
+        return RedirectResponse(redirect_url, status_code=303)
+    org_line = f"Organização/Operadora: {organization}\n\n" if organization else ""
+    send_contact_email(name, email, f"[LarClínica] {org_line}{message}")
+    return RedirectResponse(redirect_url, status_code=303)
+
+
+@router.get("/qualityassurance", response_class=HTMLResponse)
+def testes_software(request: Request, sent: bool = False):
+    return templates.TemplateResponse("testes_software.html", {"request": request, "sent": sent})
+
+
+@router.get("/en/qualityassurance", response_class=HTMLResponse)
+def testes_software_en(request: Request, sent: bool = False):
+    return templates.TemplateResponse("testes_software_en.html", {"request": request, "sent": sent})
+
+
+@router.get("/es/qualityassurance", response_class=HTMLResponse)
+def testes_software_es(request: Request, sent: bool = False):
+    return templates.TemplateResponse("testes_software_es.html", {"request": request, "sent": sent})
+
+
+_BB_ERRORS = {
+    "email": "Este e-mail já possui uma conta cadastrada. Acesse o sistema ou recupere sua senha.",
+    "phone": "Este telefone já está associado a outra conta. Verifique o número ou entre em contato.",
+    "terms": "Você precisa aceitar os Termos de Serviço para continuar.",
+    "invalid_email": "Este endereço de e-mail não é permitido. Use um e-mail profissional válido.",
+    "security": "Verificação de segurança falhou. Tente novamente.",
+    "invalid_plan": "Plano inválido.",
+    "unavailable": "Não foi possível concluir o cadastro agora. Tente novamente em instantes.",
+}
+
+_BB_ERRORS_EN = {
+    "email": "This email already has an account registered. Log in or recover your password.",
+    "phone": "This phone number is already associated with another account. Check the number or contact us.",
+    "terms": "You need to accept the Terms of Service to continue.",
+    "invalid_email": "This email address is not allowed. Please use a valid professional email.",
+    "security": "Security verification failed. Please try again.",
+    "invalid_plan": "Invalid plan.",
+    "unavailable": "We couldn't complete the signup right now. Please try again shortly.",
+}
+
+_BB_ERRORS_ES = {
+    "email": "Este correo electrónico ya tiene una cuenta registrada. Accede al sistema o recupera tu contraseña.",
+    "phone": "Este teléfono ya está asociado a otra cuenta. Verifica el número o contáctanos.",
+    "terms": "Debes aceptar los Términos de Servicio para continuar.",
+    "invalid_email": "Este correo electrónico no está permitido. Usa un correo profesional válido.",
+    "security": "La verificación de seguridad falló. Inténtalo de nuevo.",
+    "invalid_plan": "Plan inválido.",
+    "unavailable": "No pudimos completar el registro ahora. Inténtalo de nuevo en unos instantes.",
+}
+
+@router.get("/booking_beauty", response_class=HTMLResponse)
+def booking_beauty(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
+    return templates.TemplateResponse("booking_beauty.html", {
+        "request": request,
+        "bb_sent": bb_sent,
+        "bb_subscribed": bb_subscribed,
+        "bb_error": _BB_ERRORS.get(bb_error, ""),
+    })
+
+
+@router.get("/en/booking_beauty", response_class=HTMLResponse)
+def booking_beauty_en(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
+    return templates.TemplateResponse("booking_beauty_en.html", {
+        "request": request,
+        "bb_sent": bb_sent,
+        "bb_subscribed": bb_subscribed,
+        "bb_error": _BB_ERRORS_EN.get(bb_error, ""),
+    })
+
+
+@router.get("/es/booking_beauty", response_class=HTMLResponse)
+def booking_beauty_es(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
+    return templates.TemplateResponse("booking_beauty_es.html", {
+        "request": request,
+        "bb_sent": bb_sent,
+        "bb_subscribed": bb_subscribed,
+        "bb_error": _BB_ERRORS_ES.get(bb_error, ""),
+    })
+
+
+@router.post("/contact")
+@limiter.limit("5/minute")
+def contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    message: str = Form(...),
+    lang: str = Form(default="pt"),
+):
+    prefix = f"/{lang}" if lang in ("en", "es") else ""
+    redirect_url = f"{prefix}/?sent=1" if prefix else "/?sent=1"
+    # E-mails de domínios de teste/descartáveis: fingimos sucesso sem enviar
+    if _is_blocked_email(email):
+        return RedirectResponse(redirect_url, status_code=303)
+    send_contact_email(name, email, message)
+    return RedirectResponse(redirect_url, status_code=303)
+
+
+BB_PLANS = {"bb_starter", "bb_pro"}
+
+
+@router.post("/booking_beauty/subscribe")
+@limiter.limit("5/minute")
+async def booking_beauty_subscribe(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    plan: str = Form(...),
+    phone: str = Form(default=""),
+    accept_terms: str | None = Form(default=None),
+    lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
+):
+    prefix = f"/{lang}" if lang in ("en", "es") else ""
+
+    if plan not in BB_PLANS:
+        raise HTTPException(status_code=400, detail="Plano inválido.")
+
+    # Honeypot: campo invisível para humanos, só bots preenchem.
+    # Fingimos sucesso para não ensinar o bot a identificar o bloqueio.
+    if website:
+        return RedirectResponse(f"{prefix}/booking_beauty?bb_subscribed=1", status_code=303)
+
+    payload = {
+        "name": name,
+        "email": email,
+        "plan": plan,
+        "phone": phone,
+        "accept_terms": bool(accept_terms),
+        "recaptcha_token": recaptcha_token,
+        "terms_ip": _client_ip(request),
+        "terms_user_agent": (request.headers.get("user-agent") or "")[:512] or None,
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            r = await client.post(
+                f"{settings.booking_internal_url}/internal/booking-beauty/trial-signup",
+                json=payload,
+                headers={"X-Master-Key": settings.booking_master_api_key},
+            )
+        result = r.json()
+    except Exception:
+        return RedirectResponse(f"{prefix}/booking_beauty?bb_error=unavailable&plan={plan}", status_code=303)
+
+    if not result.get("ok"):
+        error = result.get("error", "unavailable")
+        return RedirectResponse(f"{prefix}/booking_beauty?bb_error={error}&plan={plan}", status_code=303)
+
+    return RedirectResponse(f"{prefix}/booking_beauty?bb_subscribed=1", status_code=303)
+
+
+@router.post("/booking_beauty_contact")
+@limiter.limit("5/minute")
+def booking_beauty_contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    whatsapp: str = Form(default=""),
+    message: str = Form(...),
+    lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+):
+    prefix = f"/{lang}" if lang in ("en", "es") else ""
+    redirect_url = f"{prefix}/booking_beauty?bb_sent=1"
+    # Honeypot preenchido ou e-mail de domínio bloqueado: fingimos sucesso silenciosamente
+    if website or _is_blocked_email(email):
+        return RedirectResponse(redirect_url, status_code=303)
+    send_contact_email(name, email, f"[Booking AI Beauty] WhatsApp: {whatsapp}\n\n{message}")
+    return RedirectResponse(redirect_url, status_code=303)
+
+
+@router.post("/qualityassurance_contact")
+@limiter.limit("5/minute")
+def testes_software_contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    message: str = Form(...),
+    lang: str = Form(default="pt"),
+):
+    prefix = f"/{lang}" if lang in ("en", "es") else ""
+    redirect_url = f"{prefix}/qualityassurance?sent=1"
+    if _is_blocked_email(email):
+        return RedirectResponse(redirect_url, status_code=303)
+    send_contact_email(name, email, f"[Testes de Software] {message}")
+    return RedirectResponse(redirect_url, status_code=303)
+
+
+@router.post("/pilotqa_contact")
+@limiter.limit("5/minute")
+def pilotqa_contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    message: str = Form(...),
+    origin: str = Form(default="home"),
+    lang: str = Form(default="pt"),
+):
+    prefix = f"/{lang}" if lang in ("en", "es") else ""
+    page = "/pilotqa_ai" if origin == "pilotqa" else "/"
+    if page == "/":
+        redirect = f"{prefix}/?pq_sent=1" if prefix else "/?pq_sent=1"
+    else:
+        redirect = f"{prefix}{page}?pq_sent=1"
+    if _is_blocked_email(email):
+        return RedirectResponse(redirect, status_code=303)
+    send_pilotqa_contact_email(name, email, message)
+    return RedirectResponse(redirect, status_code=303)
+
+
+@router.post("/pilotqa_ai/subscribe")
+@limiter.limit("5/minute")
+def pilotqa_subscribe(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    plan: str = Form(...),
+    cpf_cnpj: str = Form(default=""),
+    session: Session = Depends(get_session),
+):
+    if plan not in PLANS:
+        raise HTTPException(status_code=400, detail="Plano inválido.")
+
+    if _is_blocked_email(email):
+        raise HTTPException(status_code=400, detail="E-mail inválido.")
+
+    if not settings.asaas_api_key:
+        raise HTTPException(status_code=503, detail="Pagamento não configurado.")
+
+    cpf_cnpj_clean = re.sub(r"\D", "", cpf_cnpj)
+
+    subscriber = session.exec(
+        select(PilotQASubscriber).where(PilotQASubscriber.email == email)
+    ).first()
+
+    if not subscriber:
+        subscriber = PilotQASubscriber(name=name, email=email, plan=plan)
+        session.add(subscriber)
+        session.commit()
+        session.refresh(subscriber)
+
+    if not subscriber.asaas_customer_id:
+        customer = create_customer(name, email, cpf_cnpj_clean)
+        subscriber.asaas_customer_id = customer["id"]
+        session.add(subscriber)
+        session.commit()
+    elif cpf_cnpj_clean:
+        update_customer(subscriber.asaas_customer_id, cpf_cnpj_clean)
+
+    plan_info = PLANS[plan]
+    sub = create_subscription(subscriber.asaas_customer_id, plan_info["value"], plan_info["description"])
+    subscriber.asaas_subscription_id = sub["id"]
+    session.add(subscriber)
+    session.commit()
+
+    payment_url = get_subscription_payment_link(sub["id"]) or sub.get("invoiceUrl")
+    if not payment_url:
+        return RedirectResponse("/pilotqa_ai?subscribe_error=1", status_code=303)
+    return RedirectResponse(payment_url, status_code=303)
+
+
+@router.post("/pilotqa_ai/webhook/asaas")
+async def pilotqa_asaas_webhook(request: Request, session: Session = Depends(get_session)):
+    token = request.headers.get("asaas-access-token", "")
+    if settings.asaas_webhook_token and token != settings.asaas_webhook_token:
+        raise HTTPException(status_code=401, detail="Token inválido.")
+    data = await request.json()
+    event = data.get("event", "")
+    if event in ("PAYMENT_CONFIRMED", "PAYMENT_RECEIVED"):
+        subscription_id = data.get("payment", {}).get("subscription")
+        if subscription_id:
+            subscriber = session.exec(
+                select(PilotQASubscriber).where(PilotQASubscriber.asaas_subscription_id == subscription_id)
+            ).first()
+            if subscriber and settings.pilotqa_jwt_private_key:
+                jwt_token = generate_pilotqa_token(subscriber.email, subscriber.plan)
+                send_pilotqa_token_email(subscriber.name, subscriber.email, subscriber.plan, jwt_token)
+                session.add(subscriber)
+                session.commit()
+    return {"received": True}
