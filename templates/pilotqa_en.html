@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PilotQA AI — Automated Testing with Artificial Intelligence</title>
+  <title>PilotQA AI | Automated Testing with Artificial Intelligence</title>
   <meta name="description" content="Write tests in natural language and let AI run them in the browser. PilotQA AI interprets your commands and automates end-to-end testing. Free 14-day trial." />
   <link rel="canonical" href="https://mtjltechnology.com/en/pilotqa_ai" />
   <link rel="alternate" hreflang="pt-BR" href="https://mtjltechnology.com/pilotqa_ai" />
@@ -11,13 +11,13 @@
   <link rel="alternate" hreflang="es" href="https://mtjltechnology.com/es/pilotqa_ai" />
   <link rel="alternate" hreflang="x-default" href="https://mtjltechnology.com/pilotqa_ai" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="PilotQA AI — Automated Testing with Artificial Intelligence" />
+  <meta property="og:title" content="PilotQA AI | Automated Testing with Artificial Intelligence" />
   <meta property="og:description" content="Write tests in natural language and let AI run them in the browser. PilotQA AI interprets your commands and automates end-to-end testing. Free 14-day trial." />
   <meta property="og:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
   <meta property="og:url" content="https://mtjltechnology.com/en/pilotqa_ai" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PilotQA AI — Automated Testing with Artificial Intelligence" />
+  <meta name="twitter:title" content="PilotQA AI | Automated Testing with Artificial Intelligence" />
   <meta name="twitter:description" content="Write tests in natural language and let AI run them in the browser. PilotQA AI interprets your commands and automates end-to-end testing. Free 14-day trial." />
   <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
   <script type="application/ld+json">
@@ -54,11 +54,16 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="/static/website/mtjl.css?v=45" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=114" />
   <link rel="stylesheet" href="/static/website/pilotqa.css?v=14" />
   <link rel="icon" type="image/png" href="/static/brand/mtjl-technology-logo-transparent.png" />
 </head>
 <body>
+<a class="skip-link" href="#features">Skip to content</a>
+
 
 <!-- ── Navbar ── -->
 <nav class="navbar">
@@ -105,7 +110,7 @@
         AI does the rest.
       </h1>
       <p class="hero-sub">
-        PilotQA AI interprets your commands and runs them directly in the browser — no complex selectors, no endless configuration. Test automation reinvented with AI.
+        PilotQA AI interprets your commands and runs them directly in the browser, no complex selectors, no endless configuration. Test automation reinvented with AI.
       </p>
       <div class="hero-cta">
         <button type="button" onclick="openPilotqaModal()" class="btn-hero-primary" style="cursor:pointer;border:none;font-family:inherit;">
@@ -199,7 +204,7 @@
       <div class="feature-card">
         <div class="feature-icon">🧩</div>
         <h3>Framework Agnostic</h3>
-        <p>Works with any test runner: <code style="color:var(--cyan);font-size:.8rem">node:test</code>, Jest, Vitest. Architecture ready for Playwright, Cypress, and Puppeteer.</p>
+        <p>Works with any test runner: <code style="color:var(--cyan);font-size:.8rem">node:test</code>, Jest, Vitest. Our own browser driver, with no external runtime to install.</p>
       </div>
 
       <div class="feature-card">
@@ -246,7 +251,7 @@
       <span class="pq-section-tag">Real code</span>
       <h2 class="pq-section-title">As simple as that.</h2>
       <p class="pq-section-sub">
-        One function. One command in plain English. AI does all the work of identifying elements, interacting, and validating — you just describe what you want to test.
+        One function. One command in plain English. AI does all the work of identifying elements, interacting, and validating. You just describe what you want to test.
       </p>
       <div class="demo-tag-list">
         <span class="demo-tag">click</span>
@@ -309,7 +314,7 @@
       <div class="pricing-card">
         <div class="pricing-plan">Free</div>
         <div class="pricing-price">$0<span>/14 days</span></div>
-        <p class="pricing-desc">Try it risk-free — no credit card required</p>
+        <p class="pricing-desc">Try it risk-free, no credit card required</p>
         <ul class="pricing-features">
           <li>14-day free trial</li>
           <li>Browser execution</li>
@@ -428,7 +433,7 @@
   function closePilotqaModal() { document.getElementById('pqmodal').classList.remove('open'); document.getElementById('pqmodal-backdrop').classList.remove('open'); }
   {% if pq_sent %}window.addEventListener('load', openPilotqaModal);{% endif %}
 
-  const planLabels = { pro: 'Subscribe to Pro — $197/month', enterprise: 'Subscribe to Enterprise — $697/month' };
+  const planLabels = { pro: 'Subscribe to Pro. $197/month', enterprise: 'Subscribe to Enterprise. $697/month' };
   const planTitles = { pro: 'Subscribe to Pro Plan', enterprise: 'Subscribe to Enterprise Plan' };
 
   function openSubscribeModal(plan) {
@@ -477,5 +482,6 @@
     });
   })();
 </script>
+<script src="/static/website/mtjl.js?v=2" defer></script>
 </body>
 </html>

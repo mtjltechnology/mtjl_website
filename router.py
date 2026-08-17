@@ -34,9 +34,12 @@ SITE_BASE_URL = "https://mtjltechnology.com"
 
 _SITEMAP_PAGES = [
     {"slug": "", "en": "/en", "es": "/es"},
-    {"slug": "booking_beauty", "en": "/en/booking_beauty", "es": "/es/booking_beauty"},
+    {"slug": "relatify_beauty", "en": "/en/relatify_beauty", "es": "/es/relatify_beauty"},
     {"slug": "qualityassurance", "en": "/en/qualityassurance", "es": "/es/qualityassurance"},
     {"slug": "larclinica", "en": "/larclinica", "es": "/larclinica"},
+    {"slug": "pedemarket", "en": "/pedemarket", "es": "/pedemarket"},
+    {"slug": "desenvolvimento-de-software", "en": "/en/software-development", "es": "/es/desarrollo-de-software"},
+    {"slug": "inteligencia-artificial", "en": "/en/artificial-intelligence", "es": "/es/inteligencia-artificial"},
 ]
 
 
@@ -132,9 +135,9 @@ def home_es(request: Request, sent: bool = False, pq_sent: bool = False):
     return templates.TemplateResponse("home_es.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
 
 
-@router.get("/pilotqa_ai")
-def pilotqa():
-    return RedirectResponse("/", status_code=302)
+@router.get("/pilotqa_ai", response_class=HTMLResponse)
+def pilotqa(request: Request, pq_sent: bool = False):
+    return templates.TemplateResponse("pilotqa.html", {"request": request, "pq_sent": pq_sent})
 
 
 @router.get("/en/pilotqa_ai")
@@ -168,6 +171,103 @@ def larclinica_contact(
     org_line = f"Organização/Operadora: {organization}\n\n" if organization else ""
     send_contact_email(name, email, f"[LarClínica] {org_line}{message}")
     return RedirectResponse(redirect_url, status_code=303)
+
+
+@router.get("/pedemarket", response_class=HTMLResponse)
+def pedemarket(request: Request, sent: bool = False):
+    return templates.TemplateResponse("pedemarket.html", {"request": request, "sent": sent})
+
+
+@router.post("/pedemarket_contact")
+@limiter.limit("5/minute")
+def pedemarket_contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    organization: str = Form(default=""),
+    message: str = Form(...),
+    lang: str = Form(default="pt"),
+):
+    redirect_url = "/pedemarket?sent=1"
+    if _is_blocked_email(email):
+        return RedirectResponse(redirect_url, status_code=303)
+    org_line = f"Mercado: {organization}\n\n" if organization else ""
+    send_contact_email(name, email, f"[PedeMarket] {org_line}{message}")
+    return RedirectResponse(redirect_url, status_code=303)
+
+
+@router.get("/desenvolvimento-de-software", response_class=HTMLResponse)
+def desenvolvimento(request: Request, sent: bool = False):
+    return templates.TemplateResponse("desenvolvimento.html", {"request": request, "sent": sent})
+
+
+@router.post("/desenvolvimento_contact")
+@limiter.limit("5/minute")
+def desenvolvimento_contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    organization: str = Form(default=""),
+    message: str = Form(...),
+    lang: str = Form(default="pt"),
+):
+    redirect_url = "/desenvolvimento-de-software?sent=1"
+    if lang == "en":
+        redirect_url = "/en/software-development?sent=1"
+    elif lang == "es":
+        redirect_url = "/es/desarrollo-de-software?sent=1"
+    if _is_blocked_email(email):
+        return RedirectResponse(redirect_url, status_code=303)
+    org_line = f"Empresa: {organization}\n\n" if organization else ""
+    send_contact_email(name, email, f"[Desenvolvimento] {org_line}{message}")
+    return RedirectResponse(redirect_url, status_code=303)
+
+
+@router.get("/inteligencia-artificial", response_class=HTMLResponse)
+def inteligencia_artificial(request: Request, sent: bool = False):
+    return templates.TemplateResponse("inteligencia_artificial.html", {"request": request, "sent": sent})
+
+
+@router.post("/inteligencia_artificial_contact")
+@limiter.limit("5/minute")
+def inteligencia_artificial_contact(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    organization: str = Form(default=""),
+    message: str = Form(...),
+    lang: str = Form(default="pt"),
+):
+    redirect_url = "/inteligencia-artificial?sent=1"
+    if lang == "en":
+        redirect_url = "/en/artificial-intelligence?sent=1"
+    elif lang == "es":
+        redirect_url = "/es/inteligencia-artificial?sent=1"
+    if _is_blocked_email(email):
+        return RedirectResponse(redirect_url, status_code=303)
+    org_line = f"Empresa: {organization}\n\n" if organization else ""
+    send_contact_email(name, email, f"[Inteligência Artificial] {org_line}{message}")
+    return RedirectResponse(redirect_url, status_code=303)
+
+
+@router.get("/en/software-development", response_class=HTMLResponse)
+def desenvolvimento_en(request: Request, sent: bool = False):
+    return templates.TemplateResponse("desenvolvimento_en.html", {"request": request, "sent": sent})
+
+
+@router.get("/en/artificial-intelligence", response_class=HTMLResponse)
+def inteligencia_artificial_en(request: Request, sent: bool = False):
+    return templates.TemplateResponse("inteligencia_artificial_en.html", {"request": request, "sent": sent})
+
+
+@router.get("/es/desarrollo-de-software", response_class=HTMLResponse)
+def desenvolvimento_es(request: Request, sent: bool = False):
+    return templates.TemplateResponse("desenvolvimento_es.html", {"request": request, "sent": sent})
+
+
+@router.get("/es/inteligencia-artificial", response_class=HTMLResponse)
+def inteligencia_artificial_es(request: Request, sent: bool = False):
+    return templates.TemplateResponse("inteligencia_artificial_es.html", {"request": request, "sent": sent})
 
 
 @router.get("/qualityassurance", response_class=HTMLResponse)
@@ -215,7 +315,7 @@ _BB_ERRORS_ES = {
     "unavailable": "No pudimos completar el registro ahora. Inténtalo de nuevo en unos instantes.",
 }
 
-@router.get("/booking_beauty", response_class=HTMLResponse)
+@router.get("/relatify_beauty", response_class=HTMLResponse)
 def booking_beauty(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
     return templates.TemplateResponse("booking_beauty.html", {
         "request": request,
@@ -225,7 +325,7 @@ def booking_beauty(request: Request, bb_sent: bool = False, bb_subscribed: bool 
     })
 
 
-@router.get("/en/booking_beauty", response_class=HTMLResponse)
+@router.get("/en/relatify_beauty", response_class=HTMLResponse)
 def booking_beauty_en(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
     return templates.TemplateResponse("booking_beauty_en.html", {
         "request": request,
@@ -235,7 +335,7 @@ def booking_beauty_en(request: Request, bb_sent: bool = False, bb_subscribed: bo
     })
 
 
-@router.get("/es/booking_beauty", response_class=HTMLResponse)
+@router.get("/es/relatify_beauty", response_class=HTMLResponse)
 def booking_beauty_es(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
     return templates.TemplateResponse("booking_beauty_es.html", {
         "request": request,
@@ -243,6 +343,35 @@ def booking_beauty_es(request: Request, bb_sent: bool = False, bb_subscribed: bo
         "bb_subscribed": bb_subscribed,
         "bb_error": _BB_ERRORS_ES.get(bb_error, ""),
     })
+
+
+# ── Rename do produto: BookingAI Beauty → RelatifyAI Beauty ────────────────────
+# A URL /booking_beauty circulou em anúncios, links externos e no índice do Google.
+# 301 (permanente) preserva o ranking acumulado e transfere para a URL nova.
+# Não cobre /booking_beauty/login nem /booking_beauty/termos: essas rotas são do
+# app do produto, roteadas pelo Nginx, e não passam por este serviço.
+
+def _redirect_legacy_bb(request: Request, prefix: str = ""):
+    query = request.url.query
+    target = f"{prefix}/relatify_beauty"
+    if query:
+        target = f"{target}?{query}"
+    return RedirectResponse(target, status_code=301)
+
+
+@router.get("/booking_beauty")
+def booking_beauty_legacy(request: Request):
+    return _redirect_legacy_bb(request)
+
+
+@router.get("/en/booking_beauty")
+def booking_beauty_legacy_en(request: Request):
+    return _redirect_legacy_bb(request, "/en")
+
+
+@router.get("/es/booking_beauty")
+def booking_beauty_legacy_es(request: Request):
+    return _redirect_legacy_bb(request, "/es")
 
 
 @router.post("/contact")
@@ -266,7 +395,7 @@ def contact(
 BB_PLANS = {"bb_starter", "bb_pro"}
 
 
-@router.post("/booking_beauty/subscribe")
+@router.post("/relatify_beauty/subscribe")
 @limiter.limit("5/minute")
 async def booking_beauty_subscribe(
     request: Request,
@@ -287,7 +416,7 @@ async def booking_beauty_subscribe(
     # Honeypot: campo invisível para humanos, só bots preenchem.
     # Fingimos sucesso para não ensinar o bot a identificar o bloqueio.
     if website:
-        return RedirectResponse(f"{prefix}/booking_beauty?bb_subscribed=1", status_code=303)
+        return RedirectResponse(f"{prefix}/relatify_beauty?bb_subscribed=1", status_code=303)
 
     payload = {
         "name": name,
@@ -309,16 +438,16 @@ async def booking_beauty_subscribe(
             )
         result = r.json()
     except Exception:
-        return RedirectResponse(f"{prefix}/booking_beauty?bb_error=unavailable&plan={plan}", status_code=303)
+        return RedirectResponse(f"{prefix}/relatify_beauty?bb_error=unavailable&plan={plan}", status_code=303)
 
     if not result.get("ok"):
         error = result.get("error", "unavailable")
-        return RedirectResponse(f"{prefix}/booking_beauty?bb_error={error}&plan={plan}", status_code=303)
+        return RedirectResponse(f"{prefix}/relatify_beauty?bb_error={error}&plan={plan}", status_code=303)
 
-    return RedirectResponse(f"{prefix}/booking_beauty?bb_subscribed=1", status_code=303)
+    return RedirectResponse(f"{prefix}/relatify_beauty?bb_subscribed=1", status_code=303)
 
 
-@router.post("/booking_beauty_contact")
+@router.post("/relatify_beauty_contact")
 @limiter.limit("5/minute")
 def booking_beauty_contact(
     request: Request,
@@ -330,7 +459,7 @@ def booking_beauty_contact(
     website: str = Form(default=""),
 ):
     prefix = f"/{lang}" if lang in ("en", "es") else ""
-    redirect_url = f"{prefix}/booking_beauty?bb_sent=1"
+    redirect_url = f"{prefix}/relatify_beauty?bb_sent=1"
     # Honeypot preenchido ou e-mail de domínio bloqueado: fingimos sucesso silenciosamente
     if website or _is_blocked_email(email):
         return RedirectResponse(redirect_url, status_code=303)

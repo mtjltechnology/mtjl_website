@@ -21,3 +21,7 @@ ENV/
 
 # macOS
 .DS_Store
+
+# Ferramentas de skill instaladas localmente, não fazem parte do site
+.agents/
+skills-lock.json

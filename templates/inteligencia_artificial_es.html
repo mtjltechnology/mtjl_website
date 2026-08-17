@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inteligencia Artificial: Agentes y Modelos a Medida | MTJL Technology</title>
+  <meta name="description" content="Construimos agentes de IA que atienden clientes y ejecutan procesos internos, y entrenamos modelos a medida, desde cero o por fine-tuning, para visión artificial y automatización." />
+  <link rel="canonical" href="https://mtjltechnology.com/es/inteligencia-artificial" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Inteligencia Artificial: Agentes y Modelos a Medida | MTJL Technology" />
+  <meta property="og:description" content="Agentes que atienden y ejecutan procesos, y modelos entrenados para su dominio." />
+  <meta property="og:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <meta property="og:url" content="https://mtjltechnology.com/es/inteligencia-artificial" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Inteligencia Artificial: Agentes y Modelos a Medida | MTJL Technology" />
+  <meta name="twitter:description" content="Agentes que atienden y ejecutan procesos, y modelos entrenados para su dominio." />
+  <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Inteligencia Artificial a medida",
+    "serviceType": "Desarrollo de agentes y modelos de inteligencia artificial",
+    "url": "https://mtjltechnology.com/es/inteligencia-artificial",
+    "provider": {
+      "@type": "Organization",
+      "name": "MTJL Technology",
+      "url": "https://mtjltechnology.com/"
+    },
+    "areaServed": "BR"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=114" />
+  <link rel="icon" type="image/png" href="/static/brand/mtjl-technology-logo-transparent.png" />
+</head>
+<body>
+<a class="skip-link" href="#inicio">Saltar al contenido</a>
+
+<!-- ── Navbar ── -->
+<nav class="navbar">
+  <a href="https://mtjltechnology.com/es" style="display:flex;align-items:center">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="navbar-logo" width="150" height="80" />
+  </a>
+  <ul class="navbar-nav">
+    <li><a href="#agentes">Agentes</a></li>
+    <li><a href="#modelos">Modelos</a></li>
+    <li><a href="#responsabilidade">Cómo controlamos</a></li>
+    <li><a href="#prova">Pruebas reales</a></li>
+    <li><a href="/es/desarrollo-de-software">Desarrollo</a></li>
+    <li><a href="/es/qualityassurance">Pruebas de Software</a></li>
+  </ul>
+  <button type="button" class="navbar-burger" id="navbar-burger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navbar-mobile-panel">
+    <span class="navbar-burger-bar"></span>
+  </button>
+</nav>
+
+<!-- ── Mobile nav panel ── -->
+<div class="navbar-mobile-panel" id="navbar-mobile-panel">
+  <ul>
+    <li><a href="#agentes">Agentes</a></li>
+    <li><a href="#modelos">Modelos</a></li>
+    <li><a href="#responsabilidade">Cómo controlamos</a></li>
+    <li><a href="#prova">Pruebas reales</a></li>
+    <li><a href="/es/desarrollo-de-software">Desarrollo</a></li>
+    <li><a href="/es/qualityassurance">Pruebas de Software</a></li>
+  </ul>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-badge">Servicio · Agentes y modelos</div>
+    <h1>IA que hace el trabajo, <span>no que solo conversa</span></h1>
+    <p>Integramos IA a procesos y productos ya existentes, con foco en automatizar tareas repetitivas y apoyar decisiones. Y creamos, entrenamos y probamos modelos y agentes a medida, desde cero o ajustando un modelo existente, según la necesidad de cada cliente. El agente consulta sus datos en vez de improvisar la respuesta.</p>
+    <div class="hero-actions">
+      <button type="button" onclick="openIAModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Hablar sobre su caso</button>
+      <a href="#agentes" class="btn-outline">Ver qué hacemos</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
+      <div class="hero-card-label">Agentes</div>
+      <div class="hero-card-value">Atención y procesos</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#cpu"/></svg></div>
+      <div class="hero-card-label">Modelos</div>
+      <div class="hero-card-value">Desde cero o por fine-tuning</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#camera"/></svg></div>
+      <div class="hero-card-label">Visión artificial</div>
+      <div class="hero-card-value">Detección y clasificación</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check-shield"/></svg></div>
+      <div class="hero-card-label">Control</div>
+      <div class="hero-card-value">Sugiere, no decide sola</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Faixa ── -->
+<div class="strip">
+  <div class="strip-track">
+   <ul class="strip-list" aria-label="Lo que hacemos con IA">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> agentes de atención</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> agentes de proceso interno</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> entrenamiento de modelos desde cero</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> fine-tuning de modelo existente</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> detección de objetos</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> clasificación de imágenes</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> automatización de pruebas con IA</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> modelo funcionando en su infraestructura</li>
+    </ul>
+   <ul class="strip-list" aria-hidden="true">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> agentes de atención</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> agentes de proceso interno</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> entrenamiento de modelos desde cero</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> fine-tuning de modelo existente</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> detección de objetos</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> clasificación de imágenes</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> automatización de pruebas con IA</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> modelo funcionando en su infraestructura</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── Agentes ── -->
+<section id="agentes" class="services-section">
+  <span class="section-tag">Agentes</span>
+  <h2 class="section-title">Un agente útil necesita herramientas, no elocuencia</h2>
+  <p class="section-sub">Un chatbot que solo responde bonito no resuelve nada. Lo que entregamos consulta su catálogo, escribe en su agenda, reserva su inventario y devuelve un número de ticket. La conversación es la interfaz, el trabajo es el producto.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
+      <h3>Agentes que atienden clientes</h3>
+      <ul class="lc-check-list">
+        <li>Agendamiento, confirmación y recordatorio, sin nadie al teléfono</li>
+        <li>Consulta de precio y disponibilidad en su base, no en la suposición del modelo</li>
+        <li>Identificación de quién está hablando y recuperación del historial</li>
+        <li>Escalamiento a una persona cuando el caso lo exige</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#gear"/></svg></div>
+      <h3>Agentes que ejecutan procesos</h3>
+      <ul class="lc-check-list">
+        <li>Lectura de documentos y extracción a campos estructurados</li>
+        <li>Triaje y priorización de la cola según la regla de su negocio</li>
+        <li>Llenado y verificación entre sistemas que no se comunican</li>
+        <li>Resumen y clasificación de contenido en volumen</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Modelos ── -->
+<section id="modelos" class="services-section">
+  <span class="section-tag">Modelos</span>
+  <h2 class="section-title">Cuando el problema no es texto</h2>
+  <p class="section-sub">Contar piezas en la cinta, encontrar un defecto en una foto, separar documentos por tipo. Eso no se resuelve con un prompt: necesita un modelo entrenado con datos de su proceso.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#camera"/></svg></div>
+      <h3>Detección de objetos</h3>
+      <p>Encontrar y localizar un ítem en imagen o video: conteo, presencia, posición, conformidad visual.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#puzzle"/></svg></div>
+      <h3>Clasificación de imágenes</h3>
+      <p>Separar por categoría, aprobar o rechazar por criterio visual, identificar el tipo de documento.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
+      <h3>IA aplicada a pruebas de software</h3>
+      <p>Caso de prueba escrito en lenguaje natural, ejecutado en el navegador, con replanificación cuando la pantalla cambia.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#spark"/></svg></div>
+      <h3>Desde cero o por fine-tuning</h3>
+      <p>Entrenamos un modelo nuevo cuando el dominio es demasiado específico, o ajustamos uno existente cuando ya se acerca. La elección viene de los datos que usted tiene.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#doc"/></svg></div>
+      <h3>Preparación de los datos</h3>
+      <p>Buena parte del trabajo está antes del entrenamiento: recolectar, limpiar, etiquetar y armar el conjunto de validación que no engaña.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
+      <h3>Medición honesta</h3>
+      <p>La exactitud por sí sola esconde problemas. Reportamos dónde se equivoca el modelo, con qué frecuencia y en qué tipo de caso.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Como controlamos ── -->
+<section id="responsabilidade">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Cómo controlamos</span>
+      <h2 class="section-title">El riesgo de la IA no es que se equivoque. Es que se equivoque sin que nadie lo note</h2>
+      <p class="section-sub">Un modelo de lenguaje inventa con confianza. Por eso la arquitectura importa más que el modelo elegido, y es en ella donde trabajamos.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#search"/></svg></div>
+        <div class="feature-text">
+          <h3>Respuesta anclada en su fuente</h3>
+          <p>Precio, plazo, disponibilidad e historial salen de una consulta al sistema. El agente tiene prohibido afirmar sin buscar antes.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check-shield"/></svg></div>
+        <div class="feature-text">
+          <h3>Validación por código, no por instrucción</h3>
+          <p>Cuando la salida debe pertenecer a una lista, es el código el que verifica y descarta lo que queda fuera. Pedirle buen comportamiento al modelo no es control.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#user"/></svg></div>
+        <div class="feature-text">
+          <h3>Sugiere, la persona decide</h3>
+          <p>En contextos sensibles, la salida vuelve marcada como sugerencia y solo se convierte en registro cuando alguien la aprueba. Y existe un camino determinista para cuando el modelo falla.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
+        <div class="feature-text">
+          <h3>Sus datos pueden no salir de su red</h3>
+          <p>Cuando la confidencialidad lo exige, servimos el modelo en su propia infraestructura, sin enviar datos a un servicio externo de IA, con una barrera que impide que la aplicación arranque apuntando hacia afuera. Y con revisión humana obligatoria de lo que el modelo genera antes de convertirse en entrega.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
+        <div class="feature-text">
+          <h3>Validada en nuestro propio proceso</h3>
+          <p>Usamos IA en nuestro servicio de calidad antes de proponerla a un cliente: análisis de riesgo, priorización de pruebas y ampliación de cobertura. Lo que ofrecemos ya pasó por nuestro equipo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Prova ── -->
+<section id="prova" class="services-section">
+  <span class="section-tag">Pruebas reales</span>
+  <h2 class="section-title">Dónde ya está funcionando</h2>
+  <p class="section-sub">Cada uno de estos es producto nuestro, construido por el mismo equipo. Se puede abrir y verificar antes de contratar.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#scissors"/></svg></div>
+      <h3>Atención en salón y barbería</h3>
+      <p>Agente que responde, agenda, confirma y recuerda por WhatsApp. <a href="/es/relatify_beauty" class="inline-link">RelatifyAI Beauty</a></p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
+      <h3>Pedido de supermercado por conversación</h3>
+      <p>Agente con herramienta de catálogo y reserva de inventario, con prohibición de inventar precio o marca. <a href="/pedemarket" class="inline-link">PedeMarket</a></p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#stethoscope"/></svg></div>
+      <h3>Pre-triaje en salud</h3>
+      <p>Agente que conduce el triaje y prioriza señales de alarma, con el modelo en la infraestructura del cliente. <a href="/larclinica" class="inline-link">LarClínica</a></p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
+      <h3>Pruebas de software en lenguaje natural</h3>
+      <p>IA que planifica las acciones y un driver propio que las ejecuta en el navegador. <a href="/pilotqa_ai" class="inline-link">PilotQA AI</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="contato">
+  <h2>Traiga el proceso, nosotros le decimos si la IA es la respuesta</h2>
+  <p>No todo problema necesita inteligencia artificial, y a veces una regla bien escrita resuelve más barato. Si es el caso, se lo decimos antes de proponer un proyecto.</p>
+  <div class="cta-actions">
+    <button type="button" onclick="openIAModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Hablar sobre su caso</button>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <a href="https://mtjltechnology.com/es">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="footer-logo" width="150" height="80" />
+  </a>
+  <nav class="footer-links">
+    <a href="https://mtjltechnology.com/es">Inicio</a>
+    <a href="/es/desarrollo-de-software">Desarrollo</a>
+    <a href="/es/qualityassurance">Pruebas de Software</a>
+    <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
+  </nav>
+  <p class="footer-copy">© 2026 MTJL Technology. Todos los derechos reservados. Curitiba, Paraná, Brasil.</p>
+</footer>
+
+<!-- ── Modal de contato ── -->
+<div class="pqmodal-backdrop" id="ia-modal-backdrop" onclick="closeIAModal()"></div>
+<div class="pqmodal" id="ia-modal" role="dialog" aria-modal="true">
+  <div class="pqmodal-header">
+    <div>
+      <p class="pqmodal-tag">Inteligencia Artificial</p>
+      <h3 class="pqmodal-title">Hablar sobre su caso</h3>
+    </div>
+    <button class="pqmodal-close" onclick="closeIAModal()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="pqmodal-body">
+    {% if sent %}
+      <div class="pqmodal-success">¡Mensaje enviado! Le responderemos pronto.</div>
+    {% endif %}
+    <form method="POST" action="/inteligencia_artificial_contact" class="pqmodal-form">
+      <input type="hidden" name="lang" value="es" />
+      <label>Nombre<input type="text" name="name" placeholder="Su nombre" required /></label>
+      <label>Correo electrónico<input type="email" name="email" placeholder="su@email.com" required /></label>
+      <label>Empresa<input type="text" name="organization" placeholder="Nombre de su empresa" /></label>
+      <label>¿Qué proceso quiere automatizar?<textarea name="message" placeholder="Describa el proceso y el volumen, si lo sabe" rows="4" required></textarea></label>
+      <button type="submit">Enviar mensaje →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openIAModal()  { document.getElementById('ia-modal').classList.add('open'); document.getElementById('ia-modal-backdrop').classList.add('open'); }
+  function closeIAModal() { document.getElementById('ia-modal').classList.remove('open'); document.getElementById('ia-modal-backdrop').classList.remove('open'); }
+  {% if sent %}window.addEventListener('load', openIAModal);{% endif %}
+
+  (function () {
+    var burger = document.getElementById('navbar-burger');
+    var panel = document.getElementById('navbar-mobile-panel');
+    if (!burger || !panel) return;
+    function closePanel() { panel.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) closePanel();
+      else { panel.classList.add('open'); burger.setAttribute('aria-expanded', 'true'); }
+    });
+    panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closePanel); });
+    document.addEventListener('click', function (e) {
+      if (!panel.contains(e.target) && !burger.contains(e.target)) closePanel();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closePanel(); closeIAModal(); }
+    });
+  })();
+</script>
+<script src="/static/website/mtjl.js?v=2" defer></script>
+</body>
+</html>

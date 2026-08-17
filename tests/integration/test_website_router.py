@@ -29,7 +29,7 @@ def test_subscribe_honeypot_preenchido_nao_chama_backend(client, mocker):
     mock_post = mocker.patch("httpx.AsyncClient.post")
 
     r = client.post(
-        "/booking_beauty/subscribe",
+        "/relatify_beauty/subscribe",
         data=_bb_subscribe_payload(
             email="bot@spam-domain-qualquer.com",
             website="http://spam-bot.example.com",  # honeypot preenchido
@@ -46,7 +46,7 @@ def test_booking_beauty_contact_honeypot_preenchido_nao_envia_email(client, mock
     mock_send = mocker.patch("resend.Emails.send")
 
     r = client.post(
-        "/booking_beauty_contact",
+        "/relatify_beauty_contact",
         data={
             "name": "Bot",
             "email": "bot@spam-domain-qualquer.com",
@@ -65,7 +65,7 @@ def test_booking_beauty_contact_honeypot_preenchido_nao_envia_email(client, mock
 
 RATE_LIMITED_ENDPOINTS = [
     ("/contact", {"name": "Rate Bot", "email": "ratebot-contact@empresa-legitima.com", "message": "oi"}),
-    ("/booking_beauty_contact", {"name": "Rate Bot", "email": "ratebot-bbc@empresa-legitima.com", "message": "oi"}),
+    ("/relatify_beauty_contact", {"name": "Rate Bot", "email": "ratebot-bbc@empresa-legitima.com", "message": "oi"}),
     ("/qualityassurance_contact", {"name": "Rate Bot", "email": "ratebot-qa@empresa-legitima.com", "message": "oi"}),
     ("/pilotqa_contact", {"name": "Rate Bot", "email": "ratebot-pq@empresa-legitima.com", "message": "oi"}),
     ("/pilotqa_ai/subscribe", {"name": "Rate Bot", "email": "ratebot-pqs@empresa-legitima.com", "plan": "pro"}),
@@ -89,10 +89,10 @@ def test_rate_limit_booking_beauty_subscribe_bloqueia_a_sexta_requisicao(client,
     mocker.patch("httpx.AsyncClient.post", side_effect=Exception("sem backend no teste"))
     payload = {"name": "Rate Bot", "email": "ratebot-bb@empresa-legitima.com", "plan": "bb_starter", "accept_terms": "on"}
 
-    statuses = [client.post("/booking_beauty/subscribe", data=payload, follow_redirects=False).status_code for _ in range(5)]
+    statuses = [client.post("/relatify_beauty/subscribe", data=payload, follow_redirects=False).status_code for _ in range(5)]
     assert all(s != 429 for s in statuses), f"requisição dentro do limite retornou 429: {statuses}"
 
-    sixth = client.post("/booking_beauty/subscribe", data=payload, follow_redirects=False)
+    sixth = client.post("/relatify_beauty/subscribe", data=payload, follow_redirects=False)
     assert sixth.status_code == 429
 
 
@@ -100,7 +100,7 @@ def test_rate_limit_booking_beauty_subscribe_bloqueia_a_sexta_requisicao(client,
 
 CONTACT_BLOCKLIST_ENDPOINTS = [
     ("/contact", {"name": "Bot", "email": "x@test.com", "message": "spam"}, "sent=1"),
-    ("/booking_beauty_contact", {"name": "Bot", "email": "x@test.com", "message": "spam"}, "bb_sent=1"),
+    ("/relatify_beauty_contact", {"name": "Bot", "email": "x@test.com", "message": "spam"}, "bb_sent=1"),
     ("/qualityassurance_contact", {"name": "Bot", "email": "x@test.com", "message": "spam"}, "sent=1"),
     ("/pilotqa_contact", {"name": "Bot", "email": "x@test.com", "message": "spam"}, "pq_sent=1"),
 ]
@@ -153,7 +153,7 @@ def test_booking_beauty_contact_html_injection_e_escapado_no_corpo_do_email(clie
     mock_send = mocker.patch("resend.Emails.send")
 
     r = client.post(
-        "/booking_beauty_contact",
+        "/relatify_beauty_contact",
         data={
             "name": "<b>Nome</b>",
             "email": "injection2@empresa-legitima.com",
@@ -178,7 +178,7 @@ def test_booking_beauty_contact_fluxo_legitimo_envia_email(client, monkeypatch, 
     mock_send = mocker.patch("resend.Emails.send")
 
     r = client.post(
-        "/booking_beauty_contact",
+        "/relatify_beauty_contact",
         data={
             "name": "Cliente Real",
             "email": "cliente@empresa-legitima.com",

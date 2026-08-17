@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LarClínica — Home Care e Telessaúde para Operadoras de Saúde | MTJL Technology</title>
-  <meta name="description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde e cooperativas médicas. Cadastro único de beneficiário, conformidade LGPD/CFM." />
+  <title>LarClínica | Home Care e Telessaúde para Operadoras de Saúde | MTJL Technology</title>
+  <meta name="description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde e cooperativas médicas. Cadastro único de beneficiário, atendimento pela API Oficial do WhatsApp e conformidade LGPD." />
   <link rel="canonical" href="https://mtjltechnology.com/larclinica" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="LarClínica — Home Care e Telessaúde para Operadoras de Saúde" />
-  <meta property="og:description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde. Cadastro único de beneficiário, conformidade LGPD/CFM." />
+  <meta property="og:title" content="LarClínica | Home Care e Telessaúde para Operadoras de Saúde" />
+  <meta property="og:description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde. Cadastro único de beneficiário, atendimento pela API Oficial do WhatsApp e conformidade LGPD." />
   <meta property="og:image" content="https://mtjltechnology.com/static/brand/larclinica-logo.png" />
   <meta property="og:url" content="https://mtjltechnology.com/larclinica" />
   <meta property="og:locale" content="pt_BR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="LarClínica — Home Care e Telessaúde para Operadoras de Saúde" />
+  <meta name="twitter:title" content="LarClínica | Home Care e Telessaúde para Operadoras de Saúde" />
   <meta name="twitter:description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde, sob um único cadastro de beneficiário." />
   <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/larclinica-logo.png" />
   <script type="application/ld+json">
@@ -32,10 +32,15 @@
     "areaServed": "BR"
   }
   </script>
-  <link rel="stylesheet" href="/static/website/mtjl.css?v=45" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=114" />
   <link rel="icon" type="image/png" href="/static/brand/mtjl-technology-logo-transparent.png" />
 </head>
 <body class="lc-page">
+<a class="skip-link" href="#inicio">Pular para o conteúdo</a>
+
 
 <!-- ── Navbar ── -->
 <nav class="navbar">
@@ -45,9 +50,11 @@
   <ul class="navbar-nav">
     <li><a href="#visao-geral">Visão Geral</a></li>
     <li><a href="#pa-virtual">PA Virtual</a></li>
+    <li><a href="#whatsapp">WhatsApp</a></li>
     <li><a href="#home-care">Home Care</a></li>
     <li><a href="#telemonitoramento">Telemonitoramento</a></li>
     <li><a href="#prontuario">Prontuário</a></li>
+    <li><a href="#ia">IA</a></li>
     <li><a href="#integracoes">Integrações</a></li>
     <li><a href="#arquitetura">Arquitetura</a></li>
     <li><a href="#seguranca">Segurança</a></li>
@@ -63,9 +70,11 @@
   <ul>
     <li><a href="#visao-geral">Visão Geral</a></li>
     <li><a href="#pa-virtual">PA Virtual</a></li>
+    <li><a href="#whatsapp">WhatsApp</a></li>
     <li><a href="#home-care">Home Care</a></li>
     <li><a href="#telemonitoramento">Telemonitoramento</a></li>
     <li><a href="#prontuario">Prontuário</a></li>
+    <li><a href="#ia">IA</a></li>
     <li><a href="#integracoes">Integrações</a></li>
     <li><a href="#arquitetura">Arquitetura</a></li>
     <li><a href="#seguranca">Segurança</a></li>
@@ -78,7 +87,7 @@
   <div class="hero-inner">
     <div class="hero-badge">Plataforma B2B · Operadoras de Saúde</div>
     <h1>Uma única plataforma para <span>Pronto Atendimento Virtual, Home Care e Telemonitoramento</span></h1>
-    <p>Tudo sob um único cadastro de beneficiário: mesma tabela de paciente, mesmo CPF, mesmo histórico clínico. Fila, triagem de pacientes, vídeo, chat, prontuário e prescrição digital de um lado. Mapa de casas, estoque domiciliar, sinais vitais e alertas do outro — pronta para avaliação técnica da diretoria médica, TI e compliance.</p>
+    <p>Tudo sob um único cadastro de beneficiário: mesma tabela de paciente, mesmo CPF, mesmo histórico clínico. Fila, triagem de pacientes, vídeo, chat, prontuário e prescrição digital de um lado. Mapa de casas, estoque domiciliar, sinais vitais e alertas do outro. Pronta para avaliação técnica da diretoria médica, TI e compliance.</p>
     <div class="hero-actions">
       <button type="button" onclick="openLCModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Falar com especialista</button>
       <a href="#pa-virtual" class="btn-outline">Ver módulos</a>
@@ -87,39 +96,65 @@
 
   <div class="hero-visual" aria-hidden="true">
     <div class="hero-card">
-      <div class="hero-card-icon">🚑</div>
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#ambulance"/></svg></div>
       <div class="hero-card-label">PA Virtual</div>
       <div class="hero-card-value">Fila e triagem de pacientes</div>
     </div>
     <div class="hero-card">
-      <div class="hero-card-icon">🏠</div>
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#home"/></svg></div>
       <div class="hero-card-label">Home Care</div>
       <div class="hero-card-value">Mapa de casas e estoque</div>
     </div>
     <div class="hero-card">
-      <div class="hero-card-icon">📋</div>
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#clipboard"/></svg></div>
       <div class="hero-card-label">Prontuário</div>
       <div class="hero-card-value">Histórico e prescrição digital</div>
     </div>
     <div class="hero-card">
-      <div class="hero-card-icon">🔒</div>
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
       <div class="hero-card-label">Conformidade</div>
-      <div class="hero-card-value">LGPD + Res. CFM 2.314/2022</div>
+      <div class="hero-card-value">LGPD e trilha auditável</div>
     </div>
   </div>
 </section>
 
+<!-- ── Strip ── -->
+<div class="strip">
+  <div class="strip-track">
+   <ul class="strip-list" aria-label="Módulos da plataforma">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Pronto Atendimento Virtual</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Home Care / Telemonitoramento</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Prontuário Eletrônico</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Prescrição Digital</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Teleinterconsulta</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> LGPD e auditoria</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Atendimento por WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Agendamento online</li>
+    </ul>
+   <ul class="strip-list" aria-hidden="true">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Pronto Atendimento Virtual</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Home Care / Telemonitoramento</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Prontuário Eletrônico</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Prescrição Digital</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Teleinterconsulta</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> LGPD e auditoria</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Atendimento por WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Agendamento online</li>
+    </ul>
+  </div>
+</div>
+
 <!-- ── Números ── -->
-<section id="numeros" style="text-align:center">
+<section id="numeros">
   <span class="section-tag">Em números</span>
   <h2 class="section-title">Robustez desde a arquitetura</h2>
   <div class="lc-stats-grid">
     <div class="stat-card">
-      <div class="stat-value">25</div>
+      <div class="stat-value">35</div>
       <div class="stat-label">Domínios modulares integrados</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value">110+</div>
+      <div class="stat-value">191</div>
       <div class="stat-label">Endpoints de API implementados</div>
     </div>
     <div class="stat-card">
@@ -127,31 +162,22 @@
       <div class="stat-label">Um beneficiário, um histórico clínico</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="font-size:1.4rem">LGPD + CFM</div>
+      <div class="stat-value" style="font-size:1.4rem">LGPD</div>
       <div class="stat-label">Conformidade desde a arquitetura</div>
     </div>
   </div>
 </section>
 
-<!-- ── Strip ── -->
-<div class="strip">
-  <div class="strip-item"><span class="strip-dot"></span> Pronto Atendimento Virtual</div>
-  <div class="strip-item"><span class="strip-dot"></span> Home Care / Telemonitoramento</div>
-  <div class="strip-item"><span class="strip-dot"></span> Prontuário Eletrônico</div>
-  <div class="strip-item"><span class="strip-dot"></span> Prescrição Digital</div>
-  <div class="strip-item"><span class="strip-dot"></span> Teleinterconsulta</div>
-  <div class="strip-item"><span class="strip-dot"></span> LGPD / CFM</div>
-</div>
 
 <!-- ── Visão Geral ── -->
 <section id="visao-geral" class="services-section">
   <span class="section-tag">Visão geral da solução</span>
   <h2 class="section-title">Uma plataforma única, sob cadastro único de beneficiário</h2>
-  <p class="section-sub" style="margin-left:auto;margin-right:auto">A ponte entre Pronto Atendimento Virtual e Home Care é a mesma tabela de paciente, o mesmo CPF, o mesmo histórico clínico — elimina retrabalho e risco de dado desatualizado.</p>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">A ponte entre Pronto Atendimento Virtual e Home Care é a mesma tabela de paciente, o mesmo CPF, o mesmo histórico clínico. Elimina retrabalho e risco de dado desatualizado.</p>
 
   <div class="lc-overview-grid">
     <div class="service-card" style="text-align:left">
-      <div class="service-icon">🚑</div>
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#ambulance"/></svg></div>
       <h3 style="justify-content:flex-start">PA Virtual / Teleconsulta</h3>
       <ul class="lc-check-list">
         <li>Fila digital e triagem de pacientes</li>
@@ -160,7 +186,7 @@
       </ul>
     </div>
     <div class="service-card" style="text-align:left">
-      <div class="service-icon">🏠</div>
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#home"/></svg></div>
       <h3 style="justify-content:flex-start">Home Care / Telemonitoramento</h3>
       <ul class="lc-check-list">
         <li>Mapa de casas em acompanhamento e estoque de insumos por residência</li>
@@ -169,7 +195,7 @@
       </ul>
     </div>
     <div class="service-card" style="text-align:left">
-      <div class="service-icon">👤</div>
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#compass"/></svg></div>
       <h3 style="justify-content:flex-start">Jornada do Beneficiário</h3>
       <ul class="lc-check-list">
         <li>Cadastro digital único, atualização self-service</li>
@@ -185,14 +211,14 @@
 <section id="pa-virtual" class="services-section">
   <span class="section-tag">PA Virtual</span>
   <h2 class="section-title">Pronto Atendimento Virtual, do acolhimento à segunda opinião</h2>
-  <p class="section-sub" style="margin-left:auto;margin-right:auto">Recepção digital, fila com triagem de risco e videoconsulta — com teleinterconsulta médico↔médico quando o caso pede uma segunda opinião.</p>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Recepção digital, fila com triagem de risco e videoconsulta, com teleinterconsulta médico↔médico quando o caso pede uma segunda opinião.</p>
 
   <div class="services-grid lc-two-col-grid">
     <div class="service-card">
-      <div class="service-icon">🚑</div>
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#ambulance"/></svg></div>
       <h3>Atendimento Digital / PA Virtual</h3>
       <ul class="lc-check-list">
-        <li>Recepção digital com elegibilidade automática</li>
+        <li>Recepção digital com validação de cadastro ativo</li>
         <li>Fila em tempo real, triagem de pacientes parametrizável</li>
         <li>Tempo de espera dinâmico por prioridade</li>
         <li>Atendimento por enfermagem com escalonamento ao médico</li>
@@ -200,12 +226,43 @@
       </ul>
     </div>
     <div class="service-card">
-      <div class="service-icon">🩺</div>
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#stethoscope"/></svg></div>
       <h3>Teleinterconsulta e Protocolos</h3>
       <ul class="lc-check-list">
         <li>Teleinterconsulta médico↔médico para segunda opinião</li>
         <li>Acesso controlado ao prontuário durante a interconsulta</li>
         <li>Biblioteca de protocolos clínicos consultável em atendimento</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Canal WhatsApp ── -->
+<section id="whatsapp" class="services-section">
+  <span class="section-tag">Canal de entrada</span>
+  <h2 class="section-title">O atendimento inteiro acontece dentro do WhatsApp</h2>
+  <p class="section-sub">Não é aviso por WhatsApp. É identificação, consentimento, pré-triagem e senha na fila dentro da própria conversa. A web só aparece no link do vídeo. Para o beneficiário idoso ou com pouca familiaridade digital, isso tira o aplicativo, a senha e a URL do caminho.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
+      <h3>Da mensagem à sala de vídeo</h3>
+      <ul class="lc-check-list">
+        <li>Identificação por CPF ou carteirinha, conferida contra o cadastro</li>
+        <li>Consentimento LGPD aceito na conversa, com registro próprio</li>
+        <li>Pré-triagem adaptativa, no máximo cinco perguntas</li>
+        <li>Senha na fila e aviso de "sua vez chegou" pelo mesmo canal</li>
+        <li>Link da sala de vídeo entregue ao fim da conversa</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check-shield"/></svg></div>
+      <h3>API Oficial, sinal de alarme e login sem senha</h3>
+      <ul class="lc-check-list">
+        <li>API Oficial do WhatsApp, contratada pela operadora direto na Meta</li>
+        <li>Sintoma grave encerra as perguntas, prioriza o caso e alerta a enfermagem</li>
+        <li>Login do beneficiário por código enviado no WhatsApp, sem senha</li>
+        <li>Cada instituição atende pelo próprio número, sem mistura de cadastro</li>
       </ul>
     </div>
   </div>
@@ -217,33 +274,33 @@
     <div>
       <span class="section-tag">Home Care</span>
       <h2 class="section-title">Cuidado domiciliar com visibilidade de ponta a ponta</h2>
-      <p class="section-sub">Cada residência acompanhada vira um ponto no mapa operacional da equipe — com estoque de insumos, responsável de linha de cuidado e histórico clínico visíveis em um só lugar.</p>
+      <p class="section-sub">Cada residência acompanhada vira um ponto no mapa operacional da equipe, com estoque de insumos, responsável de linha de cuidado e histórico clínico visíveis em um só lugar.</p>
     </div>
 
     <div class="about-features">
       <div class="about-feature">
-        <div class="feature-icon">🏠</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#home"/></svg></div>
         <div class="feature-text">
           <h3>Mapa de casas em acompanhamento</h3>
           <p>Visão territorial de todos os pacientes ativos em home care, por residência.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">📦</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
         <div class="feature-text">
           <h3>Estoque de insumos por residência</h3>
           <p>Controle de material domiciliar vinculado a cada paciente, sem planilha paralela.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🗺️</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#map"/></svg></div>
         <div class="feature-text">
           <h3>Linhas de cuidado e gestão de casos</h3>
           <p>Timeline de coordenação entre os profissionais responsáveis por cada paciente.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">📊</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
         <div class="feature-text">
           <h3>Dashboard de acompanhamento clínico</h3>
           <p>Cobertura territorial por bairro e responsável, com exportação para gestão.</p>
@@ -254,38 +311,38 @@
 </section>
 
 <!-- ── Telemonitoramento ── -->
-<section id="telemonitoramento" style="background:var(--light)">
+<section id="telemonitoramento">
   <div class="about-grid">
     <div>
       <span class="section-tag">Telemonitoramento</span>
       <h2 class="section-title">Sinais vitais e escalas clínicas que disparam alerta sozinhos</h2>
-      <p class="section-sub">Escalas validadas clinicamente e faixas de risco parametrizáveis — o time é avisado antes de o quadro piorar, sem depender de visita presencial pra perceber.</p>
+      <p class="section-sub">Escalas validadas clinicamente e faixas de risco parametrizáveis. O time é avisado antes de o quadro piorar, sem depender de visita presencial pra perceber.</p>
     </div>
 
     <div class="about-features">
       <div class="about-feature">
-        <div class="feature-icon">📈</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#trend-up"/></svg></div>
         <div class="feature-text">
           <h3>Escalas clínicas validadas</h3>
           <p>Braden, Morse, EVA, PHQ-9 e GAD-7 aplicadas diretamente no acompanhamento.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🚨</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#alert"/></svg></div>
         <div class="feature-text">
           <h3>Alertas automáticos por faixa de risco</h3>
           <p>Sinal vital fora do parâmetro esperado dispara notificação pro responsável.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🤰</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#pregnant"/></svg></div>
         <div class="feature-text">
           <h3>Gestante de alto risco</h3>
           <p>Monitoramento de BCF, altura uterina e ajuste de protocolo de pré-eclâmpsia.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🧠</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#heart-pulse"/></svg></div>
         <div class="feature-text">
           <h3>Saúde mental integrada</h3>
           <p>Linha dedicada com PHQ-9/GAD-7 e encaminhamento direto pelo mesmo cadastro.</p>
@@ -299,19 +356,19 @@
 <section id="prontuario" class="services-section">
   <span class="section-tag">Prontuário</span>
   <h2 class="section-title">Prontuário e prescrição digital sem perder rastro</h2>
-  <p class="section-sub" style="margin-left:auto;margin-right:auto">Toda edição clínica é versionada — nada se sobrescreve, tudo fica auditável.</p>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Toda edição clínica é versionada. Nada se sobrescreve, tudo fica auditável.</p>
 
   <div class="services-grid lc-two-col-grid">
     <div class="service-card">
-      <div class="service-icon">📋</div>
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#clipboard"/></svg></div>
       <h3>Prontuário Eletrônico</h3>
       <ul class="lc-check-list">
         <li>Histórico por atendimento, CID-10 e CIAP2</li>
-        <li>Evolução clínica com versionamento — nenhuma edição sobrescreve dado anterior</li>
+        <li>Evolução clínica com versionamento. Nenhuma edição sobrescreve dado anterior</li>
       </ul>
     </div>
     <div class="service-card">
-      <div class="service-icon">💊</div>
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#pill"/></svg></div>
       <h3>Prescrição Digital</h3>
       <ul class="lc-check-list">
         <li>Sinalização de controlado e interação medicamentosa</li>
@@ -321,42 +378,73 @@
   </div>
 </section>
 
+<!-- ── IA clínica ── -->
+<section id="ia" class="services-section">
+  <span class="section-tag">Inteligência Artificial</span>
+  <h2 class="section-title">IA que sugere, nunca decide, e não sai da sua rede</h2>
+  <p class="section-sub">Sete capacidades, todas desligadas por padrão e ligadas uma a uma pela gestão. Nenhuma escreve no prontuário: a saída volta para a tela marcada como sugestão e só vira registro quando o profissional salva.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#spark"/></svg></div>
+      <h3>Onde a IA entra</h3>
+      <ul class="lc-check-list">
+        <li>Transcrição da consulta gravada e SOAP automático</li>
+        <li>Resumo clínico do histórico do beneficiário</li>
+        <li>Sugestão de CID-10 validada contra lista curada, não só pelo modelo</li>
+        <li>Pré-triagem adaptativa na web e no WhatsApp</li>
+        <li>Sinalização de risco de internação e de inconsistência operacional, sempre com os motivos listados</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
+      <h3>O dado clínico não viaja</h3>
+      <ul class="lc-check-list">
+        <li>Modelo servido em infraestrutura própria, não em serviço de terceiro</li>
+        <li>Barreira no código: a aplicação recusa iniciar se o endereço do modelo apontar para fora da rede local</li>
+        <li>Consentimento específico de IA por beneficiário, recusável sem bloquear o atendimento</li>
+        <li>Sem diagnóstico e sem prescrição automáticos, por desenho</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- ── Integrações ── -->
-<section id="integracoes" style="background:var(--light)">
+<section id="integracoes">
   <div class="about-grid">
     <div>
       <span class="section-tag">Integrações</span>
       <h2 class="section-title">Pronta para conectar com o ecossistema da operadora</h2>
-      <p class="section-sub">Interfaces já definidas para os principais sistemas corporativos de saúde — a conexão efetiva depende de endpoint e credencial de cada fornecedor, sem precisar redesenhar a plataforma.</p>
+      <p class="section-sub">Interfaces já definidas para os principais sistemas corporativos de saúde. A conexão efetiva depende de endpoint e credencial de cada fornecedor, sem precisar redesenhar a plataforma.</p>
     </div>
 
     <div class="about-features">
       <div class="about-feature">
-        <div class="feature-icon">🏥</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#hospital"/></svg></div>
         <div class="feature-text">
           <h3>Sistemas hospitalares e de saúde</h3>
           <p>Interfaces definidas para Tasy, RNDS, TISS, PACS, LIS e RIS.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🔑</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
         <div class="feature-text">
-          <h3>SSO / Active Directory corporativo</h3>
-          <p>Autenticação integrada ao diretório da operadora, sem login paralelo.</p>
+          <h3>API Oficial do WhatsApp, e-mail e push</h3>
+          <p>Os três canais operando hoje. O WhatsApp roda na API Oficial, contratada pela operadora direto na Meta. Cada envio fica registrado em log auditável, mesmo quando o canal falha.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">✍️</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#plug"/></svg></div>
         <div class="feature-text">
-          <h3>Assinatura eletrônica ICP-Brasil</h3>
-          <p>Interface pronta para provedor credenciado de assinatura digital.</p>
+          <h3>Ingestão assinada de sistema parceiro</h3>
+          <p>Endpoint que só aceita dado com assinatura digital comprovando origem automatizada. O mecanismo de verificação está pronto e testado; falta o contrato de payload com cada fornecedor.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">📧</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#key"/></svg></div>
         <div class="feature-text">
-          <h3>E-mail e push já funcionais</h3>
-          <p>Notificação por SMTP e Web Push operando hoje, sem depender de vendor pago. WhatsApp Business API estruturado, aguardando contratação de gateway.</p>
+          <h3>SSO corporativo e assinatura ICP-Brasil</h3>
+          <p>Pontos de extensão definidos no código, aguardando credencial do provedor de cada operadora. Ainda não conectados.</p>
         </div>
       </div>
     </div>
@@ -364,7 +452,7 @@
 </section>
 
 <!-- ── Diferenciais ── -->
-<section id="diferenciais" style="background:var(--light);text-align:center">
+<section id="diferenciais">
   <span class="section-tag">Diferenciais</span>
   <h2 class="section-title">Por que LarClínica, e não dois produtos colados</h2>
 
@@ -382,17 +470,17 @@
     <div class="lc-diff-card">
       <div class="lc-diff-num">3</div>
       <h3>Arquitetura modular por domínios</h3>
-      <p>Cada função é um domínio isolado — evoluções estendem o domínio correspondente, sem reescrever a plataforma.</p>
+      <p>Cada função é um domínio isolado. Evoluções estendem o domínio correspondente, sem reescrever a plataforma.</p>
     </div>
     <div class="lc-diff-card">
       <div class="lc-diff-num">4</div>
-      <h3>Conformidade LGPD/CFM desde a 1ª linha</h3>
+      <h3>Conformidade LGPD desde a 1ª linha</h3>
       <p>Trilha de auditoria, consentimento versionado e histórico de prontuário fazem parte do desenho de dados desde o início.</p>
     </div>
     <div class="lc-diff-card">
       <div class="lc-diff-num">5</div>
       <h3>Pronta para integrar com terceiros</h3>
-      <p>Interfaces já definidas para ICP-Brasil, Tasy/TISS/RNDS, SSO e WhatsApp Business API — basta endpoint e credencial do fornecedor.</p>
+      <p>Interfaces já definidas para ICP-Brasil, Tasy/TISS/RNDS, SSO e WhatsApp Business API. Basta endpoint e credencial do fornecedor.</p>
     </div>
   </div>
 </section>
@@ -403,36 +491,36 @@
     <div>
       <span class="section-tag">Arquitetura</span>
       <h2 class="section-title">Stack enxuta, modular por domínio</h2>
-      <p class="section-sub">Autenticação, auditoria, cadastro, consentimento, fila, prontuário, atendimento/chat, prescrição, estoque domiciliar, telemonitoramento, teleinterconsulta e protocolos — cada domínio concentra sua própria regra de negócio e camada HTTP, consumindo outro domínio só por interface definida.</p>
+      <p class="section-sub">Autenticação, auditoria, cadastro, consentimento, fila, prontuário, atendimento/chat, prescrição, estoque domiciliar, telemonitoramento, teleinterconsulta e protocolos. Cada domínio concentra sua própria regra de negócio e camada HTTP, consumindo outro domínio só por interface definida.</p>
     </div>
 
     <div class="about-features">
       <div class="about-feature">
-        <div class="feature-icon">🧩</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#puzzle"/></svg></div>
         <div class="feature-text">
-          <h3>25 domínios isolados</h3>
-          <p>Cada função é um módulo próprio — evoluções estendem o domínio correspondente, sem reescrever a plataforma.</p>
+          <h3>35 domínios isolados</h3>
+          <p>Cada função é um módulo próprio. Evoluções estendem o domínio correspondente, sem reescrever a plataforma.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🔌</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#plug"/></svg></div>
         <div class="feature-text">
           <h3>Comunicação só por interface definida</h3>
           <p>Reduz o risco de uma mudança quebrar outro módulo e facilita auditoria técnica pela equipe de TI da operadora.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">📊</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
         <div class="feature-text">
           <h3>Gestão Assistencial e Analytics</h3>
-          <p>Linhas de cuidado, medicina preventiva e dashboard operacional — SLA, NPS, saúde populacional, exportação CSV.</p>
+          <p>Linhas de cuidado, medicina preventiva e dashboard operacional. SLA, NPS, saúde populacional, exportação CSV.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🐳</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#container"/></svg></div>
         <div class="feature-text">
           <h3>Empacotamento simples</h3>
-          <p>Docker Compose (app + banco) — sobe em qualquer ambiente sem depender de orquestrador complexo.</p>
+          <p>Docker Compose (app + banco). Sobe em qualquer ambiente sem depender de orquestrador complexo.</p>
         </div>
       </div>
     </div>
@@ -440,41 +528,41 @@
 </section>
 
 <!-- ── Segurança ── -->
-<section id="seguranca" style="background:var(--light)">
+<section id="seguranca">
   <div class="about-grid">
     <div>
       <span class="section-tag">Segurança</span>
-      <h2 class="section-title">Conformidade LGPD/CFM desde o desenho de dados</h2>
-      <p class="section-sub">Trilha de auditoria, consentimento versionado e histórico de prontuário não são camadas coladas depois — fazem parte da modelagem de dados desde a primeira linha.</p>
+      <h2 class="section-title">Conformidade LGPD desde o desenho de dados</h2>
+      <p class="section-sub">Isolamento entre operadoras garantido pelo banco de dados, não pela aplicação. Auditoria que detecta adulteração retroativa. Consentimento que guarda o texto exato que a pessoa leu. São respostas para as perguntas que mais custam caro numa due diligence.</p>
     </div>
 
     <div class="about-features">
       <div class="about-feature">
-        <div class="feature-icon">🔐</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
         <div class="feature-text">
-          <h3>Controle de acesso por papel</h3>
-          <p>Médico só atendimento, home care só domiciliar, gestão acessa os três + auditoria.</p>
+          <h3>Isolamento garantido pelo banco</h3>
+          <p>Row Level Security do PostgreSQL em 41 tabelas: consulta que esqueça o filtro não enxerga a linha, em vez de vazar. A aplicação recusa iniciar em produção se a política de isolamento não existir.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🧾</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#receipt"/></svg></div>
         <div class="feature-text">
-          <h3>Trilha de auditoria completa</h3>
-          <p>Login, prontuário, cadastro, assinatura, download e revogação, com autor e data/hora — log imutável.</p>
+          <h3>Auditoria com cadeia de verificação</h3>
+          <p>Cada registro encadeia o anterior por hash, então adulteração retroativa é detectável. Cobre login, prontuário, prescrição, download de anexo e gravação. CPF e texto clínico nunca entram no detalhe do log.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">✅</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg></div>
         <div class="feature-text">
-          <h3>Consentimento LGPD versionado</h3>
-          <p>Capturado com IP e user-agent. Revogação é atualização de status, nunca exclusão.</p>
+          <h3>Consentimento com o texto arquivado</h3>
+          <p>Granular por finalidade. Atendimento, home care, gravação e IA. Guarda IP, user-agent e o próprio termo aceito, então dá para provar o que a pessoa leu mesmo depois de o texto padrão mudar.</p>
         </div>
       </div>
       <div class="about-feature">
-        <div class="feature-icon">🕓</div>
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#clock"/></svg></div>
         <div class="feature-text">
-          <h3>Histórico de prontuário com snapshot</h3>
-          <p>Toda alteração clínica grava o estado anterior — nenhum dado se perde.</p>
+          <h3>Prontuário versionado e dado cifrado</h3>
+          <p>Toda alteração clínica grava o estado anterior, com hash encadeado. Campos sensíveis em AES-256-GCM, com retenção de prontuário conforme a Resolução CFM 1.821/2007.</p>
         </div>
       </div>
     </div>
@@ -484,7 +572,7 @@
 <!-- ── Demonstração ── -->
 <section class="cta-section" id="demonstracao">
   <h2>Leve o LarClínica para avaliação da sua operadora</h2>
-  <p>Arquitetura modular, conformidade LGPD/CFM desde o desenho de dados e cobertura completa do PA Virtual ao Home Care — em uma única plataforma, pronta para demonstração técnica. Agende um horário com sua diretoria médica, TI e compliance e veja o produto funcionando ao vivo.</p>
+  <p>Arquitetura modular, conformidade LGPD desde o desenho de dados e cobertura completa do PA Virtual ao Home Care, em uma única plataforma, pronta para demonstração técnica. Agende um horário com sua diretoria médica, TI e compliance e veja o produto funcionando ao vivo.</p>
   <div class="cta-actions">
     <button type="button" onclick="openLCModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Agendar demonstração</button>
   </div>
@@ -568,5 +656,6 @@
     });
   })();
 </script>
+<script src="/static/website/mtjl.js?v=2" defer></script>
 </body>
 </html>

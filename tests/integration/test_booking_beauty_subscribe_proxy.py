@@ -29,7 +29,7 @@ def _mock_backend_response(mocker, json_body, status_code=200):
 def test_backend_ok_redireciona_para_bb_subscribed(client, mocker):
     mock_post = _mock_backend_response(mocker, {"ok": True})
 
-    r = client.post("/booking_beauty/subscribe", data=_payload(), follow_redirects=False)
+    r = client.post("/relatify_beauty/subscribe", data=_payload(), follow_redirects=False)
 
     assert r.status_code == 303
     assert "bb_subscribed=1" in r.headers["location"]
@@ -40,7 +40,7 @@ def test_backend_ok_redireciona_para_bb_subscribed(client, mocker):
 def test_backend_erro_redireciona_com_bb_error(client, mocker, error_code):
     _mock_backend_response(mocker, {"ok": False, "error": error_code})
 
-    r = client.post("/booking_beauty/subscribe", data=_payload(), follow_redirects=False)
+    r = client.post("/relatify_beauty/subscribe", data=_payload(), follow_redirects=False)
 
     assert r.status_code == 303
     assert f"bb_error={error_code}" in r.headers["location"]
@@ -49,7 +49,7 @@ def test_backend_erro_redireciona_com_bb_error(client, mocker, error_code):
 def test_backend_indisponivel_redireciona_com_bb_error_unavailable(client, mocker):
     mocker.patch("httpx.AsyncClient.post", side_effect=httpx.ConnectError("connection refused"))
 
-    r = client.post("/booking_beauty/subscribe", data=_payload(), follow_redirects=False)
+    r = client.post("/relatify_beauty/subscribe", data=_payload(), follow_redirects=False)
 
     assert r.status_code == 303
     assert "bb_error=unavailable" in r.headers["location"]
@@ -59,7 +59,7 @@ def test_payload_repassado_ao_backend_inclui_master_key_e_dados_do_form(client, 
     mock_post = _mock_backend_response(mocker, {"ok": True})
 
     client.post(
-        "/booking_beauty/subscribe",
+        "/relatify_beauty/subscribe",
         data=_payload(name="Ana", email="ana@empresa.com", phone="41988887777"),
         follow_redirects=False,
         headers={"user-agent": "pytest-agent"},
@@ -78,6 +78,6 @@ def test_payload_repassado_ao_backend_inclui_master_key_e_dados_do_form(client, 
 def test_prefixo_de_idioma_preservado_no_redirect(client, mocker):
     _mock_backend_response(mocker, {"ok": True})
 
-    r = client.post("/booking_beauty/subscribe", data=_payload(lang="en"), follow_redirects=False)
+    r = client.post("/relatify_beauty/subscribe", data=_payload(lang="en"), follow_redirects=False)
 
-    assert r.headers["location"].startswith("/en/booking_beauty")
+    assert r.headers["location"].startswith("/en/relatify_beauty")

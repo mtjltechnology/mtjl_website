@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desenvolvimento de Software Sob Medida | MTJL Technology</title>
+  <meta name="description" content="Aplicações web, APIs e integrações sob medida, com arquitetura por domínio e teste automatizado desde a primeira entrega. Quem desenvolve aqui também é time de qualidade." />
+  <link rel="canonical" href="https://mtjltechnology.com/desenvolvimento-de-software" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Desenvolvimento de Software Sob Medida | MTJL Technology" />
+  <meta property="og:description" content="Aplicações web, APIs e integrações sob medida, com teste automatizado desde a primeira entrega." />
+  <meta property="og:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <meta property="og:url" content="https://mtjltechnology.com/desenvolvimento-de-software" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Desenvolvimento de Software Sob Medida | MTJL Technology" />
+  <meta name="twitter:description" content="Aplicações web, APIs e integrações sob medida, com teste automatizado desde a primeira entrega." />
+  <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Desenvolvimento de Software Sob Medida",
+    "serviceType": "Desenvolvimento de software",
+    "url": "https://mtjltechnology.com/desenvolvimento-de-software",
+    "provider": {
+      "@type": "Organization",
+      "name": "MTJL Technology",
+      "url": "https://mtjltechnology.com/"
+    },
+    "areaServed": "BR"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=114" />
+  <link rel="icon" type="image/png" href="/static/brand/mtjl-technology-logo-transparent.png" />
+</head>
+<body>
+<a class="skip-link" href="#inicio">Pular para o conteúdo</a>
+
+<!-- ── Navbar ── -->
+<nav class="navbar">
+  <a href="https://mtjltechnology.com/" style="display:flex;align-items:center">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="navbar-logo" width="150" height="80" />
+  </a>
+  <ul class="navbar-nav">
+    <li><a href="#o-que-construimos">O que construímos</a></li>
+    <li><a href="#como-trabalhamos">Como trabalhamos</a></li>
+    <li><a href="#tecnologias">Tecnologias</a></li>
+    <li><a href="#prova">Prova</a></li>
+    <li><a href="/qualityassurance">Testes de Software</a></li>
+    <li><a href="/inteligencia-artificial">Inteligência Artificial</a></li>
+  </ul>
+  <button type="button" class="navbar-burger" id="navbar-burger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navbar-mobile-panel">
+    <span class="navbar-burger-bar"></span>
+  </button>
+</nav>
+
+<!-- ── Mobile nav panel ── -->
+<div class="navbar-mobile-panel" id="navbar-mobile-panel">
+  <ul>
+    <li><a href="#o-que-construimos">O que construímos</a></li>
+    <li><a href="#como-trabalhamos">Como trabalhamos</a></li>
+    <li><a href="#tecnologias">Tecnologias</a></li>
+    <li><a href="#prova">Prova</a></li>
+    <li><a href="/qualityassurance">Testes de Software</a></li>
+    <li><a href="/inteligencia-artificial">Inteligência Artificial</a></li>
+  </ul>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-badge">Serviço · Desenvolvimento sob medida</div>
+    <h1>Software feito para o seu processo, <span>não o contrário</span></h1>
+    <p>Aplicações web, APIs e integrações construídas com arquitetura que aguenta o negócio crescer. E com uma diferença que quase nenhuma fábrica de software tem: aqui quem desenvolve convive com o time de qualidade todo dia, então o teste não é uma fase no fim, é parte da entrega.</p>
+    <div class="hero-actions">
+      <button type="button" onclick="openDevModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Falar sobre o seu projeto</button>
+      <a href="#o-que-construimos" class="btn-outline">O que construímos</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#code"/></svg></div>
+      <div class="hero-card-label">Aplicações</div>
+      <div class="hero-card-value">Web, painel e desktop</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#plug"/></svg></div>
+      <div class="hero-card-label">APIs</div>
+      <div class="hero-card-value">Integração entre sistemas</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
+      <div class="hero-card-label">Qualidade</div>
+      <div class="hero-card-value">Teste desde a primeira entrega</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#refresh"/></svg></div>
+      <div class="hero-card-label">Entrega</div>
+      <div class="hero-card-value">Deploy em pipeline</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Faixa ── -->
+<div class="strip">
+  <div class="strip-track">
+   <ul class="strip-list" aria-label="O que entregamos">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> aplicação web sob medida</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> API e integração entre sistemas</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> painel administrativo</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> aplicativo desktop</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> arquitetura por domínio</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> teste automatizado no pipeline</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> multi-tenant e controle de acesso</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> observabilidade e backup</li>
+    </ul>
+   <ul class="strip-list" aria-hidden="true">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> aplicação web sob medida</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> API e integração entre sistemas</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> painel administrativo</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> aplicativo desktop</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> arquitetura por domínio</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> teste automatizado no pipeline</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> multi-tenant e controle de acesso</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> observabilidade e backup</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── O que construímos ── -->
+<section id="o-que-construimos" class="services-section">
+  <span class="section-tag">O que construímos</span>
+  <h2 class="section-title">Do formulário que ninguém aguenta mais preencher à plataforma inteira</h2>
+  <p class="section-sub">Trabalhamos tanto em sistema novo quanto em sistema que já existe e precisa evoluir sem parar de operar.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#code"/></svg></div>
+      <h3>Aplicação web e painel</h3>
+      <p>Sistema de gestão, portal de cliente, painel operacional. Com papel de usuário, permissão por função e separação de dados entre clientes quando o produto atende mais de uma empresa.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#plug"/></svg></div>
+      <h3>API e integração</h3>
+      <p>Conectar o que você já usa: ERP, gateway de pagamento, mensageria, serviço de terceiro. Inclusive quando a documentação do outro lado é ruim ou inexistente.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
+      <h3>Aplicativo desktop</h3>
+      <p>Quando o trabalho não cabe no navegador: acesso a arquivo local, terminal, dispositivo conectado à máquina. Instalador para macOS, Windows e Linux.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#refresh"/></svg></div>
+      <h3>Modernização do que já existe</h3>
+      <p>Sistema legado que trava a operação. Entramos por partes, com teste cobrindo o comportamento atual antes de mexer, para a migração não virar aposta.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
+      <h3>Automação de processo</h3>
+      <p>Aquela planilha que três pessoas atualizam à mão, o relatório que alguém monta toda segunda, o cadastro digitado duas vezes em sistemas diferentes.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
+      <h3>Infraestrutura e operação</h3>
+      <p>Publicação em contêiner, pipeline de deploy, monitoramento, rotina de backup com ensaio de restauração. Software que ninguém sabe operar não está pronto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Como trabalhamos ── -->
+<section id="como-trabalhamos">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Como trabalhamos</span>
+      <h2 class="section-title">Teste não é a última fase do projeto</h2>
+      <p class="section-sub">A MTJL nasceu prestando consultoria em qualidade de software. Isso muda como a gente desenvolve: o teste entra junto com o código, não depois que a entrega já está de pé e ninguém quer mais mexer. E como desenvolvimento, qualidade e IA ficam sob o mesmo fornecedor, não existe responsabilidade fragmentada quando algo falha ou precisa evoluir.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#map"/></svg></div>
+        <div class="feature-text">
+          <h3>Domínio antes de tela</h3>
+          <p>Primeiro entender a regra de negócio e como ela se divide. Cada área vira um módulo com fronteira clara, então mudar uma coisa não obriga a reescrever a plataforma. Isso reduz o risco de integrar com sistema legado, porque a conexão fica contida num módulo, e facilita auditoria técnica pelo time de TI do cliente.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
+        <div class="feature-text">
+          <h3>Teste automatizado desde o começo</h3>
+          <p>Unitário, integração e jornada completa rodando no pipeline. Não é preciso contratar a parte de qualidade separado, ela já vem.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#alert"/></svg></div>
+        <div class="feature-text">
+          <h3>Falhar alto, não em silêncio</h3>
+          <p>Configuração incompleta ou insegura derruba a aplicação na subida, em vez de deixá-la rodando degradada. Erro visível custa muito menos que erro escondido.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#doc"/></svg></div>
+        <div class="feature-text">
+          <h3>Entrega com manual</h3>
+          <p>Documentação de operação, rotina de backup e restauração testada. Você deve conseguir tocar o sistema sem depender de quem escreveu.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
+        <div class="feature-text">
+          <h3>Experiência de dono de produto</h3>
+          <p>Não somos só fornecedor de projeto. Mantemos produtos próprios em operação, então conhecemos o custo de decisão ruim de arquitetura no segundo ano, não no dia da entrega.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check-shield"/></svg></div>
+        <div class="feature-text">
+          <h3>Transparência técnica como princípio</h3>
+          <p>Deixamos explícito o que já está pronto e o que depende de contrato ou credencial de terceiro. Você não descobre uma dependência bloqueante na véspera de subir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Tecnologias ── -->
+<section id="tecnologias" class="services-section">
+  <span class="section-tag">Tecnologias</span>
+  <h2 class="section-title">Escolhemos a ferramenta pelo problema, não pela moda</h2>
+  <p class="section-sub">Estas são as que usamos no dia a dia, todas rodando em produtos nossos hoje.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#gear"/></svg></div>
+      <h3>Backend e dados</h3>
+      <ul class="lc-check-list">
+        <li>Python com FastAPI, Node.js com Express, TypeScript</li>
+        <li>PostgreSQL, com isolamento entre clientes no próprio banco</li>
+        <li>Tempo real por WebSocket e vídeo por WebRTC</li>
+        <li>Docker, integração contínua e publicação automatizada</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#code"/></svg></div>
+      <h3>Frontend e aplicativo</h3>
+      <ul class="lc-check-list">
+        <li>React e Next.js quando o projeto pede framework</li>
+        <li>HTML, CSS e JavaScript direto quando não pede</li>
+        <li>Electron para aplicativo desktop multiplataforma</li>
+        <li>Acessibilidade e responsividade como requisito, não como ajuste final</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Prova ── -->
+<section id="prova">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Prova</span>
+      <h2 class="section-title">A gente usa em casa o que vende</h2>
+      <p class="section-sub">Nossos produtos são construídos pelo mesmo time, com o mesmo método. Dá para olhar o resultado antes de contratar.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#hospital"/></svg></div>
+        <div class="feature-text">
+          <h3>Plataforma de saúde multi-cliente</h3>
+          <p>Dezenas de domínios, vídeo em tempo real, isolamento entre clientes garantido pelo banco de dados e trilha de auditoria verificável. <a href="/larclinica" class="inline-link">Ver o LarClínica</a></p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
+        <div class="feature-text">
+          <h3>Atendimento automatizado com cobrança</h3>
+          <p>Agente no WhatsApp, agenda, planos de assinatura e integração com gateway de pagamento. <a href="/relatify_beauty" class="inline-link">Ver o RelatifyAI Beauty</a></p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
+        <div class="feature-text">
+          <h3>Operação de varejo ponta a ponta</h3>
+          <p>Pedido, separação conferida, entrega rastreada em mapa e relatório de venda, num painel só. <a href="/pedemarket" class="inline-link">Ver o PedeMarket</a></p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#code"/></svg></div>
+        <div class="feature-text">
+          <h3>Aplicativo desktop multiplataforma</h3>
+          <p>Editor, terminal e integração com Git dentro do próprio aplicativo, com instalador para os três sistemas. <a href="/pilotqa_ai" class="inline-link">Ver o PilotQA AI</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="contato">
+  <h2>Conte qual é o problema, não a solução</h2>
+  <p>Na primeira conversa a gente quer entender o processo que dói hoje. A proposta de arquitetura vem depois, e vem por escrito.</p>
+  <div class="cta-actions">
+    <button type="button" onclick="openDevModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Falar sobre o seu projeto</button>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <a href="https://mtjltechnology.com/">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="footer-logo" width="150" height="80" />
+  </a>
+  <nav class="footer-links">
+    <a href="https://mtjltechnology.com/">Início</a>
+    <a href="/qualityassurance">Testes de Software</a>
+    <a href="/inteligencia-artificial">Inteligência Artificial</a>
+    <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
+  </nav>
+  <p class="footer-copy">© 2026 MTJL Technology. Todos os direitos reservados. Curitiba, Paraná, Brasil.</p>
+</footer>
+
+<!-- ── Modal de contato ── -->
+<div class="pqmodal-backdrop" id="dev-modal-backdrop" onclick="closeDevModal()"></div>
+<div class="pqmodal" id="dev-modal" role="dialog" aria-modal="true">
+  <div class="pqmodal-header">
+    <div>
+      <p class="pqmodal-tag">Desenvolvimento de Software</p>
+      <h3 class="pqmodal-title">Falar sobre o seu projeto</h3>
+    </div>
+    <button class="pqmodal-close" onclick="closeDevModal()" aria-label="Fechar">✕</button>
+  </div>
+  <div class="pqmodal-body">
+    {% if sent %}
+      <div class="pqmodal-success">Mensagem enviada! Retornaremos em breve.</div>
+    {% endif %}
+    <form method="POST" action="/desenvolvimento_contact" class="pqmodal-form">
+      <input type="hidden" name="lang" value="pt" />
+      <label>Nome<input type="text" name="name" placeholder="Seu nome" required /></label>
+      <label>E-mail<input type="email" name="email" placeholder="seu@email.com" required /></label>
+      <label>Empresa<input type="text" name="organization" placeholder="Nome da sua empresa" /></label>
+      <label>Qual processo dói hoje?<textarea name="message" placeholder="Descreva o problema, não precisa saber a solução" rows="4" required></textarea></label>
+      <button type="submit">Enviar mensagem →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openDevModal()  { document.getElementById('dev-modal').classList.add('open'); document.getElementById('dev-modal-backdrop').classList.add('open'); }
+  function closeDevModal() { document.getElementById('dev-modal').classList.remove('open'); document.getElementById('dev-modal-backdrop').classList.remove('open'); }
+  {% if sent %}window.addEventListener('load', openDevModal);{% endif %}
+
+  (function () {
+    var burger = document.getElementById('navbar-burger');
+    var panel = document.getElementById('navbar-mobile-panel');
+    if (!burger || !panel) return;
+    function closePanel() { panel.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) closePanel();
+      else { panel.classList.add('open'); burger.setAttribute('aria-expanded', 'true'); }
+    });
+    panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closePanel); });
+    document.addEventListener('click', function (e) {
+      if (!panel.contains(e.target) && !burger.contains(e.target)) closePanel();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closePanel(); closeDevModal(); }
+    });
+  })();
+</script>
+<script src="/static/website/mtjl.js?v=2" defer></script>
+</body>
+</html>

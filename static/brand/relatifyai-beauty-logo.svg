@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 72">
+  <defs>
+    <linearGradient id="bab-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#5bc8e8"/>
+      <stop offset="50%" stop-color="#2878c8"/>
+      <stop offset="100%" stop-color="#1a3a78"/>
+    </linearGradient>
+    <linearGradient id="bab-facet-l" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.75"/>
+    </linearGradient>
+    <linearGradient id="bab-facet-r" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ícone — quadrado gradiente 70×70 -->
+  <rect x="1" y="1" width="70" height="70" rx="16" fill="url(#bab-bg)"/>
+
+  <!-- Diamante (escala 80→70 via translate+scale) -->
+  <g transform="translate(1,1) scale(0.875)">
+    <!-- Faceta sup-esq -->
+    <path d="M40 13 L26 35 L40 30 Z" fill="url(#bab-facet-l)"/>
+    <!-- Faceta sup-dir -->
+    <path d="M40 13 L54 35 L40 30 Z" fill="url(#bab-facet-r)"/>
+    <!-- Faceta inf-esq -->
+    <path d="M26 35 L40 62 L40 30 Z" fill="url(#bab-facet-r)"/>
+    <!-- Faceta inf-dir -->
+    <path d="M54 35 L40 62 L40 30 Z" fill="url(#bab-facet-l)"/>
+    <!-- Topo sólido brilhante -->
+    <polygon points="40,18 52,34 40,28 28,34" fill="#ffffff" opacity="0.92"/>
+    <!-- Linha de corte horizontal -->
+    <line x1="27" y1="35" x2="53" y2="35" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.45"/>
+    <!-- Contorno externo do diamante -->
+    <polygon points="40,13 54,35 40,62 26,35"
+      fill="none" stroke="#ffffff" stroke-width="1.4"
+      stroke-opacity="0.60" stroke-linejoin="round"/>
+    <!-- Pivot central -->
+    <circle cx="40" cy="30" r="2.8" fill="#ffffff"/>
+
+    <!-- Sparkle 4 pontas -->
+    <line x1="60" y1="14" x2="60" y2="26" stroke="#ffffff" stroke-width="2.0" stroke-linecap="round"/>
+    <line x1="54" y1="20" x2="66" y2="20" stroke="#ffffff" stroke-width="2.0" stroke-linecap="round"/>
+    <line x1="56.3" y1="16.3" x2="63.7" y2="23.7" stroke="#ffffff" stroke-width="0.9" stroke-linecap="round" stroke-opacity="0.55"/>
+    <line x1="63.7" y1="16.3" x2="56.3" y2="23.7" stroke="#ffffff" stroke-width="0.9" stroke-linecap="round" stroke-opacity="0.55"/>
+    <circle cx="60" cy="20" r="2.2" fill="#ffffff"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="86" y="35"
+    font-family="'Optima','Gill Sans MT',Candara,'Century Gothic',Calibri,sans-serif"
+    font-size="27">
+    <tspan font-weight="300" letter-spacing="2" fill="#2878c8">Relatify</tspan><tspan font-weight="800" letter-spacing="0.5" fill="#1a3a78">AI</tspan>
+  </text>
+
+  <!-- Linha decorativa sutil -->
+  <line x1="86" y1="43" x2="318" y2="43"
+    stroke="#2878c8" stroke-width="0.5" stroke-opacity="0.20"/>
+
+  <!-- Beauty -->
+  <text x="87" y="59"
+    font-family="Georgia,'Palatino Linotype','Book Antiqua',Palatino,serif"
+    font-size="12" font-style="italic" font-weight="400"
+    letter-spacing="7" fill="#1a3a78" fill-opacity="0.55">Beauty</text>
+</svg>
