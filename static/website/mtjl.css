@@ -3177,3 +3177,22 @@ body.pq-page::before {
 
 /* Rótulo do painel de consultoria media 4,48:1, logo abaixo do mínimo */
 #consultoria .stat-label { color: var(--ink-2) !important; }
+
+/* ── Grade de produtos: responsivo ───────────────────────────────────────────
+   As regras de quatro destaques foram acrescentadas depois das media queries
+   antigas, então venciam em qualquer largura e o mobile nunca empilhava: os
+   quatro cards "em breve" ficavam lado a lado num celular, com o texto
+   quebrando uma palavra por linha. Estas precisam vir por último.
+   ────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .products-grid > .product-card:nth-child(-n+4),
+  .products-grid > .product-card:nth-child(n+5) { grid-column: span 6; }
+}
+@media (max-width: 700px) {
+  .products-grid > .product-card:nth-child(-n+4),
+  .products-grid > .product-card:nth-child(n+5) { grid-column: span 12; }
+  .product-card { padding: 1.8rem 1.5rem; }
+  /* Nome do produto e etiqueta não devem quebrar no meio da palavra */
+  .product-name, .beauty-name, .larclinica-name, .pilotqa-name { text-wrap: balance; }
+  .product-tags li { font-size: .72rem; padding: .24rem .62rem; }
+}
