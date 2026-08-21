@@ -77,7 +77,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="/static/website/mtjl.css?v=115" />
-  <link rel="icon" type="image/png" href="/static/brand/mtjl-favicon.png" />
+  <!-- Ícone da própria marca, não o da MTJL: esta página é o site do LarClínica.
+       Arquivos vindos do repo do produto (server/public), então a aba do browser
+       mostra o mesmo símbolo do app. O .ico primeiro cobre browser antigo e o
+       resultado do Google, que ignora PNG em alguns casos; o 32 é o que o Chrome
+       usa na aba, e o 16 evita reescala borrada em tela sem HiDPI. -->
+  <link rel="icon" href="/static/brand/larclinica-favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/brand/larclinica-favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/brand/larclinica-favicon-16.png" />
+  <link rel="apple-touch-icon" href="/static/brand/larclinica-apple-touch-icon.png" />
 </head>
 <body class="lc-page">
 <a class="skip-link" href="#inicio">Pular para o conteúdo</a>

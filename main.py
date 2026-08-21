@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, Response
-from fastapi.responses import RedirectResponse
+from fastapi import FastAPI, Request, Response
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -10,7 +10,7 @@ from slowapi.errors import RateLimitExceeded
 from config import settings
 from db import create_db_and_tables
 from limiter import limiter
-from router import larclinica_host_redirect_target, router
+from router import is_larclinica_host, larclinica_host_redirect_target, router
 
 
 @asynccontextmanager
@@ -80,6 +80,14 @@ if settings.app_env != "production" and Path("static").is_dir():
 app.include_router(router)
 
 
+_LARCLINICA_FAVICON = Path("static/brand/larclinica-favicon.ico")
+
+
 @app.get("/favicon.ico", include_in_schema=False)
-def favicon() -> Response:
+def favicon(request: Request) -> Response:
+    # O <link rel="icon"> da página já aponta o arquivo certo, mas o Google (e
+    # browser antigo) busca /favicon.ico direto na raiz do domínio ao montar o
+    # resultado de busca. Um 204 ali faz o resultado sair sem ícone.
+    if is_larclinica_host(request) and _LARCLINICA_FAVICON.is_file():
+        return FileResponse(_LARCLINICA_FAVICON, media_type="image/x-icon")
     return Response(status_code=204)

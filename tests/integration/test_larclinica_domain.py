@@ -225,3 +225,22 @@ def test_sem_token_configurado_nao_renderiza_meta_de_verificacao(client):
     r = client.get("/", headers=LC_HEADERS)
 
     assert "google-site-verification" not in r.text
+
+
+def test_aba_do_browser_usa_o_icone_do_larclinica(client):
+    """A página é o site do LarClínica, então o favicon é o símbolo da marca dele,
+    não o da MTJL."""
+    r = client.get("/", headers=LC_HEADERS)
+
+    assert '<link rel="icon" href="/static/brand/larclinica-favicon.ico" sizes="any" />' in r.text
+    assert "mtjl-favicon.png" not in r.text
+
+
+def test_favicon_ico_na_raiz_do_dominio_novo_devolve_o_arquivo(client):
+    """O Google busca /favicon.ico direto. No institucional a rota segue 204."""
+    lc = client.get("/favicon.ico", headers=LC_HEADERS)
+    mtjl = client.get("/favicon.ico", headers=MTJL_HEADERS)
+
+    assert lc.status_code == 200
+    assert lc.headers["content-type"] == "image/x-icon"
+    assert mtjl.status_code == 204
