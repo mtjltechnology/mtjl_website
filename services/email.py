@@ -6,6 +6,13 @@ from config import settings
 
 _CONTACT_TO = "faleconosco@mtjltechnology.com"
 
+# O LarClínica tem domínio e caixa próprios desde a migração para
+# www.larclinicahealth.com: o lead dele não passa mais pelo faleconosco da MTJL.
+# O remetente continua sendo noreply@mtjltechnology.com porque é o domínio
+# verificado no Resend; trocar para @larclinicahealth.com exige verificar o
+# domínio novo lá primeiro, senão o envio é recusado.
+LARCLINICA_CONTACT_TO = "contato@larclinicahealth.com"
+
 
 def _esc(value: str) -> str:
     """Escapa HTML para evitar HTML/script injection quando o valor é
@@ -127,7 +134,7 @@ def send_pilotqa_token_email(name: str, email: str, plan: str, token: str) -> No
     })
 
 
-def send_contact_email(name: str, email: str, message: str) -> None:
+def send_contact_email(name: str, email: str, message: str, to: str | None = None) -> None:
     if not settings.resend_api_key:
         print("[email] resend_api_key não configurada — send_contact_email ignorado")
         return
@@ -142,7 +149,7 @@ def send_contact_email(name: str, email: str, message: str) -> None:
         resend.Emails.send({
             "from": "MTJL Technology <noreply@mtjltechnology.com>",
             "reply_to": email,
-            "to": [_CONTACT_TO],
+            "to": [to or _CONTACT_TO],
             "subject": f"Contato via site — {name}",
             "text": f"Nome: {name}\nE-mail: {email}\n\nMensagem:\n{message}",
             "html": f"""<!DOCTYPE html>

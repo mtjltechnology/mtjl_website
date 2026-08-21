@@ -11,6 +11,10 @@ class Settings(BaseSettings):
     pilotqa_jwt_private_key: str = ""
     booking_internal_url: str = "http://127.0.0.1:8000"
     booking_master_api_key: str = "change-me-in-production"
+    # Token da propriedade www.larclinicahealth.com no Google Search Console. Vazio
+    # é o normal depois que a propriedade já está verificada: a meta tag só precisa
+    # existir no momento da verificação, mas o Google pede que ela continue no ar.
+    larclinica_google_site_verification: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

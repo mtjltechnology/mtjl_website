@@ -6,6 +6,7 @@
   <title>LarClínica | Telessaúde para Operadoras de Saúde</title>
   <meta name="description" content="Pronto Atendimento Virtual, Home Care e Telemonitoramento num só cadastro de beneficiário, com atendimento pelo WhatsApp Oficial e conformidade LGPD." />
   <link rel="canonical" href="https://www.larclinicahealth.com/" />
+  {% if google_site_verification %}<meta name="google-site-verification" content="{{ google_site_verification }}" />{% endif %}
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LarClínica | Telessaúde para Operadoras de Saúde" />
   <meta property="og:description" content="Pronto Atendimento Virtual, Home Care e Telemonitoramento num só cadastro de beneficiário, com atendimento pelo WhatsApp Oficial e conformidade LGPD." />
@@ -65,6 +66,13 @@
     "areaServed": "BR"
   }
   </script>
+  <!-- Meta Pixel -->
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1132342796628104');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1132342796628104&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18180637831"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18180637831');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
@@ -697,7 +705,18 @@
 <script>
   function openLCModal()  { document.getElementById('lc-modal').classList.add('open'); document.getElementById('lc-modal-backdrop').classList.add('open'); }
   function closeLCModal() { document.getElementById('lc-modal').classList.remove('open'); document.getElementById('lc-modal-backdrop').classList.remove('open'); }
-  {% if sent %}window.addEventListener('load', openLCModal);{% endif %}
+  {% if sent %}
+  window.addEventListener('load', openLCModal);
+  // Lead confirmado: o formulário só volta com sent=1 depois do POST aceito.
+  // O Meta conta como Lead direto pelo pixel. No Google Ads o generate_lead
+  // sozinho não vira conversão: é preciso importá-lo ou trocar por
+  // gtag('event','conversion',{send_to:'AW-18180637831/<rótulo>'}) com o rótulo
+  // da ação de conversão do LarClínica.
+  window.addEventListener('load', function () {
+    if (typeof fbq === 'function') { fbq('track', 'Lead', {content_name: 'LarClinica'}); }
+    if (typeof gtag === 'function') { gtag('event', 'generate_lead', {value: 0, currency: 'BRL'}); }
+  });
+  {% endif %}
 
   // Menu hambúrguer mobile
   (function () {

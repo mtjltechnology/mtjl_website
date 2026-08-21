@@ -156,3 +156,72 @@ def test_robots_aponta_pro_sitemap_do_proprio_dominio(client):
 
     assert "Sitemap: https://www.larclinicahealth.com/sitemap.xml" in lc.text
     assert "Sitemap: https://mtjltechnology.com/sitemap.xml" in mtjl.text
+
+
+# ── Destinatário do lead ──────────────────────────────────────────────────────
+
+def test_lead_do_larclinica_vai_pra_caixa_do_proprio_dominio(client, monkeypatch, mocker):
+    from config import settings
+    monkeypatch.setattr(settings, "resend_api_key", "re_fake_key")
+    mock_send = mocker.patch("resend.Emails.send")
+
+    r = client.post(
+        "/larclinica_contact",
+        headers=LC_HEADERS,
+        data={"name": "Ana", "email": "ana@operadora.com.br", "organization": "Operadora X", "message": "quero demo"},
+        follow_redirects=False,
+    )
+
+    assert r.status_code == 303
+    payload = mock_send.call_args[0][0]
+    assert payload["to"] == ["contato@larclinicahealth.com"]
+    assert "[LarClínica]" in payload["text"]
+
+
+def test_contato_geral_continua_indo_pro_faleconosco_da_mtjl(client, monkeypatch, mocker):
+    """A troca de caixa é só do LarClínica: o resto do site não muda."""
+    from config import settings
+    monkeypatch.setattr(settings, "resend_api_key", "re_fake_key")
+    mock_send = mocker.patch("resend.Emails.send")
+
+    client.post(
+        "/contact",
+        headers=MTJL_HEADERS,
+        data={"name": "Ana", "email": "ana@empresa.com.br", "message": "oi"},
+        follow_redirects=False,
+    )
+
+    assert mock_send.call_args[0][0]["to"] == ["faleconosco@mtjltechnology.com"]
+
+
+# ── Rastreamento e verificação de propriedade ─────────────────────────────────
+
+def test_pagina_do_larclinica_carrega_pixel_e_google_tag(client):
+    r = client.get("/", headers=LC_HEADERS)
+
+    assert "fbq('init','1132342796628104')" in r.text
+    assert "googletagmanager.com/gtag/js?id=AW-18180637831" in r.text
+
+
+def test_evento_de_lead_dispara_so_depois_do_envio(client):
+    sem_envio = client.get("/", headers=LC_HEADERS)
+    com_envio = client.get("/?sent=1", headers=LC_HEADERS)
+
+    assert "fbq('track', 'Lead'" not in sem_envio.text
+    assert "fbq('track', 'Lead'" in com_envio.text
+    assert "generate_lead" in com_envio.text
+
+
+def test_meta_de_verificacao_do_search_console_sai_do_env(client, monkeypatch):
+    from config import settings
+    monkeypatch.setattr(settings, "larclinica_google_site_verification", "token-de-teste")
+
+    r = client.get("/", headers=LC_HEADERS)
+
+    assert '<meta name="google-site-verification" content="token-de-teste" />' in r.text
+
+
+def test_sem_token_configurado_nao_renderiza_meta_de_verificacao(client):
+    r = client.get("/", headers=LC_HEADERS)
+
+    assert "google-site-verification" not in r.text

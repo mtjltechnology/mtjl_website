@@ -13,7 +13,7 @@ from db import get_session
 from limiter import limiter
 from models import PilotQASubscriber
 from services.asaas import PLANS, create_customer, create_subscription, get_subscription_payment_link, update_customer
-from services.email import send_contact_email, send_pilotqa_contact_email, send_pilotqa_token_email
+from services.email import LARCLINICA_CONTACT_TO, send_contact_email, send_pilotqa_contact_email, send_pilotqa_token_email
 from services.token import generate_pilotqa_token
 
 router = APIRouter()
@@ -203,7 +203,11 @@ def home(request: Request, sent: bool = False, pq_sent: bool = False):
     # A raiz de larclinicahealth.com é a página do LarClínica, não a home do
     # institucional: mesma aplicação, template escolhido pelo Host.
     if is_larclinica_host(request):
-        return templates.TemplateResponse("larclinica.html", {"request": request, "sent": sent})
+        return templates.TemplateResponse("larclinica.html", {
+            "request": request,
+            "sent": sent,
+            "google_site_verification": settings.larclinica_google_site_verification,
+        })
     return templates.TemplateResponse("home.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
 
 
@@ -269,7 +273,7 @@ def larclinica_contact(
     if _is_blocked_email(email):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Organização/Operadora: {organization}\n\n" if organization else ""
-    send_contact_email(name, email, f"[LarClínica] {org_line}{message}")
+    send_contact_email(name, email, f"[LarClínica] {org_line}{message}", to=LARCLINICA_CONTACT_TO)
     return RedirectResponse(redirect_url, status_code=303)
 
 

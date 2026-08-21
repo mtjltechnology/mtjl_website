@@ -17,7 +17,10 @@ sem build step, cada página é HTML server-rendered com CSS próprio e script i
   completo, com variante `_en.html` / `_es.html` para inglês/espanhol
 - **CSS**: `static/website/mtjl.css` (global) + `booking_beauty.css`, `pilotqa.css` (por página)
 - **JS**: inline `<script>` nos próprios templates — sem arquivo `.js` separado, sem bundler
-- **Tracking**: Meta Pixel + Google Ads (`gtag.js`, ID `AW-18180637831`) — hoje só em `home.html`
+- **Tracking**: Meta Pixel (ID `1132342796628104`) + Google Ads (`gtag.js`, ID `AW-18180637831`) em
+  `home.html`, `home_en.html`, `home_es.html` e `larclinica.html`. Só a página do LarClínica dispara
+  evento de lead (`fbq('track','Lead')` e `gtag('event','generate_lead')`), no carregamento com
+  `sent=1`, que é o retorno do POST aceito.
 - **SEO**: `router.py::sitemap_xml()` gera `/sitemap.xml` dinamicamente com hreflang pt-BR/en/es
 
 ## Páginas e suas rotas

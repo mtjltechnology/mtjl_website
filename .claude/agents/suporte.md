@@ -23,7 +23,7 @@ no caso do trial BookingAI Beauty, criam registro real no outro repositório. Ao
 | Contato BookingAI Beauty | `POST /booking_beauty_contact` | `faleconosco@mtjltechnology.com` |
 | Trial BookingAI Beauty | `POST /booking_beauty/subscribe` | Cria `Establishment` no BookingAI Beauty + e-mail pro assinante e pro time |
 | Contato QA/Testes de Software | `POST /qualityassurance_contact` | `faleconosco@mtjltechnology.com` |
-| Contato LarClínica (form na raiz de `www.larclinicahealth.com`) | `POST /larclinica_contact` | `faleconosco@mtjltechnology.com` |
+| Contato LarClínica (form na raiz de `www.larclinicahealth.com`) | `POST /larclinica_contact` | `contato@larclinicahealth.com` (caixa do domínio próprio, roteada pelo Cloudflare Email Routing) |
 | Contato PilotQA AI | `POST /pilotqa_contact` | `faleconosco@mtjltechnology.com` |
 | Assinatura PilotQA AI | `POST /pilotqa_ai/subscribe` | Cria/atualiza `PilotQASubscriber`, gera cobrança Asaas |
 

@@ -18,7 +18,8 @@ Diferente de um produto SaaS, este site **não guarda dado operacional de client
 capta lead/contato. Dois fluxos de dado pessoal:
 
 1. **Formulários de contato/trial** (`/contact`, `/booking_beauty_contact`,
-   `/qualityassurance_contact`, `/larclinica_contact`, `/pilotqa_contact`) — nome, e-mail,
+   `/qualityassurance_contact`, `/larclinica_contact` (destino próprio:
+   `contato@larclinicahealth.com`), `/pilotqa_contact`) — nome, e-mail,
    mensagem, telefone/WhatsApp em alguns casos. Enviado por e-mail (Resend) pro time interno,
    **não fica salvo em banco** — o formulário não persiste, só encaminha.
 2. **`PilotQASubscriber`** (única tabela própria do site) — nome, e-mail, `asaas_customer_id`,
@@ -29,10 +30,17 @@ capta lead/contato. Dois fluxos de dado pessoal:
 
 ## Tracking — ponto de atenção real
 
-`templates/home.html` carrega **Meta Pixel** e **Google Ads (gtag.js)** sem nenhum banner de
-consentimento de cookies visível no restante do site. Isso é uma lacuna de conformidade: LGPD
-(e a prática de mercado alinhada a ela) espera aviso/consentimento antes de rastreamento não
-essencial, especialmente quando o pixel dispara em evento de conversão (submit de formulário).
+`templates/home.html` (e as versões en/es) e `templates/larclinica.html` carregam **Meta Pixel** e
+**Google Ads (gtag.js)** sem nenhum banner de consentimento de cookies visível no site. Isso é uma
+lacuna de conformidade: LGPD (e a prática de mercado alinhada a ela) espera aviso/consentimento
+antes de rastreamento não essencial, especialmente quando o pixel dispara em evento de conversão
+(submit de formulário), o que a página do LarClínica passou a fazer.
+
+Atenção específica ao LarClínica: a página é de produto de saúde e o lead vem de operadora, não de
+paciente, então o dado captado é corporativo. Mesmo assim, pixel em página de saúde atrai leitura
+mais rígida do que em página institucional comum, e o evento de lead dispara na mesma navegação em
+que a pessoa preencheu nome, e-mail e operadora. Se entrar banner de consentimento em algum
+momento, essa página é a primeira da fila.
 
 ## LGPD — papéis específicos deste site
 
