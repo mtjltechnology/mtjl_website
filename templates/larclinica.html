@@ -3,19 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LarClínica | Home Care e Telessaúde para Operadoras de Saúde | MTJL Technology</title>
-  <meta name="description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde e cooperativas médicas. Cadastro único de beneficiário, atendimento pela API Oficial do WhatsApp e conformidade LGPD." />
+  <title>LarClínica | Telessaúde para Operadoras de Saúde</title>
+  <meta name="description" content="Pronto Atendimento Virtual, Home Care e Telemonitoramento num só cadastro de beneficiário, com atendimento pelo WhatsApp Oficial e conformidade LGPD." />
   <link rel="canonical" href="https://mtjltechnology.com/larclinica" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="LarClínica | Home Care e Telessaúde para Operadoras de Saúde" />
-  <meta property="og:description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde. Cadastro único de beneficiário, atendimento pela API Oficial do WhatsApp e conformidade LGPD." />
+  <meta property="og:title" content="LarClínica | Telessaúde para Operadoras de Saúde" />
+  <meta property="og:description" content="Pronto Atendimento Virtual, Home Care e Telemonitoramento num só cadastro de beneficiário, com atendimento pelo WhatsApp Oficial e conformidade LGPD." />
   <meta property="og:image" content="https://mtjltechnology.com/static/brand/larclinica-logo.png" />
   <meta property="og:url" content="https://mtjltechnology.com/larclinica" />
   <meta property="og:locale" content="pt_BR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="LarClínica | Home Care e Telessaúde para Operadoras de Saúde" />
-  <meta name="twitter:description" content="Plataforma integrada de Pronto Atendimento Virtual, Home Care e Telemonitoramento para operadoras de saúde, sob um único cadastro de beneficiário." />
+  <meta name="twitter:title" content="LarClínica | Telessaúde para Operadoras de Saúde" />
+  <meta name="twitter:description" content="Pronto Atendimento Virtual, Home Care e Telemonitoramento num só cadastro de beneficiário, com atendimento pelo WhatsApp Oficial e conformidade LGPD." />
   <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/larclinica-logo.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "O dado clínico do beneficiário sai da rede da operadora?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. Quando o sigilo exige, o modelo de IA é servido na infraestrutura da própria operadora, e a aplicação recusa iniciar se o endereço do modelo apontar para fora da rede local." }
+      },
+      {
+        "@type": "Question",
+        "name": "A IA do LarClínica decide diagnóstico ou prescrição sozinha?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. A IA sugere, nunca decide: toda saída volta marcada como sugestão e só vira registro clínico quando o profissional aprova." }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona o isolamento entre operadoras diferentes?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Por Row Level Security do PostgreSQL em 41 tabelas: uma consulta que esqueça o filtro não enxerga a linha da outra operadora, em vez de vazar dado." }
+      },
+      {
+        "@type": "Question",
+        "name": "O atendimento pelo WhatsApp exige aplicativo do beneficiário?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. Identificação, consentimento, pré-triagem e senha na fila acontecem dentro da própria conversa de WhatsApp; a web só aparece no link do vídeo." }
+      },
+      {
+        "@type": "Question",
+        "name": "O LarClínica integra com sistemas hospitalares existentes?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sim, há interfaces definidas para Tasy, RNDS, TISS, PACS, LIS e RIS. A conexão efetiva depende de endpoint e credencial de cada fornecedor." }
+      }
+    ]
+  }
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -574,6 +607,42 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<style>
+  .faq-item{ border-top:1px solid rgba(11,18,34,.08); padding:16px 0; }
+  .faq-item summary{ cursor:pointer; list-style:none; font-weight:600; color:var(--ink); font-size:1.02rem; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::before{ content:'+'; display:inline-block; width:1.3em; color:var(--ink-3); }
+  .faq-item[open] summary::before{ content:'–'; }
+  .faq-answer{ margin:10px 0 0; color:var(--ink-2); font-size:.95rem; line-height:1.7; padding-left:1.3em; }
+</style>
+<section id="faq" class="services-section">
+  <span class="section-tag">Perguntas frequentes</span>
+  <h2 class="section-title">O que diretoria médica, TI e compliance perguntam primeiro</h2>
+  <div class="faq-list" style="max-width:760px;margin:0 auto;text-align:left">
+    <details class="faq-item">
+      <summary>O dado clínico do beneficiário sai da rede da operadora?</summary>
+      <p class="faq-answer">Não. Quando o sigilo exige, o modelo de IA é servido na infraestrutura da própria operadora, e a aplicação recusa iniciar se o endereço do modelo apontar para fora da rede local.</p>
+    </details>
+    <details class="faq-item">
+      <summary>A IA do LarClínica decide diagnóstico ou prescrição sozinha?</summary>
+      <p class="faq-answer">Não. A IA sugere, nunca decide: toda saída volta marcada como sugestão e só vira registro clínico quando o profissional aprova.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Como funciona o isolamento entre operadoras diferentes?</summary>
+      <p class="faq-answer">Por Row Level Security do PostgreSQL em 41 tabelas: uma consulta que esqueça o filtro não enxerga a linha da outra operadora, em vez de vazar dado.</p>
+    </details>
+    <details class="faq-item">
+      <summary>O atendimento pelo WhatsApp exige aplicativo do beneficiário?</summary>
+      <p class="faq-answer">Não. Identificação, consentimento, pré-triagem e senha na fila acontecem dentro da própria conversa de WhatsApp; a web só aparece no link do vídeo.</p>
+    </details>
+    <details class="faq-item">
+      <summary>O LarClínica integra com sistemas hospitalares existentes?</summary>
+      <p class="faq-answer">Sim, há interfaces definidas para Tasy, RNDS, TISS, PACS, LIS e RIS. A conexão efetiva depende de endpoint e credencial de cada fornecedor.</p>
+    </details>
   </div>
 </section>
 

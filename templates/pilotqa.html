@@ -3,19 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PilotQA AI | Testes automatizados em linguagem natural | MTJL Technology</title>
+  <title>PilotQA AI | Testes Automatizados com IA</title>
   <meta name="description" content="Escreva o caso de teste em linguagem natural e o navegador executa. Biblioteca, CLI, aplicativo desktop e servidor com governança para time de QA." />
   <link rel="canonical" href="https://mtjltechnology.com/pilotqa_ai" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="PilotQA AI | Testes automatizados em linguagem natural" />
+  <meta property="og:title" content="PilotQA AI | Testes Automatizados com IA" />
   <meta property="og:description" content="Escreva o caso de teste em linguagem natural e o navegador executa, sem seletor CSS para manter." />
-  <meta property="og:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <meta property="og:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo.png" />
   <meta property="og:url" content="https://mtjltechnology.com/pilotqa_ai" />
   <meta property="og:locale" content="pt_BR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PilotQA AI | Testes automatizados em linguagem natural" />
+  <meta name="twitter:title" content="PilotQA AI | Testes Automatizados com IA" />
   <meta name="twitter:description" content="Escreva o caso de teste em linguagem natural e o navegador executa, sem seletor CSS para manter." />
-  <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo-transparent.png" />
+  <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/mtjl-technology-logo.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "O teste do PilotQA AI quebra quando o layout da tela muda?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não é o objetivo: o modelo de linguagem lê a página como uma pessoa leria e localiza o elemento pelo que ele é, não por um seletor CSS fixo, e replaneja depois de cada navegação." }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso de Playwright ou Selenium para usar o PilotQA AI?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. O PilotQA AI conversa direto com o navegador através de um driver próprio, sem Playwright nem Selenium no meio do caminho." }
+      },
+      {
+        "@type": "Question",
+        "name": "Em quais navegadores o PilotQA AI funciona?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Edge e Firefox, com a mesma API e o mesmo caso de teste nos dois motores." }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso instalar Node na máquina para usar o PilotQA AI?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. O aplicativo desktop, disponível para macOS, Windows e Linux, carrega o que precisa sozinho." }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona a governança do PilotQA AI para time de QA?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Aprovação por quatro olhos, em que quem escreve o caso não aprova o próprio, cinco papéis de acesso por time, e trilha de auditoria com cadeia de verificação." }
+      }
+    ]
+  }
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -268,6 +301,42 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<style>
+  .faq-item{ border-top:1px solid rgba(11,18,34,.08); padding:16px 0; }
+  .faq-item summary{ cursor:pointer; list-style:none; font-weight:600; color:var(--ink); font-size:1.02rem; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::before{ content:'+'; display:inline-block; width:1.3em; color:var(--ink-3); }
+  .faq-item[open] summary::before{ content:'–'; }
+  .faq-answer{ margin:10px 0 0; color:var(--ink-2); font-size:.95rem; line-height:1.7; padding-left:1.3em; }
+</style>
+<section id="faq" class="services-section">
+  <span class="section-tag">Perguntas frequentes</span>
+  <h2 class="section-title">O que time de QA pergunta antes de trocar de ferramenta</h2>
+  <div class="faq-list" style="max-width:760px;margin:0 auto;text-align:left">
+    <details class="faq-item">
+      <summary>O teste quebra quando o layout da tela muda?</summary>
+      <p class="faq-answer">Não é o objetivo: o modelo de linguagem lê a página como uma pessoa leria e localiza o elemento pelo que ele é, não por um seletor CSS fixo, e replaneja depois de cada navegação.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Preciso de Playwright ou Selenium?</summary>
+      <p class="faq-answer">Não. O PilotQA AI conversa direto com o navegador através de um driver próprio, sem Playwright nem Selenium no meio do caminho.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Em quais navegadores funciona?</summary>
+      <p class="faq-answer">Chrome, Edge e Firefox, com a mesma API e o mesmo caso de teste nos dois motores.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Preciso instalar Node na máquina?</summary>
+      <p class="faq-answer">Não. O aplicativo desktop, disponível para macOS, Windows e Linux, carrega o que precisa sozinho.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Como funciona a governança para time de QA?</summary>
+      <p class="faq-answer">Aprovação por quatro olhos, em que quem escreve o caso não aprova o próprio, cinco papéis de acesso por time, e trilha de auditoria com cadeia de verificação.</p>
+    </details>
   </div>
 </section>
 

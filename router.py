@@ -36,8 +36,12 @@ _SITEMAP_PAGES = [
     {"slug": "", "en": "/en", "es": "/es"},
     {"slug": "relatify_beauty", "en": "/en/relatify_beauty", "es": "/es/relatify_beauty"},
     {"slug": "qualityassurance", "en": "/en/qualityassurance", "es": "/es/qualityassurance"},
-    {"slug": "larclinica", "en": "/larclinica", "es": "/larclinica"},
-    {"slug": "pedemarket", "en": "/pedemarket", "es": "/pedemarket"},
+    # LarClínica, PedeMarket e PilotQA AI não têm tradução real: en/es=None evita
+    # declarar hreflang alternado apontando pra a própria URL em pt (sitemap_xml
+    # só emite o bloco de alternates quando existe mais de uma variante).
+    {"slug": "larclinica", "en": None, "es": None},
+    {"slug": "pedemarket", "en": None, "es": None},
+    {"slug": "pilotqa_ai", "en": None, "es": None},
     {"slug": "desenvolvimento-de-software", "en": "/en/software-development", "es": "/es/desarrollo-de-software"},
     {"slug": "inteligencia-artificial", "en": "/en/artificial-intelligence", "es": "/es/inteligencia-artificial"},
 ]
@@ -89,25 +93,29 @@ def sitemap_xml():
     url_entries = []
     for page in _SITEMAP_PAGES:
         pt_path = f"/{page['slug']}" if page["slug"] else "/"
-        variants = {
-            "pt-BR": pt_path,
-            "en": page["en"],
-            "es": page["es"],
-        }
-        for path in variants.values():
-            loc = SITE_BASE_URL + path
+        variants = {"pt-BR": pt_path}
+        if page["en"]:
+            variants["en"] = page["en"]
+        if page["es"]:
+            variants["es"] = page["es"]
+
+        # Só declara alternates de hreflang quando existe mais de uma variante
+        # de idioma de verdade — evita apontar en/es pra a própria URL pt.
+        alternates = ""
+        if len(variants) > 1:
             alternates = "\n".join(
                 f'    <xhtml:link rel="alternate" hreflang="{alt_lang}" href="{escape(SITE_BASE_URL + alt_path)}" />'
                 for alt_lang, alt_path in variants.items()
             )
             alternates += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{escape(SITE_BASE_URL + pt_path)}" />'
-            url_entries.append(
-                f"  <url>\n"
-                f"    <loc>{escape(loc)}</loc>\n"
-                f"{alternates}\n"
-                f"    <lastmod>{lastmod}</lastmod>\n"
-                f"  </url>"
-            )
+
+        for path in variants.values():
+            loc = SITE_BASE_URL + path
+            block = f"  <url>\n    <loc>{escape(loc)}</loc>\n"
+            if alternates:
+                block += f"{alternates}\n"
+            block += f"    <lastmod>{lastmod}</lastmod>\n  </url>"
+            url_entries.append(block)
 
     xml_body = "\n".join(url_entries)
     xml = (
@@ -118,6 +126,12 @@ def sitemap_xml():
         "</urlset>"
     )
     return Response(content=xml, media_type="application/xml")
+
+
+@router.get("/robots.txt")
+def robots_txt():
+    body = "User-agent: *\nAllow: /\n\nSitemap: " + SITE_BASE_URL + "/sitemap.xml\n"
+    return Response(content=body, media_type="text/plain")
 
 
 @router.get("/", response_class=HTMLResponse)
