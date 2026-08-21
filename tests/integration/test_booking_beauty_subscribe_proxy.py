@@ -80,4 +80,4 @@ def test_prefixo_de_idioma_preservado_no_redirect(client, mocker):
 
     r = client.post("/relatify_beauty/subscribe", data=_payload(lang="en"), follow_redirects=False)
 
-    assert r.headers["location"].startswith("/en/relatify_beauty")
+    assert r.headers["location"].startswith("/en/relatify-beauty")

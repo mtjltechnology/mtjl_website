@@ -78,7 +78,7 @@ def send_pilotqa_token_email(name: str, email: str, plan: str, token: str) -> No
         "from": "PilotQA AI <noreply@mtjltechnology.com>",
         "to": [email],
         "subject": f"Seu token PilotQA AI — Plano {plan_label}",
-        "text": f"Olá {name},\n\nSeu pagamento foi confirmado!\n\nSeu token de acesso PilotQA AI:\n\n{token}\n\nConfigure no seu .env_pilotqa:\nPILOTQA_AUTH_TOKEN={token}\n\nDocumentação: https://mtjltechnology.com/pilotqa_ai\n\nMTJL Technology",
+        "text": f"Olá {name},\n\nSeu pagamento foi confirmado!\n\nSeu token de acesso PilotQA AI:\n\n{token}\n\nConfigure no seu .env_pilotqa:\nPILOTQA_AUTH_TOKEN={token}\n\nDocumentação: https://mtjltechnology.com/pilotqa-ai\n\nMTJL Technology",
         "html": f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head><meta charset="utf-8"></head>
@@ -114,7 +114,7 @@ def send_pilotqa_token_email(name: str, email: str, plan: str, token: str) -> No
             </td>
           </tr>
         </table>
-        <a href="https://mtjltechnology.com/pilotqa_ai" style="display:inline-block;background:#06b6d4;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:50px;text-decoration:none">Ver documentação →</a>
+        <a href="https://mtjltechnology.com/pilotqa-ai" style="display:inline-block;background:#06b6d4;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:50px;text-decoration:none">Ver documentação →</a>
       </td></tr>
       <tr><td style="border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-top:24px">
         <p style="margin:0;font-size:12px;color:#475569">© 2026 MTJL Technology · PilotQA AI · <a href="https://mtjltechnology.com" style="color:#475569">mtjltechnology.com</a></p>

@@ -35,6 +35,44 @@
     "areaServed": "BR"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿El agente de IA puede inventar una respuesta equivocada?",
+        "acceptedAnswer": { "@type": "Answer", "text": "La arquitectura lo impide: precio, plazo y disponibilidad salen de una consulta al sistema, nunca de una invención del modelo, y cuando la salida debe pertenecer a una lista, es el código el que verifica y descarta lo que queda fuera." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Los datos de mi proceso salen de mi infraestructura?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Solo si usted lo permite. Cuando la confidencialidad lo exige, el modelo se sirve en la infraestructura del propio cliente, con una barrera que impide que la aplicación arranque apuntando hacia afuera." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Entrenan un modelo desde cero o solo ajustan uno existente?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Depende de los datos que usted tenga: entrenamos desde cero cuando el dominio es demasiado específico, o hacemos fine-tuning de un modelo existente cuando ya se acerca." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Todo problema necesita inteligencia artificial?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No, y lo decimos antes de proponer un proyecto. A veces una regla bien escrita resuelve más barato que un modelo." }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://mtjltechnology.com/es" },
+      { "@type": "ListItem", "position": 2, "name": "Inteligencia Artificial", "item": "https://mtjltechnology.com/es/inteligencia-artificial" }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
@@ -55,7 +93,7 @@
     <li><a href="#responsabilidade">Cómo controlamos</a></li>
     <li><a href="#prova">Pruebas reales</a></li>
     <li><a href="/es/desarrollo-de-software">Desarrollo</a></li>
-    <li><a href="/es/qualityassurance">Pruebas de Software</a></li>
+    <li><a href="/es/pruebas-de-software">Pruebas de Software</a></li>
   </ul>
   <div class="lang-switcher">
     <a href="/inteligencia-artificial" class="lang-flag" title="Português" aria-label="Português">🇧🇷</a>
@@ -75,7 +113,7 @@
     <li><a href="#responsabilidade">Cómo controlamos</a></li>
     <li><a href="#prova">Pruebas reales</a></li>
     <li><a href="/es/desarrollo-de-software">Desarrollo</a></li>
-    <li><a href="/es/qualityassurance">Pruebas de Software</a></li>
+    <li><a href="/es/pruebas-de-software">Pruebas de Software</a></li>
   </ul>
 </div>
 
@@ -270,7 +308,7 @@
     <div class="service-card">
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#scissors"/></svg></div>
       <h3>Atención en salón y barbería</h3>
-      <p>Agente que responde, agenda, confirma y recuerda por WhatsApp. <a href="/es/relatify_beauty" class="inline-link">RelatifyAI Beauty</a></p>
+      <p>Agente que responde, agenda, confirma y recuerda por WhatsApp. <a href="/es/relatify-beauty" class="inline-link">RelatifyAI Beauty</a></p>
     </div>
     <div class="service-card">
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
@@ -285,8 +323,40 @@
     <div class="service-card">
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
       <h3>Pruebas de software en lenguaje natural</h3>
-      <p>IA que planifica las acciones y un driver propio que las ejecuta en el navegador. <a href="/pilotqa_ai" class="inline-link">PilotQA AI</a></p>
+      <p>IA que planifica las acciones y un driver propio que las ejecuta en el navegador. <a href="/es/pilotqa-ai" class="inline-link">PilotQA AI</a></p>
     </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<style>
+  .faq-item{ border-top:1px solid rgba(11,18,34,.08); padding:16px 0; }
+  .faq-item summary{ cursor:pointer; list-style:none; font-weight:600; color:var(--ink); font-size:1.02rem; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::before{ content:'+'; display:inline-block; width:1.3em; color:var(--ink-3); }
+  .faq-item[open] summary::before{ content:'–'; }
+  .faq-answer{ margin:10px 0 0; color:var(--ink-2); font-size:.95rem; line-height:1.7; padding-left:1.3em; }
+</style>
+<section id="faq" class="services-section">
+  <span class="section-tag">Preguntas frecuentes</span>
+  <h2 class="section-title">Antes de traer su proceso</h2>
+  <div class="faq-list" style="max-width:760px;margin:0 auto;text-align:left">
+    <details class="faq-item">
+      <summary>¿El agente de IA puede inventar una respuesta equivocada?</summary>
+      <p class="faq-answer">La arquitectura lo impide: precio, plazo y disponibilidad salen de una consulta al sistema, nunca de una invención del modelo, y cuando la salida debe pertenecer a una lista, es el código el que verifica y descarta lo que queda fuera.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Los datos de mi proceso salen de mi infraestructura?</summary>
+      <p class="faq-answer">Solo si usted lo permite. Cuando la confidencialidad lo exige, el modelo se sirve en la infraestructura del propio cliente, con una barrera que impide que la aplicación arranque apuntando hacia afuera.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Entrenan un modelo desde cero o solo ajustan uno existente?</summary>
+      <p class="faq-answer">Depende de los datos que usted tenga: entrenamos desde cero cuando el dominio es demasiado específico, o hacemos fine-tuning de un modelo existente cuando ya se acerca.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Todo problema necesita inteligencia artificial?</summary>
+      <p class="faq-answer">No, y lo decimos antes de proponer un proyecto. A veces una regla bien escrita resuelve más barato que un modelo.</p>
+    </details>
   </div>
 </section>
 
@@ -307,7 +377,7 @@
   <nav class="footer-links">
     <a href="https://mtjltechnology.com/es">Inicio</a>
     <a href="/es/desarrollo-de-software">Desarrollo</a>
-    <a href="/es/qualityassurance">Pruebas de Software</a>
+    <a href="/es/pruebas-de-software">Pruebas de Software</a>
     <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
   </nav>
   <p class="footer-copy">© 2026 MTJL Technology. Todos los derechos reservados. Curitiba, Paraná, Brasil.</p>

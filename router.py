@@ -34,14 +34,14 @@ SITE_BASE_URL = "https://mtjltechnology.com"
 
 _SITEMAP_PAGES = [
     {"slug": "", "en": "/en", "es": "/es"},
-    {"slug": "relatify_beauty", "en": "/en/relatify_beauty", "es": "/es/relatify_beauty"},
-    {"slug": "qualityassurance", "en": "/en/qualityassurance", "es": "/es/qualityassurance"},
-    # LarClínica, PedeMarket e PilotQA AI não têm tradução real: en/es=None evita
-    # declarar hreflang alternado apontando pra a própria URL em pt (sitemap_xml
-    # só emite o bloco de alternates quando existe mais de uma variante).
+    {"slug": "relatify-beauty", "en": "/en/relatify-beauty", "es": "/es/relatify-beauty"},
+    {"slug": "testes-de-software", "en": "/en/software-testing", "es": "/es/pruebas-de-software"},
+    # LarClínica e PedeMarket não têm tradução real: en/es=None evita declarar
+    # hreflang alternado apontando pra a própria URL em pt (sitemap_xml só emite
+    # o bloco de alternates quando existe mais de uma variante).
     {"slug": "larclinica", "en": None, "es": None},
     {"slug": "pedemarket", "en": None, "es": None},
-    {"slug": "pilotqa_ai", "en": None, "es": None},
+    {"slug": "pilotqa-ai", "en": "/en/pilotqa-ai", "es": "/es/pilotqa-ai"},
     {"slug": "desenvolvimento-de-software", "en": "/en/software-development", "es": "/es/desarrollo-de-software"},
     {"slug": "inteligencia-artificial", "en": "/en/artificial-intelligence", "es": "/es/inteligencia-artificial"},
 ]
@@ -85,6 +85,13 @@ def _client_ip(request: Request):
     if real_ip:
         return real_ip.strip() or None
     return request.client.host if request.client else None
+
+
+def _redirect_preserving_query(request: Request, target: str, status_code: int = 301):
+    query = request.url.query
+    if query:
+        target = f"{target}?{query}"
+    return RedirectResponse(target, status_code=status_code)
 
 
 @router.get("/sitemap.xml")
@@ -149,19 +156,34 @@ def home_es(request: Request, sent: bool = False, pq_sent: bool = False):
     return templates.TemplateResponse("home_es.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
 
 
-@router.get("/pilotqa_ai", response_class=HTMLResponse)
+@router.get("/pilotqa-ai", response_class=HTMLResponse)
 def pilotqa(request: Request, pq_sent: bool = False):
     return templates.TemplateResponse("pilotqa.html", {"request": request, "pq_sent": pq_sent})
 
 
+@router.get("/pilotqa_ai")
+def pilotqa_legacy(request: Request):
+    return _redirect_preserving_query(request, "/pilotqa-ai")
+
+
+@router.get("/en/pilotqa-ai", response_class=HTMLResponse)
+def pilotqa_en(request: Request, pq_sent: bool = False):
+    return templates.TemplateResponse("pilotqa_en.html", {"request": request, "pq_sent": pq_sent})
+
+
 @router.get("/en/pilotqa_ai")
-def pilotqa_en():
-    return RedirectResponse("/en", status_code=302)
+def pilotqa_en_legacy(request: Request):
+    return _redirect_preserving_query(request, "/en/pilotqa-ai")
+
+
+@router.get("/es/pilotqa-ai", response_class=HTMLResponse)
+def pilotqa_es(request: Request, pq_sent: bool = False):
+    return templates.TemplateResponse("pilotqa_es.html", {"request": request, "pq_sent": pq_sent})
 
 
 @router.get("/es/pilotqa_ai")
-def pilotqa_es():
-    return RedirectResponse("/es", status_code=302)
+def pilotqa_es_legacy(request: Request):
+    return _redirect_preserving_query(request, "/es/pilotqa-ai")
 
 
 @router.get("/larclinica", response_class=HTMLResponse)
@@ -284,19 +306,34 @@ def inteligencia_artificial_es(request: Request, sent: bool = False):
     return templates.TemplateResponse("inteligencia_artificial_es.html", {"request": request, "sent": sent})
 
 
-@router.get("/qualityassurance", response_class=HTMLResponse)
+@router.get("/testes-de-software", response_class=HTMLResponse)
 def testes_software(request: Request, sent: bool = False):
     return templates.TemplateResponse("testes_software.html", {"request": request, "sent": sent})
 
 
-@router.get("/en/qualityassurance", response_class=HTMLResponse)
+@router.get("/qualityassurance")
+def testes_software_legacy(request: Request):
+    return _redirect_preserving_query(request, "/testes-de-software")
+
+
+@router.get("/en/software-testing", response_class=HTMLResponse)
 def testes_software_en(request: Request, sent: bool = False):
     return templates.TemplateResponse("testes_software_en.html", {"request": request, "sent": sent})
 
 
-@router.get("/es/qualityassurance", response_class=HTMLResponse)
+@router.get("/en/qualityassurance")
+def testes_software_en_legacy(request: Request):
+    return _redirect_preserving_query(request, "/en/software-testing")
+
+
+@router.get("/es/pruebas-de-software", response_class=HTMLResponse)
 def testes_software_es(request: Request, sent: bool = False):
     return templates.TemplateResponse("testes_software_es.html", {"request": request, "sent": sent})
+
+
+@router.get("/es/qualityassurance")
+def testes_software_es_legacy(request: Request):
+    return _redirect_preserving_query(request, "/es/pruebas-de-software")
 
 
 _BB_ERRORS = {
@@ -329,7 +366,7 @@ _BB_ERRORS_ES = {
     "unavailable": "No pudimos completar el registro ahora. Inténtalo de nuevo en unos instantes.",
 }
 
-@router.get("/relatify_beauty", response_class=HTMLResponse)
+@router.get("/relatify-beauty", response_class=HTMLResponse)
 def booking_beauty(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
     return templates.TemplateResponse("booking_beauty.html", {
         "request": request,
@@ -339,7 +376,12 @@ def booking_beauty(request: Request, bb_sent: bool = False, bb_subscribed: bool 
     })
 
 
-@router.get("/en/relatify_beauty", response_class=HTMLResponse)
+@router.get("/relatify_beauty")
+def booking_beauty_slug_legacy(request: Request):
+    return _redirect_preserving_query(request, "/relatify-beauty")
+
+
+@router.get("/en/relatify-beauty", response_class=HTMLResponse)
 def booking_beauty_en(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
     return templates.TemplateResponse("booking_beauty_en.html", {
         "request": request,
@@ -349,7 +391,12 @@ def booking_beauty_en(request: Request, bb_sent: bool = False, bb_subscribed: bo
     })
 
 
-@router.get("/es/relatify_beauty", response_class=HTMLResponse)
+@router.get("/en/relatify_beauty")
+def booking_beauty_en_slug_legacy(request: Request):
+    return _redirect_preserving_query(request, "/en/relatify-beauty")
+
+
+@router.get("/es/relatify-beauty", response_class=HTMLResponse)
 def booking_beauty_es(request: Request, bb_sent: bool = False, bb_subscribed: bool = False, bb_error: str = ""):
     return templates.TemplateResponse("booking_beauty_es.html", {
         "request": request,
@@ -359,6 +406,11 @@ def booking_beauty_es(request: Request, bb_sent: bool = False, bb_subscribed: bo
     })
 
 
+@router.get("/es/relatify_beauty")
+def booking_beauty_es_slug_legacy(request: Request):
+    return _redirect_preserving_query(request, "/es/relatify-beauty")
+
+
 # ── Rename do produto: BookingAI Beauty → RelatifyAI Beauty ────────────────────
 # A URL /booking_beauty circulou em anúncios, links externos e no índice do Google.
 # 301 (permanente) preserva o ranking acumulado e transfere para a URL nova.
@@ -366,11 +418,7 @@ def booking_beauty_es(request: Request, bb_sent: bool = False, bb_subscribed: bo
 # app do produto, roteadas pelo Nginx, e não passam por este serviço.
 
 def _redirect_legacy_bb(request: Request, prefix: str = ""):
-    query = request.url.query
-    target = f"{prefix}/relatify_beauty"
-    if query:
-        target = f"{target}?{query}"
-    return RedirectResponse(target, status_code=301)
+    return _redirect_preserving_query(request, f"{prefix}/relatify-beauty")
 
 
 @router.get("/booking_beauty")
@@ -430,7 +478,7 @@ async def booking_beauty_subscribe(
     # Honeypot: campo invisível para humanos, só bots preenchem.
     # Fingimos sucesso para não ensinar o bot a identificar o bloqueio.
     if website:
-        return RedirectResponse(f"{prefix}/relatify_beauty?bb_subscribed=1", status_code=303)
+        return RedirectResponse(f"{prefix}/relatify-beauty?bb_subscribed=1", status_code=303)
 
     payload = {
         "name": name,
@@ -452,13 +500,13 @@ async def booking_beauty_subscribe(
             )
         result = r.json()
     except Exception:
-        return RedirectResponse(f"{prefix}/relatify_beauty?bb_error=unavailable&plan={plan}", status_code=303)
+        return RedirectResponse(f"{prefix}/relatify-beauty?bb_error=unavailable&plan={plan}", status_code=303)
 
     if not result.get("ok"):
         error = result.get("error", "unavailable")
-        return RedirectResponse(f"{prefix}/relatify_beauty?bb_error={error}&plan={plan}", status_code=303)
+        return RedirectResponse(f"{prefix}/relatify-beauty?bb_error={error}&plan={plan}", status_code=303)
 
-    return RedirectResponse(f"{prefix}/relatify_beauty?bb_subscribed=1", status_code=303)
+    return RedirectResponse(f"{prefix}/relatify-beauty?bb_subscribed=1", status_code=303)
 
 
 @router.post("/relatify_beauty_contact")
@@ -473,7 +521,7 @@ def booking_beauty_contact(
     website: str = Form(default=""),
 ):
     prefix = f"/{lang}" if lang in ("en", "es") else ""
-    redirect_url = f"{prefix}/relatify_beauty?bb_sent=1"
+    redirect_url = f"{prefix}/relatify-beauty?bb_sent=1"
     # Honeypot preenchido ou e-mail de domínio bloqueado: fingimos sucesso silenciosamente
     if website or _is_blocked_email(email):
         return RedirectResponse(redirect_url, status_code=303)
@@ -490,8 +538,12 @@ def testes_software_contact(
     message: str = Form(...),
     lang: str = Form(default="pt"),
 ):
-    prefix = f"/{lang}" if lang in ("en", "es") else ""
-    redirect_url = f"{prefix}/qualityassurance?sent=1"
+    if lang == "en":
+        redirect_url = "/en/software-testing?sent=1"
+    elif lang == "es":
+        redirect_url = "/es/pruebas-de-software?sent=1"
+    else:
+        redirect_url = "/testes-de-software?sent=1"
     if _is_blocked_email(email):
         return RedirectResponse(redirect_url, status_code=303)
     send_contact_email(name, email, f"[Testes de Software] {message}")
@@ -509,7 +561,7 @@ def pilotqa_contact(
     lang: str = Form(default="pt"),
 ):
     prefix = f"/{lang}" if lang in ("en", "es") else ""
-    page = "/pilotqa_ai" if origin == "pilotqa" else "/"
+    page = "/pilotqa-ai" if origin == "pilotqa" else "/"
     if page == "/":
         redirect = f"{prefix}/?pq_sent=1" if prefix else "/?pq_sent=1"
     else:
@@ -567,7 +619,7 @@ def pilotqa_subscribe(
 
     payment_url = get_subscription_payment_link(sub["id"]) or sub.get("invoiceUrl")
     if not payment_url:
-        return RedirectResponse("/pilotqa_ai?subscribe_error=1", status_code=303)
+        return RedirectResponse("/pilotqa-ai?subscribe_error=1", status_code=303)
     return RedirectResponse(payment_url, status_code=303)
 
 

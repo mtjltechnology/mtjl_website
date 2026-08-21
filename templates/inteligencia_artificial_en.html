@@ -35,6 +35,44 @@
     "areaServed": "BR"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can the AI agent make up a wrong answer?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The architecture prevents it: price, lead time and availability come from a query to the system, never from the model making things up, and when the output has to belong to a list, it is the code that checks and discards whatever falls outside." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does my process data leave my infrastructure?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Only if you allow it. When confidentiality requires it, the model is served on the customer's own infrastructure, with a guard that prevents the application from starting up pointing outside." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you train a model from scratch or only adjust an existing one?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It depends on the data you have: we train from scratch when the domain is too specific, or we fine-tune an existing model when it already gets close." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does every problem need artificial intelligence?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No, and we say so before proposing a project. Sometimes a well-written rule solves it for less than a model." }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mtjltechnology.com/en" },
+      { "@type": "ListItem", "position": 2, "name": "Artificial Intelligence", "item": "https://mtjltechnology.com/en/artificial-intelligence" }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
@@ -55,7 +93,7 @@
     <li><a href="#responsabilidade">How we keep control</a></li>
     <li><a href="#prova">Proof</a></li>
     <li><a href="/en/software-development">Development</a></li>
-    <li><a href="/en/qualityassurance">Software Testing</a></li>
+    <li><a href="/en/software-testing">Software Testing</a></li>
   </ul>
   <div class="lang-switcher">
     <a href="/inteligencia-artificial" class="lang-flag" title="Português" aria-label="Português">🇧🇷</a>
@@ -75,7 +113,7 @@
     <li><a href="#responsabilidade">How we keep control</a></li>
     <li><a href="#prova">Proof</a></li>
     <li><a href="/en/software-development">Development</a></li>
-    <li><a href="/en/qualityassurance">Software Testing</a></li>
+    <li><a href="/en/software-testing">Software Testing</a></li>
   </ul>
 </div>
 
@@ -270,7 +308,7 @@
     <div class="service-card">
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#scissors"/></svg></div>
       <h3>Customer service for salons and barbershops</h3>
-      <p>An agent that answers, schedules, confirms and sends reminders over WhatsApp. <a href="/en/relatify_beauty" class="inline-link">RelatifyAI Beauty</a></p>
+      <p>An agent that answers, schedules, confirms and sends reminders over WhatsApp. <a href="/en/relatify-beauty" class="inline-link">RelatifyAI Beauty</a></p>
     </div>
     <div class="service-card">
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
@@ -285,8 +323,40 @@
     <div class="service-card">
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
       <h3>Software testing in natural language</h3>
-      <p>AI that plans the actions and our own driver that runs them in the browser. <a href="/pilotqa_ai" class="inline-link">PilotQA AI</a></p>
+      <p>AI that plans the actions and our own driver that runs them in the browser. <a href="/en/pilotqa-ai" class="inline-link">PilotQA AI</a></p>
     </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<style>
+  .faq-item{ border-top:1px solid rgba(11,18,34,.08); padding:16px 0; }
+  .faq-item summary{ cursor:pointer; list-style:none; font-weight:600; color:var(--ink); font-size:1.02rem; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::before{ content:'+'; display:inline-block; width:1.3em; color:var(--ink-3); }
+  .faq-item[open] summary::before{ content:'–'; }
+  .faq-answer{ margin:10px 0 0; color:var(--ink-2); font-size:.95rem; line-height:1.7; padding-left:1.3em; }
+</style>
+<section id="faq" class="services-section">
+  <span class="section-tag">Frequently asked questions</span>
+  <h2 class="section-title">Before you bring us your process</h2>
+  <div class="faq-list" style="max-width:760px;margin:0 auto;text-align:left">
+    <details class="faq-item">
+      <summary>Can the AI agent make up a wrong answer?</summary>
+      <p class="faq-answer">The architecture prevents it: price, lead time and availability come from a query to the system, never from the model making things up, and when the output has to belong to a list, it is the code that checks and discards whatever falls outside.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does my process data leave my infrastructure?</summary>
+      <p class="faq-answer">Only if you allow it. When confidentiality requires it, the model is served on the customer's own infrastructure, with a guard that prevents the application from starting up pointing outside.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do you train a model from scratch or only adjust an existing one?</summary>
+      <p class="faq-answer">It depends on the data you have: we train from scratch when the domain is too specific, or we fine-tune an existing model when it already gets close.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does every problem need artificial intelligence?</summary>
+      <p class="faq-answer">No, and we say so before proposing a project. Sometimes a well-written rule solves it for less than a model.</p>
+    </details>
   </div>
 </section>
 
@@ -307,7 +377,7 @@
   <nav class="footer-links">
     <a href="https://mtjltechnology.com/en">Home</a>
     <a href="/en/software-development">Development</a>
-    <a href="/en/qualityassurance">Software Testing</a>
+    <a href="/en/software-testing">Software Testing</a>
     <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
   </nav>
   <p class="footer-copy">© 2026 MTJL Technology. All rights reserved. Curitiba, Paraná, Brazil.</p>
