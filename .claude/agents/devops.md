@@ -56,6 +56,26 @@ quem responde:
 - **Tudo mais** (`location /` catch-all, incluindo `/booking_beauty/login`, `/register`,
   `/{slug}/`, `/admin`) → bookingai-api (8000), inalterado
 
+## Google Search Console do larclinicahealth.com
+
+Propriedade `https://www.larclinicahealth.com/` verificada em 2026-08-21, dona
+`mtjltechnology@gmail.com`, nível `siteOwner`. Sitemap `/sitemap.xml` submetido.
+
+Verificação por meta tag, e a tag vem de `LARCLINICA_GOOGLE_SITE_VERIFICATION` no `.env` da VM
+(`config.py::Settings`, renderizada em `larclinica.html` só quando preenchida). O Google pede que
+a tag continue no ar depois de verificar, então essa variável não pode ser removida.
+
+Acesso à API sem OAuth client próprio: `gcloud auth application-default login --scopes=` com
+`webmasters` e `siteverification` somados aos escopos de sempre. O token do `gcloud auth
+print-access-token` comum NÃO serve, falta escopo, e o erro é 403. As APIs
+`searchconsole.googleapis.com` e `siteverification.googleapis.com` estão habilitadas no projeto
+`larclinica`, que é o quota project do ADC; chamadas precisam do header
+`x-goog-user-project: larclinica`.
+
+Ponto de atenção: `sites.list` nessa conta devolve só o larclinicahealth. A propriedade de
+mtjltechnology.com está em outra conta Google, então relatório dos dois domínios junto exige
+adicionar uma das contas como proprietária na propriedade da outra.
+
 `/etc/nginx/sites-enabled/larclinicahealth` — vhost separado de
 `larclinicahealth.com`/`www.larclinicahealth.com`, tudo em `location /` pro mesmo mtjl_website
 (8011), com `proxy_set_header Host $host` obrigatório: é o Host que faz a aplicação entregar a
