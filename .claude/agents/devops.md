@@ -49,11 +49,18 @@ quem responde:
 
 - `location = /caminho` (match exato) → mtjl_website (8011): `/`, `/en`, `/es`, `/booking_beauty`,
   `/en|es/booking_beauty`, `/booking_beauty/subscribe`, `/booking_beauty_contact`,
-  `/qualityassurance*`, `/larclinica`, `/larclinica_contact`, `/pilotqa_ai*`, `/pilotqa_contact`,
+  `/qualityassurance*`, `/larclinica` (hoje só 301 pro domínio próprio), `/larclinica_contact`,
+  `/pilotqa_ai*`, `/pilotqa_contact`,
   `/contact`, `/sitemap.xml`
 - `location /static/website/` (prefixo) → mtjl_website
 - **Tudo mais** (`location /` catch-all, incluindo `/booking_beauty/login`, `/register`,
   `/{slug}/`, `/admin`) → bookingai-api (8000), inalterado
+
+`/etc/nginx/sites-enabled/larclinicahealth` — vhost separado de
+`larclinicahealth.com`/`www.larclinicahealth.com`, tudo em `location /` pro mesmo mtjl_website
+(8011), com `proxy_set_header Host $host` obrigatório: é o Host que faz a aplicação entregar a
+página do LarClínica na raiz. DNS na Cloudflare com proxy ligado. Modelo do bloco e passos de
+certificado estão no `deploy.sh`.
 
 Antes de editar esse arquivo:
 1. `sudo cp /etc/nginx/sites-enabled/mtjltechnology ~/nginx_mtjltechnology.bak.$(date +%Y%m%d_%H%M%S)`

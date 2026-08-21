@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, Response
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -9,7 +10,7 @@ from slowapi.errors import RateLimitExceeded
 from config import settings
 from db import create_db_and_tables
 from limiter import limiter
-from router import router
+from router import larclinica_host_redirect_target, router
 
 
 @asynccontextmanager
@@ -40,6 +41,25 @@ if settings.app_env != "production":
         if response.headers.get("content-type", "").startswith("text/html"):
             response.headers["Cache-Control"] = "no-store, must-revalidate"
         return response
+
+
+# larclinicahealth.com e mtjltechnology.com são servidos pelo mesmo uvicorn, então
+# sem este guarda toda página do site institucional responderia 200 nos dois
+# domínios: conteúdo duplicado no índice, com o domínio errado ganhando a URL.
+# O domínio do LarClínica só entrega a própria raiz, o POST do formulário, os
+# arquivos estáticos, o robots e o sitemap; o resto volta 301 pro institucional.
+# O mesmo guarda leva o domínio sem www para o host canônico, que é o do canonical
+# declarado na página.
+@app.middleware("http")
+async def larclinica_domain_guard(request, call_next):
+    target = larclinica_host_redirect_target(request)
+    if target is not None:
+        query = request.url.query
+        if query:
+            target = f"{target}?{query}"
+        return RedirectResponse(target, status_code=301)
+    return await call_next(request)
+
 
 app.mount("/static/website", StaticFiles(directory="static/website"), name="website_static")
 

@@ -78,6 +78,62 @@ echo ">>> da mesma VM: /etc/nginx/sites-enabled/mtjltechnology (roteamento"
 echo ">>> por path, não por porta única). Não mexer sem ver o roteamento"
 echo ">>> completo daquele arquivo primeiro."
 echo ""
+echo ">>> DOMÍNIO DO LARCLÍNICA (www.larclinicahealth.com)"
+echo ">>> A página institucional do LarClínica saiu de mtjltechnology.com/larclinica e"
+echo ">>> passou a ser servida por esta mesma aplicação, escolhida pelo cabeçalho Host."
+echo ">>> O vhost /etc/nginx/sites-enabled/larclinicahealth já existe, com certificado"
+echo ">>> próprio em /etc/letsencrypt/live/larclinicahealth.com, mas na versão original"
+echo ">>> ele fazia 302 de tudo pra mtjltechnology.com/larclinica. Isso tem que virar"
+echo ">>> roteamento por path, senão o 301 do caminho antigo e o 302 do domínio novo"
+echo ">>> formam loop. Bloco 443 esperado:"
+cat <<'NGINX'
+
+    server {
+        listen 443 ssl;
+        server_name larclinicahealth.com www.larclinicahealth.com;
+
+        ssl_certificate /etc/letsencrypt/live/larclinicahealth.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/larclinicahealth.com/privkey.pem;
+
+        # Site institucional do LarClínica: mtjl_website (8011). Só a raiz e o que a
+        # página precisa. proxy_set_header Host $host é obrigatório: é por ele que a
+        # aplicação sabe que a requisição chegou pelo domínio do LarClínica e entrega
+        # larclinica.html na raiz em vez da home da MTJL.
+        location = / { include /etc/nginx/snippets/larclinica_site.conf; }
+        location = /larclinica_contact { include /etc/nginx/snippets/larclinica_site.conf; }
+        location = /robots.txt { include /etc/nginx/snippets/larclinica_site.conf; }
+        location = /sitemap.xml { include /etc/nginx/snippets/larclinica_site.conf; }
+        location = /favicon.ico { include /etc/nginx/snippets/larclinica_site.conf; }
+        location /static/website/ { include /etc/nginx/snippets/larclinica_site.conf; }
+        location /static/brand/ { include /etc/nginx/snippets/larclinica_site.conf; }
+
+        # Caminho aposentado pedido no domínio novo: um salto só, pra própria raiz.
+        location = /larclinica { return 301 https://www.larclinicahealth.com/; }
+
+        # Todo o resto continua sendo o APP do produto, que hoje mora atrás de
+        # mtjltechnology.com/larclinica/ (34.74.45.49:8080). Mantido como estava:
+        # /login, /paciente e companhia seguem funcionando pelos mesmos links.
+        location / {
+            return 302 https://mtjltechnology.com/larclinica$request_uri;
+        }
+    }
+
+    # /etc/nginx/snippets/larclinica_site.conf
+    proxy_pass http://127.0.0.1:8011;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+NGINX
+echo ">>> ORDEM DE APLICAÇÃO IMPORTA: nginx primeiro, código depois."
+echo ">>>   1. sudo nginx -t && sudo systemctl reload nginx"
+echo ">>>   2. cd $APP_DIR && git pull && pm2 restart mtjl-website"
+echo ">>> Invertendo a ordem, /larclinica passa a 301 pro domínio novo enquanto o"
+echo ">>> domínio novo ainda 302 de volta pra /larclinica: loop."
+echo ">>> Entre o passo 1 e o 2 a raiz do domínio novo serve a home da MTJL por"
+echo ">>> alguns segundos, o que é preferível ao loop."
+echo ""
 echo "Deploy recorrente (código já em produção, sem mudança de dependência):"
 echo "  cd $APP_DIR && git pull && pm2 restart mtjl-website"
 echo ""

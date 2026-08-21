@@ -26,14 +26,17 @@ sem build step, cada página é HTML server-rendered com CSS próprio e script i
 /booking_beauty, /en|es/booking_beauty → booking_beauty.html (landing + form de trial)
 /qualityassurance, /en|es/...        → testes_software.html
 /pilotqa_ai                          → redirect pra / (seção da home)
-/larclinica                          → larclinica.html
+/larclinica                          → 301 pra https://www.larclinicahealth.com/ (endereço aposentado)
 ```
+O LarClínica tem domínio próprio, servido por esta mesma aplicação: `GET /` com
+`Host: www.larclinicahealth.com` renderiza `larclinica.html`. Ver `router.py::home()` e o guarda
+`larclinica_domain_guard` em `main.py`.
 
 ## Formulários e endpoints que eles chamam
 - `/booking_beauty` → `POST /booking_beauty/subscribe` (trial) e `POST /booking_beauty_contact`
 - `/` → `POST /contact` e `POST /pilotqa_contact`
 - `/qualityassurance` → `POST /qualityassurance_contact`
-- `/larclinica` → `POST /larclinica_contact`
+- raiz de `www.larclinicahealth.com` → `POST /larclinica_contact`
 
 Todo formulário público tem um **campo honeypot** chamado `website` — invisível para humano
 (CSS, não `display:none` puro — bot simples detecta isso), preenchido só por bot. Ao criar

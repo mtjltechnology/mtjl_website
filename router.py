@@ -32,14 +32,35 @@ templates.env.filters["brt"] = _to_brt
 
 SITE_BASE_URL = "https://mtjltechnology.com"
 
+# O LarClínica saiu de mtjltechnology.com/larclinica e passou a ter domínio próprio.
+# A página institucional continua sendo servida por esta aplicação: o Nginx tem um
+# vhost para larclinicahealth.com apontando para o mesmo uvicorn, e as rotas abaixo
+# decidem o que entregar pelo cabeçalho Host. O caminho antigo virou 301 permanente.
+LARCLINICA_CANONICAL_HOST = "www.larclinicahealth.com"
+LARCLINICA_BASE_URL = f"https://{LARCLINICA_CANONICAL_HOST}"
+LARCLINICA_HOSTS = frozenset({"larclinicahealth.com", LARCLINICA_CANONICAL_HOST})
+
+# Só estes caminhos existem no domínio do LarClínica. Qualquer outro é página do
+# site institucional: sem o 301 de volta para mtjltechnology.com o mesmo HTML
+# responderia 200 nos dois domínios, o que é conteúdo duplicado no índice.
+_LARCLINICA_ALLOWED_PATHS = frozenset({
+    "/",
+    "/larclinica",
+    "/larclinica_contact",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/favicon.ico",
+})
+_LARCLINICA_ALLOWED_PREFIXES = ("/static/",)
+
 _SITEMAP_PAGES = [
     {"slug": "", "en": "/en", "es": "/es"},
     {"slug": "relatify-beauty", "en": "/en/relatify-beauty", "es": "/es/relatify-beauty"},
     {"slug": "testes-de-software", "en": "/en/software-testing", "es": "/es/pruebas-de-software"},
-    # LarClínica e PedeMarket não têm tradução real: en/es=None evita declarar
-    # hreflang alternado apontando pra a própria URL em pt (sitemap_xml só emite
-    # o bloco de alternates quando existe mais de uma variante).
-    {"slug": "larclinica", "en": None, "es": None},
+    # O PedeMarket não tem tradução real: en/es=None evita declarar hreflang
+    # alternado apontando pra a própria URL em pt (sitemap_xml só emite o bloco
+    # de alternates quando existe mais de uma variante). O LarClínica saiu daqui
+    # porque mora em larclinicahealth.com, que tem sitemap próprio.
     {"slug": "pedemarket", "en": None, "es": None},
     {"slug": "pilotqa-ai", "en": "/en/pilotqa-ai", "es": "/es/pilotqa-ai"},
     {"slug": "desenvolvimento-de-software", "en": "/en/software-development", "es": "/es/desarrollo-de-software"},
@@ -87,6 +108,31 @@ def _client_ip(request: Request):
     return request.client.host if request.client else None
 
 
+def _request_host(request: Request) -> str:
+    return (request.headers.get("host") or "").split(":", 1)[0].strip().lower()
+
+
+def is_larclinica_host(request: Request) -> bool:
+    return _request_host(request) in LARCLINICA_HOSTS
+
+
+def larclinica_host_redirect_target(request: Request) -> str | None:
+    """Para onde redirecionar uma requisição feita no domínio do LarClínica, ou
+    None quando ela deve ser servida como está.
+
+    Duas situações geram redirecionamento: o domínio sem www, que precisa cair no
+    host canônico (www), e qualquer caminho que seja página do site institucional,
+    que volta para mtjltechnology.com."""
+    if not is_larclinica_host(request):
+        return None
+    path = request.url.path
+    if _request_host(request) != LARCLINICA_CANONICAL_HOST:
+        return LARCLINICA_BASE_URL + path
+    if path in _LARCLINICA_ALLOWED_PATHS or path.startswith(_LARCLINICA_ALLOWED_PREFIXES):
+        return None
+    return SITE_BASE_URL + path
+
+
 def _redirect_preserving_query(request: Request, target: str, status_code: int = 301):
     query = request.url.query
     if query:
@@ -94,10 +140,28 @@ def _redirect_preserving_query(request: Request, target: str, status_code: int =
     return RedirectResponse(target, status_code=status_code)
 
 
+def _sitemap_xml_document(url_entries: str) -> str:
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+        f"{url_entries}\n"
+        "</urlset>"
+    )
+
+
 @router.get("/sitemap.xml")
-def sitemap_xml():
+def sitemap_xml(request: Request):
     lastmod = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     url_entries = []
+
+    # O domínio do LarClínica tem uma página só, a raiz, e nenhuma variante de
+    # idioma: o sitemap dele não passa por _SITEMAP_PAGES, que é do institucional.
+    if is_larclinica_host(request):
+        loc = escape(LARCLINICA_BASE_URL + "/")
+        body = f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{lastmod}</lastmod>\n  </url>"
+        return Response(content=_sitemap_xml_document(body), media_type="application/xml")
+
     for page in _SITEMAP_PAGES:
         pt_path = f"/{page['slug']}" if page["slug"] else "/"
         variants = {"pt-BR": pt_path}
@@ -124,25 +188,22 @@ def sitemap_xml():
             block += f"    <lastmod>{lastmod}</lastmod>\n  </url>"
             url_entries.append(block)
 
-    xml_body = "\n".join(url_entries)
-    xml = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
-        'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
-        f"{xml_body}\n"
-        "</urlset>"
-    )
-    return Response(content=xml, media_type="application/xml")
+    return Response(content=_sitemap_xml_document("\n".join(url_entries)), media_type="application/xml")
 
 
 @router.get("/robots.txt")
-def robots_txt():
-    body = "User-agent: *\nAllow: /\n\nSitemap: " + SITE_BASE_URL + "/sitemap.xml\n"
+def robots_txt(request: Request):
+    base = LARCLINICA_BASE_URL if is_larclinica_host(request) else SITE_BASE_URL
+    body = "User-agent: *\nAllow: /\n\nSitemap: " + base + "/sitemap.xml\n"
     return Response(content=body, media_type="text/plain")
 
 
 @router.get("/", response_class=HTMLResponse)
 def home(request: Request, sent: bool = False, pq_sent: bool = False):
+    # A raiz de larclinicahealth.com é a página do LarClínica, não a home do
+    # institucional: mesma aplicação, template escolhido pelo Host.
+    if is_larclinica_host(request):
+        return templates.TemplateResponse("larclinica.html", {"request": request, "sent": sent})
     return templates.TemplateResponse("home.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
 
 
@@ -186,9 +247,10 @@ def pilotqa_es_legacy(request: Request):
     return _redirect_preserving_query(request, "/es/pilotqa-ai")
 
 
-@router.get("/larclinica", response_class=HTMLResponse)
-def larclinica(request: Request, sent: bool = False):
-    return templates.TemplateResponse("larclinica.html", {"request": request, "sent": sent})
+@router.get("/larclinica")
+def larclinica_legacy(request: Request):
+    """Endereço aposentado. O conteúdo mora na raiz de larclinicahealth.com."""
+    return _redirect_preserving_query(request, LARCLINICA_BASE_URL + "/")
 
 
 @router.post("/larclinica_contact")
@@ -201,7 +263,9 @@ def larclinica_contact(
     message: str = Form(...),
     lang: str = Form(default="pt"),
 ):
-    redirect_url = "/larclinica?sent=1"
+    # O formulário vive na raiz do domínio do LarClínica. Um POST vindo de outro
+    # host (página antiga em cache, por exemplo) volta para lá pela URL absoluta.
+    redirect_url = "/?sent=1" if is_larclinica_host(request) else f"{LARCLINICA_BASE_URL}/?sent=1"
     if _is_blocked_email(email):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Organização/Operadora: {organization}\n\n" if organization else ""
