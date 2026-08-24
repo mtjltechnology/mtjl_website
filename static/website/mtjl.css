@@ -2636,7 +2636,7 @@ footer { background: none; border-top: 1px solid rgba(11,18,34,.06); }
   --lc-100: #D9EDE7;
   --lc-300: #7BD5C0;   /* menta — acento sobre o escuro */
   --lc-500: #2E9C8A;
-  --lc-700: #0B6B5F;   /* texto e botão sobre papel — 6,0:1 */
+  --lc-700: #0B6C60;   /* verde institucional da marca (mesmo hex da logo) — 6,5:1 sobre branco */
   --lc-900: #0C3B38;   /* petróleo — fundo do hero */
   --lc-950: #082B29;
 

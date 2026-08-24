@@ -37,7 +37,10 @@ def test_raiz_do_dominio_novo_entrega_a_pagina_do_larclinica(client):
 
     assert r.status_code == 200
     assert '<link rel="canonical" href="https://www.larclinicahealth.com/" />' in r.text
-    assert "LarClínica | Telessaúde para Operadoras de Saúde" in r.text
+    # Nome completo do produto, confirmado pelo PO em 2026-08-24. O título antigo
+    # ("LarClínica | Telessaúde para Operadoras de Saúde") descrevia o segmento;
+    # este descreve o produto, e é o mesmo texto usado no card da home.
+    assert "LarClínica · Plataforma de Gestão do Cuidado" in r.text
 
 
 @pytest.mark.parametrize("path", ["/", "/larclinica", "/sitemap.xml"])
@@ -56,6 +59,19 @@ def test_raiz_do_institucional_continua_entregando_a_home_da_mtjl(client):
     assert r.status_code == 200
     assert "MTJL Technology" in r.text
     assert "https://www.larclinicahealth.com/" in r.text  # card do produto aponta pra fora
+
+
+def test_card_do_larclinica_na_home_usa_o_nome_completo_do_produto(client):
+    """O card e o título da página do produto têm que contar a mesma história.
+
+    O card dizia "Telessaúde para operadoras de saúde", que é segmento, não
+    produto. O nome completo passou a ser LarClínica · Plataforma de Gestão do
+    Cuidado, e o descritor curto que cabe no card é a segunda metade dele.
+    """
+    r = client.get("/", headers=MTJL_HEADERS)
+
+    assert "Plataforma de Gestão do Cuidado" in r.text
+    assert "Telessaúde para operadoras de saúde" not in r.text
 
 
 def test_pagina_do_larclinica_nao_declara_mais_url_antiga(client):
