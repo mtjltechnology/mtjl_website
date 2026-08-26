@@ -82,7 +82,7 @@ def test_pagina_do_larclinica_nao_declara_mais_url_antiga(client):
 
 # ── Conteúdo duplicado: outros caminhos no domínio do LarClínica ──────────────
 
-@pytest.mark.parametrize("path", ["/pilotqa-ai", "/en", "/desenvolvimento-de-software", "/pedemarket"])
+@pytest.mark.parametrize("path", ["/pilotqa-ai", "/desenvolvimento-de-software", "/pedemarket"])
 def test_paginas_do_institucional_no_dominio_novo_voltam_301(client, path):
     r = client.get(path, headers=LC_HEADERS, follow_redirects=False)
 
@@ -157,13 +157,25 @@ def test_sitemap_do_institucional_nao_lista_mais_larclinica(client):
     assert "<loc>https://mtjltechnology.com/pedemarket</loc>" in r.text
 
 
-def test_sitemap_do_dominio_novo_lista_so_a_propria_raiz(client):
+def test_sitemap_do_dominio_novo_lista_so_as_proprias_paginas(client):
     r = client.get("/sitemap.xml", headers=LC_HEADERS)
 
     assert r.status_code == 200
     assert "<loc>https://www.larclinicahealth.com/</loc>" in r.text
+    assert "<loc>https://www.larclinicahealth.com/en</loc>" in r.text
+    assert "<loc>https://www.larclinicahealth.com/es</loc>" in r.text
     assert "mtjltechnology.com" not in r.text
-    assert r.text.count("<loc>") == 1
+    assert r.text.count("<loc>") == 3
+
+
+def test_traducoes_do_larclinica_ficam_no_proprio_dominio(client):
+    """/en e /es no domínio do LarClínica são a página dele, não a do institucional."""
+    for path, marker in (("/en", 'lang="en"'), ("/es", 'lang="es"')):
+        r = client.get(path, headers=LC_HEADERS, follow_redirects=False)
+
+        assert r.status_code == 200
+        assert marker in r.text
+        assert "LarClínica" in r.text
 
 
 def test_robots_aponta_pro_sitemap_do_proprio_dominio(client):

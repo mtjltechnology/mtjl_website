@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PedeMarket | Your Grocery Store on WhatsApp | MTJL Technology</title>
+  <meta name="description" content="Your store selling on WhatsApp: the AI takes the order, builds the cart with your prices and your stock, and your team picks and delivers while you follow everything on one screen." />
+  <link rel="canonical" href="https://mtjltechnology.com/en/pedemarket" />
+  <link rel="alternate" hreflang="pt-BR" href="https://mtjltechnology.com/pedemarket" />
+  <link rel="alternate" hreflang="en" href="https://mtjltechnology.com/en/pedemarket" />
+  <link rel="alternate" hreflang="es" href="https://mtjltechnology.com/es/pedemarket" />
+  <link rel="alternate" hreflang="x-default" href="https://mtjltechnology.com/pedemarket" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="PedeMarket | Your Grocery Store on WhatsApp" />
+  <meta property="og:description" content="Customers order by chatting, with no app to download. The store picks, delivers and follows everything on one screen." />
+  <meta property="og:image" content="https://mtjltechnology.com/static/brand/pedemarket-logo.png" />
+  <meta property="og:url" content="https://mtjltechnology.com/en/pedemarket" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PedeMarket | Your Grocery Store on WhatsApp" />
+  <meta name="twitter:description" content="Customers order by chatting, with no app to download. The store picks, delivers and follows everything on one screen." />
+  <meta name="twitter:image" content="https://mtjltechnology.com/static/brand/pedemarket-logo.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can the PedeMarket AI invent a price or a brand that does not exist?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Brand, price and what is in stock always come from your store's own product records. The AI does not answer on its own." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens when an item in the order is out of stock?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The dashboard sends the replacement options straight into the chat. The customer picks one, the swap goes into the order, and stock is checked again." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the customer need to install an app to order?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The whole order happens by chatting on WhatsApp, from the first 'hi' to the closed order." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the store follow the delivery?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The driver signs in with a QR code, a phone number and a short PIN, and the dashboard shows where they are on the map." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can we send promotional campaigns over WhatsApp?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, only to customers who opted in, with consent checked right before each send and a controlled pace so WhatsApp does not block your number." }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "PedeMarket",
+    "applicationCategory": "BusinessApplication",
+    "description": "AI ordering on WhatsApp for grocery stores and supermarkets, with a picking dashboard, delivery tracked on a map, and promotional campaigns.",
+    "url": "https://mtjltechnology.com/en/pedemarket",
+    "provider": {
+      "@type": "Organization",
+      "name": "MTJL Technology",
+      "url": "https://mtjltechnology.com/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mtjltechnology.com/en" },
+      { "@type": "ListItem", "position": 2, "name": "PedeMarket", "item": "https://mtjltechnology.com/en/pedemarket" }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=116" />
+  <link rel="icon" type="image/png" href="/static/brand/mtjl-favicon.png" />
+</head>
+<body class="pm-page">
+<a class="skip-link" href="#inicio">Skip to content</a>
+
+<!-- ── Navbar ── -->
+<nav class="navbar">
+  <a href="https://mtjltechnology.com/en" style="display:flex;align-items:center">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="navbar-logo" width="150" height="80" />
+  </a>
+  <ul class="navbar-nav">
+    <li><a href="#ordering">Ordering</a></li>
+    <li><a href="#picking">Picking</a></li>
+    <li><a href="#delivery">Delivery</a></li>
+    <li><a href="#offers">Offers</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#demo" onclick="openPMModal();return false;">Demo</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <a href="/pedemarket" class="lang-flag" title="Português" aria-label="Português">🇧🇷</a>
+    <a href="/en/pedemarket" class="lang-flag lang-flag--active" title="English" aria-label="English">🇺🇸</a>
+    <a href="/es/pedemarket" class="lang-flag" title="Español" aria-label="Español">🇪🇸</a>
+  </div>
+  <button type="button" class="navbar-burger" id="navbar-burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navbar-mobile-panel">
+    <span class="navbar-burger-bar"></span>
+  </button>
+</nav>
+
+<!-- ── Mobile nav panel ── -->
+<div class="navbar-mobile-panel" id="navbar-mobile-panel">
+  <ul>
+    <li><a href="#ordering">Ordering</a></li>
+    <li><a href="#picking">Picking</a></li>
+    <li><a href="#delivery">Delivery</a></li>
+    <li><a href="#offers">Offers</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#demo" onclick="openPMModal();return false;">Demo</a></li>
+  </ul>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-badge">For grocery stores, supermarkets, bakeries and corner shops</div>
+    <h1>Your store selling on <span>WhatsApp</span>, from the order to the customer's door</h1>
+    <p>The customer chats, picks the brand, asks for half a kilo of sirloin and closes the order without downloading anything. The AI answering only talks about what your store actually carries, at your price, and it already takes the item out of stock. On your side, the team bags the order, delivers it and follows everything on one screen.</p>
+    <div class="hero-actions">
+      <button type="button" onclick="openPMModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Talk to us</button>
+      <a href="#ordering" class="btn-outline">See how it works</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
+      <div class="hero-card-label">Ordering</div>
+      <div class="hero-card-value">Orders placed by chatting</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
+      <div class="hero-card-label">Picking</div>
+      <div class="hero-card-value">Every item scanned and checked</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#map"/></svg></div>
+      <div class="hero-card-label">Delivery</div>
+      <div class="hero-card-value">Driver on the map</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
+      <div class="hero-card-label">Dashboard</div>
+      <div class="hero-card-value">Orders and revenue</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Strip ── -->
+<div class="strip">
+  <div class="strip-track">
+   <ul class="strip-list" aria-label="What PedeMarket does">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> orders placed by chatting on WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> order by brand, by weight or by piece</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> items leave stock as the order is placed</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> picking with every item scanned</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> replacements agreed with the customer</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> delivery tracked on the map</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> flyers by photo and offers on WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> sales reports</li>
+    </ul>
+   <ul class="strip-list" aria-hidden="true">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> orders placed by chatting on WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> order by brand, by weight or by piece</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> items leave stock as the order is placed</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> picking with every item scanned</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> replacements agreed with the customer</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> delivery tracked on the map</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> flyers by photo and offers on WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> sales reports</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── Ordering ── -->
+<section id="ordering" class="services-section">
+  <span class="section-tag">Ordering</span>
+  <h2 class="section-title">It serves like your best counter clerk, not like a web form</h2>
+  <p class="section-sub">Ask for "rice" and you get the brands that are on the shelf today, with prices. Ask for "half a kilo of rump" and it asks about the cut first. Ask for "two chicken drumsticks" and it gives you the estimated weight per piece. None of this is invented by the AI: every answer comes from your product records.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
+      <h3>From "hi" to a closed order</h3>
+      <ul class="lc-check-list">
+        <li>Customers type it wrong, abbreviated or without accents and still find the product</li>
+        <li>Scale items sold by weight or by piece, warning that the weight is an estimate</li>
+        <li>What goes into the cart leaves stock, so two customers cannot take the same cut</li>
+        <li>Store pickup, delivery, or delivery scheduled in a two-hour window</li>
+        <li>Delivery fee calculated from the distance to the customer's address</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check-shield"/></svg></div>
+      <h3>It does not invent prices, brands or promotions</h3>
+      <ul class="lc-check-list">
+        <li>Brand, price and what is in stock always come from your own records</li>
+        <li>Before suggesting a side item, it checks that the store actually has it</li>
+        <li>Returning customers are recognised by phone, with address and past orders saved</li>
+        <li>Outside opening hours, the customer is told and already knows when you reopen</li>
+        <li>Change or cancel an order in the same chat, while picking has not gone too far</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Picking ── -->
+<section id="picking" class="services-section">
+  <span class="section-tag">Picking</span>
+  <h2 class="section-title">Customers complaining about the wrong item stop at the check</h2>
+  <p class="section-sub">The order lands on the dashboard and moves through New, Picking and Delivery. During picking, every item is scanned and the quantity checked, so what leaves the store is what the customer ordered.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
+      <h3>The picking list on screen</h3>
+      <ul class="lc-check-list">
+        <li>Item scanned, with a check on quantity or weight</li>
+        <li>Bag count, with the chilled ones kept apart</li>
+        <li>Store pickup recorded with the name and ID of whoever collected it</li>
+        <li>Reopen and fix an order, searching by number or customer name</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#refresh"/></svg></div>
+      <h3>Out of stock? The customer decides</h3>
+      <ul class="lc-check-list">
+        <li>One tap and the dashboard sends the replacement options into the chat</li>
+        <li>The customer answers, the swap enters the order, and stock is checked again</li>
+        <li>A cancelled item notifies the customer on its own, with nobody having to remember</li>
+        <li>If the customer replies "2", option 2 is what counts. No AI interpretation here</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Delivery ── -->
+<section id="delivery">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Delivery</span>
+      <h2 class="section-title">You stop calling the driver to ask where they are</h2>
+      <p class="section-sub">No app to install: the driver points the camera at a QR code, signs in with a phone number and a short PIN, and sees only their own deliveries.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#user"/></svg></div>
+        <div class="feature-text">
+          <h3>Access by QR code</h3>
+          <p>Registration with vehicle, plate and licence. The driver's access is separate from the store team's.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#map"/></svg></div>
+        <div class="feature-text">
+          <h3>Position on the map</h3>
+          <p>The driver's phone reports their location and the dashboard shows the route in progress.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg></div>
+        <div class="feature-text">
+          <h3>Closed out with who received it</h3>
+          <p>Mark it as out for delivery, close it with the name of whoever received it, or record the delivery that failed and why. It all stays in the history.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
+        <div class="feature-text">
+          <h3>The customer is notified on its own</h3>
+          <p>When the order goes out for delivery, the WhatsApp message is sent automatically.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Catalogue and offers ── -->
+<section id="offers" class="services-section">
+  <span class="section-tag">Catalogue and offers</span>
+  <h2 class="section-title">Send a photo of the flyer, and the offer is in the conversation</h2>
+  <p class="section-sub">You upload the photo of the flyer, the system reads the products and prices, and the AI starts answering about them. Offer campaigns go out at the right pace and only to customers who agreed to receive them.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#camera"/></svg></div>
+      <h3>The flyer goes in as a photo</h3>
+      <ul class="lc-check-list">
+        <li>As soon as the photo is uploaded, the system reads what is written on it</li>
+        <li>A customer asking about the promotion gets the answer or the flyer itself</li>
+        <li>Your store's website also works as a source for the answers</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
+      <h3>Offers on WhatsApp without burning your number</h3>
+      <ul class="lc-check-list">
+        <li>Sending at a controlled pace, so WhatsApp does not block your number</li>
+        <li>Each customer's consent is checked right before every send</li>
+        <li>A report of who did not receive it, name by name</li>
+        <li>Customer records keep each consent and refuse anyone under age</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Dashboard ── -->
+<section id="dashboard">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Dashboard</span>
+      <h2 class="section-title">You are the one in charge of the conversation, on screen</h2>
+      <p class="section-sub">The assistant's name and tone of voice, the rules, ready answers, opening hours, delivery fee and the look of the store: all changed on screen, without opening a ticket with us.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
+        <div class="feature-text">
+          <h3>Sales reports</h3>
+          <p>Revenue, orders, cancellations, best-selling products, pickup against delivery, and a comparison with last month.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#gear"/></svg></div>
+        <div class="feature-text">
+          <h3>How the assistant speaks</h3>
+          <p>Name, tone of voice, what it may say and what it may not. Plus ready answers and opening hours per weekday.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
+        <div class="feature-text">
+          <h3>Every employee sees what they need</h3>
+          <p>A clerk sees only their own part, either able to change it or just to look. The owner and the manager see everything.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#search"/></svg></div>
+        <div class="feature-text">
+          <h3>Every conversation on record</h3>
+          <p>From the first "hi" to the closed order, it is all recorded for you to check later.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<style>
+  .faq-item{ border-top:1px solid rgba(11,18,34,.08); padding:16px 0; }
+  .faq-item summary{ cursor:pointer; list-style:none; font-weight:600; color:var(--ink); font-size:1.02rem; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::before{ content:'+'; display:inline-block; width:1.3em; color:var(--ink-3); }
+  .faq-item[open] summary::before{ content:'–'; }
+  .faq-answer{ margin:10px 0 0; color:var(--ink-2); font-size:.95rem; line-height:1.7; padding-left:1.3em; }
+</style>
+<section id="faq" class="services-section">
+  <span class="section-tag">Frequently asked questions</span>
+  <h2 class="section-title">Before you put your store on WhatsApp</h2>
+  <div class="faq-list" style="max-width:760px;margin:0 auto;text-align:left">
+    <details class="faq-item">
+      <summary>Can the AI invent a price or a brand that does not exist?</summary>
+      <p class="faq-answer">No. Brand, price and what is in stock always come from your store's own product records. The AI does not answer on its own.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What happens when an item in the order is out of stock?</summary>
+      <p class="faq-answer">The dashboard sends the replacement options straight into the chat. The customer picks one, the swap goes into the order, and stock is checked again.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does the customer need to install an app to order?</summary>
+      <p class="faq-answer">No. The whole order happens by chatting on WhatsApp, from the first "hi" to the closed order.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How does the store follow the delivery?</summary>
+      <p class="faq-answer">The driver signs in with a QR code, a phone number and a short PIN, and the dashboard shows where they are on the map.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can we send promotional campaigns over WhatsApp?</summary>
+      <p class="faq-answer">Yes, only to customers who opted in, with consent checked right before each send and a controlled pace so WhatsApp does not block your number.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="demo">
+  <h2>See PedeMarket working with your own products</h2>
+  <p>The demo runs on products from your store, so you can watch the AI find the brand, work out the weight and close the order at your price. Book a time and follow the conversation as it happens.</p>
+  <div class="cta-actions">
+    <button type="button" onclick="openPMModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Book a demo</button>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <a href="https://mtjltechnology.com/en">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="footer-logo" width="150" height="80" />
+  </a>
+  <nav class="footer-links">
+    <a href="https://mtjltechnology.com/en">Home</a>
+    <a href="#ordering">Ordering</a>
+    <a href="#delivery">Delivery</a>
+    <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
+  </nav>
+  <p class="footer-copy">© 2026 MTJL Technology. All rights reserved. Curitiba, Paraná, Brazil.</p>
+</footer>
+
+<!-- ── Contact Modal ── -->
+<div class="pqmodal-backdrop" id="pm-modal-backdrop" onclick="closePMModal()"></div>
+<div class="pqmodal" id="pm-modal" role="dialog" aria-modal="true">
+  <div class="pqmodal-header">
+    <div>
+      <p class="pqmodal-tag">PedeMarket</p>
+      <h3 class="pqmodal-title">Talk to us</h3>
+    </div>
+    <button class="pqmodal-close" onclick="closePMModal()" aria-label="Close">✕</button>
+  </div>
+  <div class="pqmodal-body">
+    {% if sent %}
+      <div class="pqmodal-success">Message sent! We'll get back to you soon.</div>
+    {% endif %}
+    <form method="POST" action="/pedemarket_contact" class="pqmodal-form">
+      <input type="hidden" name="lang" value="en" />
+      <label>Name<input type="text" name="name" placeholder="Your name" required /></label>
+      <label>Email<input type="email" name="email" placeholder="you@email.com" required /></label>
+      <label>Store<input type="text" name="organization" placeholder="Your store's name" /></label>
+      <label>How can we help?<textarea name="message" placeholder="Tell us a bit about your store and how delivery works there today" rows="4" required></textarea></label>
+      <button type="submit">Send message →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openPMModal()  { document.getElementById('pm-modal').classList.add('open'); document.getElementById('pm-modal-backdrop').classList.add('open'); }
+  function closePMModal() { document.getElementById('pm-modal').classList.remove('open'); document.getElementById('pm-modal-backdrop').classList.remove('open'); }
+  {% if sent %}window.addEventListener('load', openPMModal);{% endif %}
+
+  // Mobile hamburger menu
+  (function () {
+    var burger = document.getElementById('navbar-burger');
+    var panel = document.getElementById('navbar-mobile-panel');
+    if (!burger || !panel) return;
+
+    function closePanel() {
+      panel.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) closePanel();
+      else { panel.classList.add('open'); burger.setAttribute('aria-expanded', 'true'); }
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closePanel);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.contains(e.target) && !burger.contains(e.target)) closePanel();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closePanel(); closePMModal(); }
+    });
+  })();
+</script>
+<script src="/static/website/mtjl.js?v=2" defer></script>
+</body>
+</html>

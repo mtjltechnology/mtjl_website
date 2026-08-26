@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LarClínica · Plataforma de Gestión del Cuidado</title>
+  <meta name="description" content="Urgencias virtuales, atención domiciliaria, telemonitoreo e historia clínica sobre el mismo registro de beneficiario. Al paciente se lo atiende por WhatsApp, sin aplicación. La IA sugiere y el profesional decide, y el dato de cada institución queda separado del resto por la propia base de datos." />
+  <link rel="canonical" href="https://www.larclinicahealth.com/es" />
+  <link rel="alternate" hreflang="pt-BR" href="https://www.larclinicahealth.com/" />
+  <link rel="alternate" hreflang="en" href="https://www.larclinicahealth.com/en" />
+  <link rel="alternate" hreflang="es" href="https://www.larclinicahealth.com/es" />
+  <link rel="alternate" hreflang="x-default" href="https://www.larclinicahealth.com/" />
+  {% if google_site_verification %}<meta name="google-site-verification" content="{{ google_site_verification }}" />{% endif %}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="LarClínica · Plataforma de Gestión del Cuidado" />
+  <meta property="og:description" content="Urgencias virtuales, atención domiciliaria, telemonitoreo e historia clínica sobre el mismo registro de beneficiario. Al paciente se lo atiende por WhatsApp, sin aplicación. La IA sugiere y el profesional decide, y el dato de cada institución queda separado del resto por la propia base de datos." />
+  <meta property="og:image" content="https://www.larclinicahealth.com/static/brand/larclinica-logo.png" />
+  <meta property="og:url" content="https://www.larclinicahealth.com/es" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LarClínica · Plataforma de Gestión del Cuidado" />
+  <meta name="twitter:description" content="Urgencias virtuales, atención domiciliaria, telemonitoreo e historia clínica sobre el mismo registro de beneficiario. Al paciente se lo atiende por WhatsApp, sin aplicación. La IA sugiere y el profesional decide, y el dato de cada institución queda separado del resto por la propia base de datos." />
+  <meta name="twitter:image" content="https://www.larclinicahealth.com/static/brand/larclinica-logo.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "LarClínica · Plataforma de Gestión del Cuidado",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "description": "Plataforma multiinquilino de gestión del cuidado para aseguradoras de salud, cooperativas e instituciones de salud: urgencias virtuales, teleatención, atención domiciliaria, telemonitoreo, historia clínica y gestión asistencial sobre el mismo registro de beneficiario.",
+    "url": "https://www.larclinicahealth.com/es",
+    "inLanguage": "es",
+    "featureList": [
+      "Atención domiciliaria y telemonitoreo",
+      "Urgencias virtuales y teleatención",
+      "Inteligencia artificial clínica de apoyo",
+      "Analítica e indicadores asistenciales",
+      "Recorrido del beneficiario y atención por la API oficial de WhatsApp",
+      "Historia clínica electrónica, receta digital y documentos firmados",
+      "Gestión asistencial, protocolos versionados y auditoría"
+    ],
+    "provider": {
+      "@type": "Organization",
+      "name": "MTJL Technology",
+      "url": "https://mtjltechnology.com/"
+    },
+    "areaServed": "BR"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿El dato clínico del beneficiario sale de la red de la institución?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. El modelo de IA corre en la infraestructura de la propia institución, y el sistema se niega a arrancar si la dirección del modelo apunta fuera de la red local." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿La IA decide el diagnóstico o la receta?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. La IA sugiere y el profesional decide. Toda salida vuelve marcada como sugerencia y solo se vuelve registro clínico cuando el profesional la aprueba." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo funciona el aislamiento entre instituciones?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Cada institución ve solo su propio dato, y quien lo garantiza es la base de datos, con seguridad a nivel de fila de PostgreSQL en 60 tablas. Una consulta sin filtro no ve la fila de la otra institución, en vez de filtrar el dato." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿La atención por WhatsApp exige una aplicación?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Identificación, consentimiento, pretriaje y número de fila ocurren dentro de la propia conversación. La única pantalla en el navegador es la del video." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cualquier persona puede entrar a urgencias virtuales?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Entra solo el beneficiario ya registrado en atención domiciliaria, con acceso habilitado por el equipo. Es una decisión de producto, no una limitación técnica." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿El equipo entra con la cuenta corporativa de la institución?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí, contra el directorio de la propia institución, por OpenID Connect: Entra ID, Google Workspace, Okta y Keycloak. El proveedor se configura por institución, y sin un grupo reconocido en el mapa del directorio el acceso se rechaza." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿LarClínica se integra con sistemas hospitalarios existentes?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Hay interfaz lista para Tasy, TISS, PACS, LIS y RIS, y la red nacional de datos de salud ya opera con registro de atención clínica en FHIR R4. Conectar de hecho a cada proveedor depende de su dirección, credencial y homologación." }
+      }
+    ]
+  }
+  </script>
+  <!-- Meta Pixel -->
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1132342796628104');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1132342796628104&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18180637831"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18180637831');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="/static/website/mtjl.css?v=116" />
+  <!-- Ícone da própria marca, não o da MTJL: esta página é o site do LarClínica.
+       Arquivos vindos do repo do produto (server/public), então a aba do browser
+       mostra o mesmo símbolo do app. O .ico primeiro cobre browser antigo e o
+       resultado do Google, que ignora PNG em alguns casos; o 32 é o que o Chrome
+       usa na aba, e o 16 evita reescala borrada em tela sem HiDPI. -->
+  <link rel="icon" href="/static/brand/larclinica-favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/brand/larclinica-favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/brand/larclinica-favicon-16.png" />
+  <link rel="apple-touch-icon" href="/static/brand/larclinica-apple-touch-icon.png" />
+</head>
+<body class="lc-page">
+<a class="skip-link" href="#inicio">Saltar al contenido</a>
+
+
+<!-- ── Navbar ── -->
+<nav class="navbar">
+  <a href="https://mtjltechnology.com/" style="display:flex;align-items:center">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="navbar-logo" width="150" height="80" />
+  </a>
+  <ul class="navbar-nav">
+    <li><a href="#visao-geral">Visión general</a></li>
+    <li><a href="#modulos">Módulos</a></li>
+    <li><a href="#pa-virtual">PA Virtual</a></li>
+    <li><a href="#whatsapp">WhatsApp</a></li>
+    <li><a href="#home-care">Home Care</a></li>
+    <li><a href="#prontuario">Historia clínica</a></li>
+    <li><a href="#gestao">Gestión</a></li>
+    <li><a href="#ia">IA</a></li>
+    <li><a href="#integracoes">Integraciones</a></li>
+    <li><a href="#seguranca">Seguridad</a></li>
+    <li><a href="#demonstracao" onclick="openLCModal();return false;">Demostración</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <a href="/" class="lang-flag" title="Português" aria-label="Português">🇧🇷</a>
+    <a href="/en" class="lang-flag" title="English" aria-label="English">🇺🇸</a>
+    <a href="/es" class="lang-flag lang-flag--active" title="Español" aria-label="Español">🇪🇸</a>
+  </div>
+  <button type="button" class="navbar-burger" id="navbar-burger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navbar-mobile-panel">
+    <span class="navbar-burger-bar"></span>
+  </button>
+</nav>
+
+<!-- ── Mobile nav panel ── -->
+<div class="navbar-mobile-panel" id="navbar-mobile-panel">
+  <ul>
+    <li><a href="#visao-geral">Visión general</a></li>
+    <li><a href="#modulos">Módulos</a></li>
+    <li><a href="#pa-virtual">PA Virtual</a></li>
+    <li><a href="#whatsapp">WhatsApp</a></li>
+    <li><a href="#home-care">Home Care</a></li>
+    <li><a href="#prontuario">Historia clínica</a></li>
+    <li><a href="#gestao">Gestión</a></li>
+    <li><a href="#ia">IA</a></li>
+    <li><a href="#integracoes">Integraciones</a></li>
+    <li><a href="#seguranca">Seguridad</a></li>
+    <li><a href="#demonstracao" onclick="openLCModal();return false;">Demostración</a></li>
+  </ul>
+</div>
+
+<!-- ── Hero ── -->
+<style>
+  /* A logo empilhada da marca abre o hero. O hero é escuro, então entra a versão
+     branca. Largura por clamp() para não estourar viewport de 360px, e alinhada à
+     esquerda como o resto do bloco de texto do hero. */
+  .lc-hero-logo{ display:block; width:clamp(150px,28vw,210px); max-width:100%; height:auto; margin:0 0 1.5rem; }
+</style>
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <img src="/static/brand/larclinica-logo-branca.png" alt="LarClínica Health" class="lc-hero-logo" width="828" height="576" loading="eager" decoding="async" />
+    <div class="hero-badge">Para aseguradoras de salud, hospitales, clínicas y cooperativas médicas</div>
+    <h1><span>Gestión del cuidado</span> del primer contacto a la visita en casa</h1>
+    <p>Urgencias virtuales, teleatención, atención domiciliaria, telemonitoreo e historia clínica sobre el mismo registro de beneficiario. Al paciente se lo atiende en la conversación de WhatsApp, sin descargar aplicación y sin crear contraseña. El equipo trabaja en un solo sistema, y el dato de tu institución queda separado del de cualquier otra.</p>
+    <div class="hero-actions">
+      <button type="button" onclick="openLCModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Hablar con un especialista</button>
+      <a href="#visao-geral" class="btn-outline">Ver la plataforma</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#ambulance"/></svg></div>
+      <div class="hero-card-label">PA Virtual</div>
+      <div class="hero-card-value">Fila por riesgo y consulta por video</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#home"/></svg></div>
+      <div class="hero-card-label">Home Care</div>
+      <div class="hero-card-value">Visita, ruta del día y turnos</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#clipboard"/></svg></div>
+      <div class="hero-card-label">Historia clínica y receta</div>
+      <div class="hero-card-value">Versionado y firmado</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
+      <div class="hero-card-label">LGPD</div>
+      <div class="hero-card-value">Dato separado y auditado</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Strip ── -->
+<div class="strip">
+  <div class="strip-track">
+   <ul class="strip-list" aria-label="Capacidades de la plataforma">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> PA Virtual</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Home Care</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Telemonitoreo</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Historia clínica electrónica</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Receta digital</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Interconsulta entre médicos</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Atención por la API oficial de WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Agenda y reprogramación</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Reglas de alerta</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> SSO corporativo</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> RNDS</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> LGPD y auditoría</li>
+    </ul>
+   <ul class="strip-list" aria-hidden="true">
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> PA Virtual</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Home Care</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Telemonitoreo</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Historia clínica electrónica</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Receta digital</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Interconsulta entre médicos</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Atención por la API oficial de WhatsApp</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Agenda y reprogramación</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> Reglas de alerta</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> SSO corporativo</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> RNDS</li>
+    <li class="strip-item"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check"/></svg> LGPD y auditoría</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── Números ── -->
+<section id="numeros">
+  <span class="section-tag">En números</span>
+  <h2 class="section-title">Qué entra en el contrato</h2>
+  <div class="lc-stats-grid">
+    <div class="stat-card">
+      <div class="stat-value">4</div>
+      <div class="stat-label">Módulos contratados por institución</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">1</div>
+      <div class="stat-label">Registro de beneficiario compartido por todos los módulos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">7</div>
+      <div class="stat-label">Capacidades de IA, activadas una a una por la gestión</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Escalas clínicas validadas dentro del seguimiento</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Visão Geral ── -->
+<section id="visao-geral" class="services-section">
+  <span class="section-tag">Visión general</span>
+  <h2 class="section-title">El paciente no empieza su historia de nuevo en cada atención</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Urgencias virtuales y atención domiciliaria usan el mismo registro, el mismo documento y el mismo historial. El profesional no vuelve a escribir lo que el colega ya registró en el otro módulo.</p>
+
+  <div class="lc-overview-grid">
+    <div class="service-card" style="text-align:left">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#ambulance"/></svg></div>
+      <h3 style="justify-content:flex-start">Urgencias virtuales y teleatención</h3>
+      <ul class="lc-check-list">
+        <li>Fila priorizada por clasificación de riesgo</li>
+        <li>Triaje de enfermería con escalamiento al médico</li>
+        <li>Consulta por video con chat, y el acompañante entra por enlace</li>
+        <li>Grabación consentida de la atención</li>
+        <li>Segunda opinión entre médicos, en la misma consulta</li>
+      </ul>
+    </div>
+    <div class="service-card" style="text-align:left">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#home"/></svg></div>
+      <h3 style="justify-content:flex-start">Atención domiciliaria y telemonitoreo</h3>
+      <ul class="lc-check-list">
+        <li>Visitas, mapa y planificación de rutas</li>
+        <li>Grilla semanal de turnos</li>
+        <li>Signos vitales y escalas clínicas</li>
+        <li>Control prenatal y líneas de cuidado</li>
+        <li>Insumos en la casa del paciente y alerta de deterioro</li>
+      </ul>
+    </div>
+    <div class="service-card" style="text-align:left">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#compass"/></svg></div>
+      <h3 style="justify-content:flex-start">Recorrido del beneficiario</h3>
+      <ul class="lc-check-list">
+        <li>Entra sin contraseña, con un código enviado por WhatsApp</li>
+        <li>Consentimiento LGPD registrado con el texto aceptado</li>
+        <li>Página de agendamiento propia por institución</li>
+        <li>Aviso por WhatsApp, correo y navegador</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Módulos comerciais ── -->
+<style>
+  /* Bloco de nota: usado onde a página precisa registrar a mecânica ou o limite de
+     uma capacidade sem transformar isso em card de marketing. Cor por variável com
+     fallback, porque o verde institucional vive no CSS global. */
+  .lc-note{ max-width:900px; margin:2.4rem auto 0; padding:1.15rem 1.35rem; border:1px solid rgba(11,18,34,.09); border-left:3px solid var(--lc-green, #0B6C60); border-radius:12px; background:rgba(11,108,96,.045); text-align:left; }
+  /* --ink-2 e não --gray: sobre o fundo esverdeado claro deste bloco o cinza
+     padrão fica em 4,45:1, logo abaixo do mínimo AA para texto normal. */
+  .lc-note p{ margin:0; font-size:.88rem; line-height:1.75; color:var(--ink-2, #515C75); }
+  .lc-note p + p{ margin-top:.75rem; }
+  .lc-note strong{ color:var(--ink, #0B1222); font-weight:600; }
+  @media (max-width:560px){ .lc-note{ margin-left:0; margin-right:0; padding:1rem 1.05rem; } }
+</style>
+<section id="modulos">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Módulos</span>
+      <h2 class="section-title">Qué contrata tu institución, y qué viene incluido</h2>
+      <p class="section-sub">Cuatro módulos se contratan por institución. El recorrido del beneficiario es la quinta área: acompaña a cualquier módulo contratado y no se vende aparte.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#home"/></svg></div>
+        <div class="feature-text">
+          <h3>Home Care</h3>
+          <p>Visita domiciliaria, turnos del equipo, insumos en la casa del paciente, ruta del día y telemonitoreo.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#ambulance"/></svg></div>
+        <div class="feature-text">
+          <h3>PA Virtual</h3>
+          <p>Fila con clasificación de riesgo, triaje de enfermería, consulta por video y seguimiento después de la atención.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#spark"/></svg></div>
+        <div class="feature-text">
+          <h3>Inteligencia Artificial</h3>
+          <p>Atraviesa urgencias virtuales, atención domiciliaria y el asistente. Se contrata aparte, y la gestión la activa capacidad por capacidad.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
+        <div class="feature-text">
+          <h3>Analytics</h3>
+          <p>Panel de indicadores de la operación asistencial, para que la dirección lo siga sin pedir un reporte.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
+        <div class="feature-text">
+          <h3>Beneficiarios</h3>
+          <p>Acompaña a cualquier módulo contratado, y por eso no se vende aparte: registro único, entrada sin contraseña por código de WhatsApp, habilitación de acceso por el equipo, consentimiento LGPD por finalidad, agendamiento propio de la institución, historial de la conversación y aviso por WhatsApp, correo y navegador.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lc-note">
+    <p><strong>Activar y desactivar un módulo es operación nuestra</strong>, nunca del cliente. Contratar o cancelar vale al instante, sin esperar una actualización. Lo que no se contrató no aparece en el menú, no abre por dirección directa y no responde: en la duda, el sistema cierra en vez de habilitar.</p>
+    <p><strong>Tres controles se suman en el mismo acceso</strong>, y ninguno reemplaza al otro: el cargo de la persona, el módulo contratado y la separación del dato por institución.</p>
+    <p><strong>La segunda opinión entre médicos no es un módulo aparte.</strong> La interconsulta acompaña a urgencias virtuales y se activa junto con ella.</p>
+  </div>
+</section>
+
+<!-- ── PA Virtual ── -->
+<section id="pa-virtual" class="services-section">
+  <span class="section-tag">PA Virtual</span>
+  <h2 class="section-title">De la recepción al video, con la historia clínica a la vista</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Recepción digital, fila ordenada por clasificación de riesgo y consulta por video. Todo escrito en la misma historia clínica que usa el equipo de atención domiciliaria.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#ambulance"/></svg></div>
+      <h3>De la recepción al video</h3>
+      <ul class="lc-check-list">
+        <li>Entra solo el beneficiario ya registrado, con acceso habilitado por el equipo. No existe atención anónima, y eso es una decisión de producto</li>
+        <li>Fila ordenada por clasificación de riesgo</li>
+        <li>Triaje de enfermería, con escalamiento al médico</li>
+        <li>Sala de video que funciona incluso en red corporativa restringida</li>
+        <li>El acompañante entra por enlace, sin crear cuenta</li>
+        <li>Grabación con consentimiento, y control agendado después de la atención</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#stethoscope"/></svg></div>
+      <h3>Qué sale de la atención</h3>
+      <ul class="lc-check-list">
+        <li>Receta digital</li>
+        <li>Órdenes de estudios</li>
+        <li>Derivaciones</li>
+        <li>Segunda opinión entre médicos, sin sacar al paciente de la atención</li>
+        <li>Certificado médico y constancia de asistencia por el mismo flujo de firma que la receta, con quién puede emitirlos definido por profesión</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Canal WhatsApp ── -->
+<section id="whatsapp" class="services-section">
+  <span class="section-tag">Canal de entrada</span>
+  <h2 class="section-title">El paciente mayor no instala una aplicación, pero sí usa WhatsApp</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Identificación, consentimiento, pretriaje y número de fila ocurren dentro de la conversación. La única pantalla que abre en el navegador es la del video. Eso saca del camino la aplicación, la contraseña y la dirección del portal, que es justo donde el beneficiario mayor abandona.</p>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">El canal funciona sobre la API oficial de WhatsApp, contratada por la propia institución directo con Meta. Cada institución atiende por su número, y no lo comparte con ninguna otra.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
+      <h3>Del mensaje a la sala de video</h3>
+      <ul class="lc-check-list">
+        <li>Quién está escribiendo se verifica contra el registro de la institución</li>
+        <li>Consentimiento LGPD aceptado en la conversación, con registro del texto exacto</li>
+        <li>Pretriaje dentro del mismo diálogo</li>
+        <li>Un síntoma grave termina las preguntas, prioriza el caso y llama a enfermería al instante</li>
+        <li>Número de fila y enlace del video entregados al final de la conversación</li>
+        <li>Entrada sin contraseña, con el código enviado en la propia conversación</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#calendar"/></svg></div>
+      <h3>Agenda e historial en el mismo canal</h3>
+      <ul class="lc-check-list">
+        <li>Agendar, reprogramar y cancelar dentro de la conversación</li>
+        <li>Solo toca la agenda quien fue identificado en la conversación</li>
+        <li>Confirmación explícita antes de cancelar</li>
+        <li>Historial por beneficiario: qué se envió, qué se respondió y si llegó</li>
+        <li>Búsqueda por período y por palabra, con exportación</li>
+        <li>Visible en la ficha de atención domiciliaria y en la de pacientes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lc-note">
+    <p><strong>Sobre la activación del canal.</strong> Enviar y recibir mensajes son dos configuraciones distintas. Con la primera, el sistema ya manda código de acceso y avisos. La conversación de atención depende de la segunda, y la pantalla de integraciones muestra los dos estados por separado, para que nadie crea que activó el canal completo.</p>
+  </div>
+</section>
+
+<!-- ── Home Care ── -->
+<section id="home-care">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Home Care</span>
+      <h2 class="section-title">Cuidado domiciliario con visibilidad de punta a punta</h2>
+      <p class="section-sub">Cada casa en seguimiento se vuelve un punto en el mapa del equipo, con ruta, turnos, insumos e historial clínico en el mismo lugar. La gestión deja de enterarse de la visita perdida a fin de mes.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#map"/></svg></div>
+        <div class="feature-text">
+          <h3>Mapa de casas en seguimiento</h3>
+          <p>Dónde están los beneficiarios activos, casa por casa, en la pantalla.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#bolt"/></svg></div>
+        <div class="feature-text">
+          <h3>Planificación de rutas de visita</h3>
+          <p>Ruta del día con orden de visita y distancia de calle, no distancia en línea recta.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#clock"/></svg></div>
+        <div class="feature-text">
+          <h3>Grilla semanal de turnos</h3>
+          <p>Grilla del equipo, con el cambio de turno registrado en vez de acordado por mensaje.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#package"/></svg></div>
+        <div class="feature-text">
+          <h3>Insumos controlados por domicilio</h3>
+          <p>Material de la casa vinculado al beneficiario, con entrada y salida registradas y sin planilla paralela.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#pregnant"/></svg></div>
+        <div class="feature-text">
+          <h3>Control prenatal y líneas de cuidado</h3>
+          <p>Seguimiento por línea de cuidado, con responsable definido y la historia del caso en orden.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#home"/></svg></div>
+        <div class="feature-text">
+          <h3>Registro en campo</h3>
+          <p>Pantalla hecha para celular y mala conexión, porque la visita ocurre en la casa del paciente y no en el escritorio de la oficina.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Telemonitoramento ── -->
+<section id="telemonitoramento">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Telemonitoreo</span>
+      <h2 class="section-title">Quien define el límite clínico es tu equipo</h2>
+      <p class="section-sub">Signos vitales y escalas validadas alimentan reglas de alerta que la propia gestión configura en la pantalla. El equipo recibe el aviso antes de que el cuadro empeore, sin depender de la próxima visita para notarlo.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#alert"/></svg></div>
+        <div class="feature-text">
+          <h3>Regla de alerta definida por la gestión</h3>
+          <p>Tipo de riesgo, parámetro monitoreado, rango de corte, gravedad y mensaje definidos en la pantalla. La regla publicada no cambia después, cada alerta guarda la versión que la generó, y un panel muestra cuánto dispara cada regla. Cambiar un límite clínico no depende de llamar al proveedor.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#trend-up"/></svg></div>
+        <div class="feature-text">
+          <h3>Escalas clínicas validadas</h3>
+          <p>Braden, Morse, EVA, PHQ-9 e GAD-7 aplicadas dentro do acompanhamento, sem formulário em papel nem planilha à parte.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#pregnant"/></svg></div>
+        <div class="feature-text">
+          <h3>Embarazo de alto riesgo</h3>
+          <p>Control prenatal con los controles de la línea de cuidado en el mismo registro del beneficiario.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#heart-pulse"/></svg></div>
+        <div class="feature-text">
+          <h3>Salud mental</h3>
+          <p>PHQ-9 y GAD-7 con derivación desde el mismo registro, sin empezar el historial de nuevo en otro sistema.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Prontuário e documentos ── -->
+<section id="prontuario" class="services-section">
+  <span class="section-tag">Historia clínica</span>
+  <h2 class="section-title">Historia clínica y documentos sin perder el rastro</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Toda edición clínica guarda la versión anterior. Nada se borra, y la institución puede probar quién escribió qué y cuándo.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#clipboard"/></svg></div>
+      <h3>Historia clínica electrónica</h3>
+      <ul class="lc-check-list">
+        <li>Historial por atención, codificado en CIE-10 y CIAP-2</li>
+        <li>Evolución con historial: ninguna edición borra el registro anterior</li>
+        <li>Estudios y derivación en el mismo registro</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#pill"/></svg></div>
+      <h3>Receta y documentos firmados</h3>
+      <ul class="lc-check-list">
+        <li>Señalización de medicamento controlado y de interacción medicamentosa</li>
+        <li>Receta recurrente, renovada sin una nueva atención</li>
+        <li>Certificado médico y constancia de asistencia por el mismo flujo de firma</li>
+        <li>Verificación pública de la receta emitida, por código de validación</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Gestão assistencial ── -->
+<section id="gestao">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Gestión asistencial</span>
+      <h2 class="section-title">Quién cuida a quién, con plazo y comprobación</h2>
+      <p class="section-sub">La coordinación del caso sale de la planilla. Equipo, recomendación, protocolo y agenda quedan atados al beneficiario, con autor y plazo de vigencia.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
+        <div class="feature-text">
+          <h3>Equipo multidisciplinario por beneficiario</h3>
+          <p>Función y período de cada integrante, responsable principal siempre igual al vínculo asistencial registrado, y recomendación con especialidad, plazo, responsable y control de quién la cumplió.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#doc"/></svg></div>
+        <div class="feature-text">
+          <h3>Protocolo clínico versionado</h3>
+          <p>Autor, fecha y vigencia preservados en cada publicación, vinculados a diagnóstico en CIE-10 y CIAP-2.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#calendar"/></svg></div>
+        <div class="feature-text">
+          <h3>Calendario de turnos</h3>
+          <p>Vistas de día, semana, mes y período elegido, con filtros por profesional, estado y tipo. La edición desde la gestión usa el mismo núcleo que el autoservicio del beneficiario.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chart"/></svg></div>
+        <div class="feature-text">
+          <h3>Indicadores, SLA y líneas de cuidado</h3>
+          <p>Seguimiento operativo, medicina preventiva y salud poblacional sobre la misma base de la atención.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#refresh"/></svg></div>
+        <div class="feature-text">
+          <h3>Mantenimiento de datos</h3>
+          <p>Exportar e importar pacientes, atenciones, catálogos, equipo e historias clínicas, y borrar dato antiguo según la regla de retención de la institución. Todo registrado en auditoría.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Suporte e Central de Ajuda ── -->
+<section id="suporte" class="services-section">
+  <span class="section-tag">Soporte</span>
+  <h2 class="section-title">Ayuda y tickets dentro del propio sistema</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">El equipo resuelve dudas y abre tickets sin salir de la pantalla, con o sin el módulo de IA contratado.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#graduation"/></svg></div>
+      <h3>Manual en pantalla, por función</h3>
+      <ul class="lc-check-list">
+        <li>Manuales en PDF por rol: usuario, asistente inteligente y administrador</li>
+        <li>Cada persona ve el manual de su función, y solo después de entrar al sistema</li>
+        <li>Cada descarga queda registrada en la auditoría</li>
+        <li>El archivo no queda abierto en internet</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#receipt"/></svg></div>
+      <h3>Ticket sin corazonada de IA</h3>
+      <ul class="lc-check-list">
+        <li>Título, asunto y hasta 5 adjuntos de 4 MB</li>
+        <li>Prioridad de P1 a P4 y fila definidas por regla fija sobre el texto, nunca por opinión del modelo</li>
+        <li>Un P1 siempre espera la confirmación de una persona antes de escalar</li>
+        <li>El ticket escala a Zammad cuando está configurado, con el correo como respaldo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── IA clínica ── -->
+<section id="ia" class="services-section">
+  <span class="section-tag">Inteligencia Artificial</span>
+  <h2 class="section-title">La IA sugiere, el profesional decide, y el dato no viaja</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Siete capacidades, activadas una a una por la gestión. Ninguna escribe en la historia clínica por su cuenta: la salida vuelve a la pantalla marcada como sugerencia y solo se vuelve registro clínico cuando el profesional la guarda.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#spark"/></svg></div>
+      <h3>Siete capacidades, activadas una a una</h3>
+      <ul class="lc-check-list">
+        <li>Transcripción de la consulta grabada</li>
+        <li>Nota SOAP a partir de la transcripción</li>
+        <li>Resumen clínico del historial</li>
+        <li>Sugerencia de código diagnóstico y de estudio</li>
+        <li>Pretriaje adaptativo</li>
+        <li>Predicción de internación</li>
+        <li>Detección de fraude</li>
+        <li>La predicción de internación y la detección de fraude enumeran los motivos, uno por uno, sobre datos que la institución ya tiene. No es una caja negra de modelo entrenado</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
+      <h3>El dato clínico no sale de la red</h3>
+      <ul class="lc-check-list">
+        <li>El modelo corre en la infraestructura de la propia institución, con Ollama, y no en un servicio de terceros</li>
+        <li>El sistema se niega a arrancar si la dirección del modelo apunta fuera de la red local</li>
+        <li>Consentimiento específico de IA, rechazable sin bloquear la atención</li>
+        <li>Nunca diagnostica ni prescribe sola, por diseño del producto</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lc-note">
+    <p><strong>La IA atraviesa los módulos y se vende aparte.</strong> Sin el módulo contratado, los controles de IA desaparecen de la pantalla en vez de quedar en gris, el asistente deja de conversar, su panel se vuelve canal de soporte y el pretriaje vuelve a enfermería. Incluso con los interruptores internos activados: entre interruptor y contrato, manda el contrato.</p>
+  </div>
+</section>
+
+<!-- ── Integrações ── -->
+<section id="integracoes" class="services-section">
+  <span class="section-tag">Integraciones</span>
+  <h2 class="section-title">Qué ya opera, y qué todavía depende de un contrato</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto">Los dos grupos quedan separados a propósito. Vender una interfaz lista como proveedor conectado es el tipo de cosa que aparece en la primera reunión con tu equipo de TI.</p>
+
+  <div class="services-grid lc-two-col-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#plug"/></svg></div>
+      <h3>Ya funcionan, solo dependen de configurar el ambiente</h3>
+      <ul class="lc-check-list">
+        <li>API oficial de WhatsApp, con envío y recepción configurados por separado</li>
+        <li>Correo y aviso en el navegador</li>
+        <li>Ollama, sirviendo el asistente y la IA clínica dentro de la red</li>
+        <li>Transcripción de voz en la propia infraestructura</li>
+        <li>Servidor TURN, para que el video atraviese una red corporativa restringida</li>
+        <li>Planificación de rutas con orden de visita y distancia de calle</li>
+        <li>SSO corporativo por OpenID Connect y por institución: Entra ID, Google Workspace, Okta y Keycloak</li>
+        <li>Zammad para chamados de suporte</li>
+        <li>Monitoreo y registros: Sentry, Grafana, Loki y Promtail</li>
+        <li>Red nacional de datos de salud de Brasil (RNDS) con registro de atención clínica en FHIR R4</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#hospital"/></svg></div>
+      <h3>Interfaz lista, conexión dependiendo de contrato y homologación</h3>
+      <ul class="lc-check-list">
+        <li>Tasy</li>
+        <li>TISS</li>
+        <li>PACS, LIS y RIS</li>
+        <li>SMS</li>
+        <li>Firma digital ICP-Brasil</li>
+        <li>Una interfaz lista no significa proveedor conectado. Cada una exige su propia dirección, credencial, contrato y homologación</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lc-note">
+    <p><strong>Sobre el inicio de sesión corporativo.</strong> El proveedor se configura por institución, nunca uno solo para todas. Un proveedor único dejaría entrar cualquier cuenta del directorio en cualquier cliente, porque el inicio de sesión no dice en qué institución trabaja la persona. Sin un grupo reconocido en el mapa del directorio, el acceso se rechaza, en vez de caer en un perfil por defecto.</p>
+    <p><strong>Sobre la red nacional de datos de salud.</strong> La acreditación es del establecimiento de salud, no de la plataforma: exige registro CNES activo y certificado e-CNPJ ICP-Brasil, en el portal de servicios de DATASUS, con la plataforma declarada como sistema en la solicitud.</p>
+  </div>
+</section>
+
+<!-- ── Diferenciais ── -->
+<section id="diferenciais">
+  <span class="section-tag">Diferenciales</span>
+  <h2 class="section-title">Por qué LarClínica, y no dos sistemas pegados</h2>
+
+  <div class="lc-diff-grid">
+    <div class="lc-diff-card">
+      <div class="lc-diff-num">1</div>
+      <h3>Un registro, no dos sistemas conversando</h3>
+      <p>Urgencias virtuales y atención domiciliaria usan el mismo paciente, el mismo documento y el mismo historial. Quien corre teleconsulta en un sistema y atención domiciliaria en otro no alcanza esa continuidad sin unir los dos.</p>
+    </div>
+    <div class="lc-diff-card">
+      <div class="lc-diff-num">2</div>
+      <h3>WhatsApp como puerta de entrada, no como aviso</h3>
+      <p>Identificación, consentimiento, pretriaje y número de fila dentro de la conversación. No es un mensaje con enlace a un portal que el paciente no va a abrir.</p>
+    </div>
+    <div class="lc-diff-card">
+      <div class="lc-diff-num">3</div>
+      <h3>La separación entre instituciones la garantiza la base de datos</h3>
+      <p>Seguridad a nivel de fila en PostgreSQL, y no una configuración del sistema que alguien puede equivocar. Una consulta sin filtro no ve la fila de la otra institución, en vez de filtrar el dato.</p>
+    </div>
+    <div class="lc-diff-card">
+      <div class="lc-diff-num">4</div>
+      <h3>Sin contrato, el módulo simplemente no abre</h3>
+      <p>No aparece en el menú, no abre por dirección directa y no responde. La verificación ocurre en cada acceso, así que contratar y cancelar valen al instante.</p>
+    </div>
+    <div class="lc-diff-card">
+      <div class="lc-diff-num">5</div>
+      <h3>La IA asiste, nunca decide, y corre en tu servidor</h3>
+      <p>El modelo en la infraestructura de la institución, la salida siempre marcada como sugerencia, y el paciente que rechaza la IA sigue siendo atendido.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Arquitetura ── -->
+<section id="arquitetura">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Arquitectura</span>
+      <h2 class="section-title">Para el equipo de TI que va a auditar el producto</h2>
+      <p class="section-sub">Cada área concentra su propia regla de negocio y conversa con las otras solo por una interfaz definida. Un cambio en un módulo tiene menos chance de romper otro, y la auditoría técnica encuentra fronteras claras en vez de código enredado.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#puzzle"/></svg></div>
+        <div class="feature-text">
+          <h3>44 dominios de backend aislados</h3>
+          <p>Comunicación solo por interfaz definida, en 268 endpoints de API. La evolución extiende el dominio correspondiente, sin reescribir la plataforma.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#code"/></svg></div>
+        <div class="feature-text">
+          <h3>Node.js y Express sobre PostgreSQL 16</h3>
+          <p>Frontend en HTML, CSS y JavaScript sin framework. Una página liviana es un requisito de campo, no una optimización opcional: la atención domiciliaria trabaja en celular y con red inestable.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#container"/></svg></div>
+        <div class="feature-text">
+          <h3>Docker Compose y observabilidad</h3>
+          <p>Levanta sin orquestador complejo, con overlay de Grafana, Loki y Promtail, Sentry, y runbooks de respaldo y continuidad.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#flask"/></svg></div>
+        <div class="feature-text">
+          <h3>Suite automatizada</h3>
+          <p>Pruebas unitarias, de API y de punta a punta con Playwright, cubriendo reglas de negocio, cifrado y aislamiento entre instituciones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Segurança ── -->
+<section id="seguranca">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">Seguridad y protección de datos</span>
+      <h2 class="section-title">Cumplimiento desde el diseño de los datos</h2>
+      <p class="section-sub">Separación garantizada por la base de datos, auditoría que delata un registro alterado después y consentimiento que guarda el texto exacto que la persona leyó. Es lo que preguntan compliance y la autoridad de protección de datos, y lo que sale caro sin respuesta.</p>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#lock"/></svg></div>
+        <div class="feature-text">
+          <h3>El dato de cada institución separado por la base de datos</h3>
+          <p>Seguridad a nivel de fila en 60 tablas de PostgreSQL. Una consulta sin filtro no ve la fila de la otra institución, en vez de filtrar el dato. La verificación en la aplicación sigue activa por encima, como segunda barrera.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#receipt"/></svg></div>
+        <div class="feature-text">
+          <h3>Auditoría con cadena de hash</h3>
+          <p>Cada registro se encadena al anterior, así que tocar el pasado queda detectable. Cubre inicio de sesión, historia clínica, receta, descarga de adjuntos y grabación. El documento del paciente y el texto clínico nunca entran en el detalle del log.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#key"/></svg></div>
+        <div class="feature-text">
+          <h3>Campos sensibles cifrados</h3>
+          <p>AES-256-GCM, con índice de búsqueda por HMAC para que la pantalla siga siendo consultable. Perder la clave hace el dato irrecuperable, así que vive en una bóveda, con respaldo propio y fuera del repositorio.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#check-shield"/></svg></div>
+        <div class="feature-text">
+          <h3>Sesión, rol y consentimiento</h3>
+          <p>Sesión, rol, cargo y segundo factor en las rutas internas. Consentimiento por finalidad que archiva el texto exacto aceptado, y retención de historia clínica según la resolución CFM 1.821/2007 del consejo médico brasileño.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
+        <div class="feature-text">
+          <h3>Accesibilidad</h3>
+          <p>WCAG 2.1 AA es la meta interna que el producto persigue, no una certificación ya obtenida. En la pantalla del beneficiario eso se vuelve botón grande, texto grande y lenguaje simple.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<style>
+  .faq-item{ border-top:1px solid rgba(11,18,34,.08); padding:16px 0; }
+  .faq-item summary{ cursor:pointer; list-style:none; font-weight:600; color:var(--ink); font-size:1.02rem; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::before{ content:'+'; display:inline-block; width:1.3em; color:var(--ink-3); }
+  .faq-item[open] summary::before{ content:'–'; }
+  .faq-answer{ margin:10px 0 0; color:var(--ink-2); font-size:.95rem; line-height:1.7; padding-left:1.3em; }
+</style>
+<section id="faq" class="services-section">
+  <span class="section-tag">Preguntas frecuentes</span>
+  <h2 class="section-title">Qué preguntan la dirección médica, TI y compliance antes de firmar</h2>
+  <div class="faq-list" style="max-width:760px;margin:0 auto;text-align:left">
+    <details class="faq-item">
+      <summary>¿El dato clínico del beneficiario sale de la red de la institución?</summary>
+      <p class="faq-answer">No. El modelo de IA corre en la infraestructura de la propia institución, y el sistema se niega a arrancar si la dirección del modelo apunta fuera de la red local.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿La IA decide el diagnóstico o la receta?</summary>
+      <p class="faq-answer">No. La IA sugiere y el profesional decide. Toda salida vuelve marcada como sugerencia y solo se vuelve registro clínico cuando el profesional la aprueba.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cómo funciona el aislamiento entre instituciones?</summary>
+      <p class="faq-answer">Cada institución ve solo su propio dato, y quien lo garantiza es la base de datos, con seguridad a nivel de fila de PostgreSQL en 60 tablas. Una consulta sin filtro no ve la fila de la otra institución, en vez de filtrar el dato.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿La atención por WhatsApp exige una aplicación?</summary>
+      <p class="faq-answer">No. Identificación, consentimiento, pretriaje y número de fila ocurren dentro de la propia conversación. La única pantalla en el navegador es la del video.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cualquier persona puede entrar a urgencias virtuales?</summary>
+      <p class="faq-answer">No. Entra solo el beneficiario ya registrado en atención domiciliaria, con acceso habilitado por el equipo. Es una decisión de producto, no una limitación técnica.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿El equipo entra con la cuenta corporativa de la institución?</summary>
+      <p class="faq-answer">Sí, contra el directorio de la propia institución, por OpenID Connect: Entra ID, Google Workspace, Okta y Keycloak. El proveedor se configura por institución, y sin un grupo reconocido en el mapa del directorio el acceso se rechaza.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿LarClínica se integra con sistemas hospitalarios existentes?</summary>
+      <p class="faq-answer">Hay interfaz lista para Tasy, TISS, PACS, LIS y RIS, y la red nacional de datos de salud ya opera con registro de atención clínica en FHIR R4. Conectar de hecho a cada proveedor depende de su dirección, credencial y homologación.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ── Demonstração ── -->
+<section class="cta-section" id="demonstracao">
+  <h2>Lleva LarClínica a una evaluación técnica</h2>
+  <p>Una sesión con la dirección médica, el equipo de TI y el área de compliance, con el producto corriendo en vivo: la fila de urgencias virtuales, una visita domiciliaria, la historia clínica, la separación entre instituciones y la traza de auditoría.</p>
+  <div class="cta-actions">
+    <button type="button" onclick="openLCModal()" class="btn-primary" style="cursor:pointer;border:none;font-family:inherit;">Agendar evaluación técnica</button>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <a href="https://mtjltechnology.com/">
+    <img src="/static/brand/mtjl-technology-logo-transparent.png" alt="MTJL Technology" class="footer-logo" width="150" height="80" />
+  </a>
+  <nav class="footer-links">
+    <a href="https://mtjltechnology.com/">Inicio</a>
+    <a href="#visao-geral">Visión general</a>
+    <a href="#modulos">Módulos</a>
+    <a href="#integracoes">Integraciones</a>
+    <a href="#seguranca">Seguridad</a>
+    <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
+  </nav>
+  <p class="footer-copy">© 2026 MTJL Technology. Todos los derechos reservados. Curitiba, Paraná, Brasil.</p>
+</footer>
+
+<!-- ── Contact Modal ── -->
+<div class="pqmodal-backdrop" id="lc-modal-backdrop" onclick="closeLCModal()"></div>
+<div class="pqmodal" id="lc-modal" role="dialog" aria-modal="true">
+  <div class="pqmodal-header">
+    <div>
+      <p class="pqmodal-tag">LarClínica</p>
+      <h3 class="pqmodal-title">Hablar con un especialista</h3>
+    </div>
+    <button class="pqmodal-close" onclick="closeLCModal()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="pqmodal-body">
+    {% if sent %}
+      <div class="pqmodal-success">¡Mensaje enviado! Te responderemos pronto.</div>
+    {% endif %}
+    <form method="POST" action="/larclinica_contact" class="pqmodal-form">
+      <input type="hidden" name="lang" value="es" />
+      <label>Nombre<input type="text" name="name" placeholder="Tu nombre" required /></label>
+      <label>Correo<input type="email" name="email" placeholder="tu@correo.com" required /></label>
+      <label>Institución de salud<input type="text" name="organization" placeholder="Aseguradora, cooperativa o institución de salud" /></label>
+      <label>¿Cómo podemos ayudar?<textarea name="message" placeholder="Cuéntanos un poco sobre el contexto de tu institución" rows="4" required></textarea></label>
+      <button type="submit">Enviar mensaje →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openLCModal()  { document.getElementById('lc-modal').classList.add('open'); document.getElementById('lc-modal-backdrop').classList.add('open'); }
+  function closeLCModal() { document.getElementById('lc-modal').classList.remove('open'); document.getElementById('lc-modal-backdrop').classList.remove('open'); }
+  {% if sent %}
+  window.addEventListener('load', openLCModal);
+  // Lead confirmado: o formulário só volta com sent=1 depois do POST aceito.
+  // O Meta conta como Lead direto pelo pixel. No Google Ads o generate_lead
+  // sozinho não vira conversão: é preciso importá-lo ou trocar por
+  // gtag('event','conversion',{send_to:'AW-18180637831/<rótulo>'}) com o rótulo
+  // da ação de conversão do LarClínica.
+  window.addEventListener('load', function () {
+    if (typeof fbq === 'function') { fbq('track', 'Lead', {content_name: 'LarClinica'}); }
+    if (typeof gtag === 'function') { gtag('event', 'generate_lead', {value: 0, currency: 'BRL'}); }
+  });
+  {% endif %}
+
+  // Menu hambúrguer mobile
+  (function () {
+    var burger = document.getElementById('navbar-burger');
+    var panel = document.getElementById('navbar-mobile-panel');
+    if (!burger || !panel) return;
+
+    function closePanel() {
+      panel.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+    function openPanel() {
+      panel.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+    }
+
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) closePanel();
+      else openPanel();
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closePanel);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.contains(e.target) && !burger.contains(e.target)) closePanel();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePanel();
+    });
+  })();
+</script>
+<script src="/static/website/mtjl.js?v=2" defer></script>
+</body>
+</html>

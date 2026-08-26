@@ -52,7 +52,7 @@
       {
         "@type": "Question",
         "name": "O dado clínico do beneficiário sai da rede da instituição?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Não. O modelo de IA é servido na infraestrutura da própria instituição, e a aplicação recusa iniciar se o endereço do modelo apontar para fora da rede local." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. O modelo de IA roda na infraestrutura da própria instituição, e o sistema se recusa a subir se o endereço do modelo apontar para fora da rede local." }
       },
       {
         "@type": "Question",
@@ -62,12 +62,12 @@
       {
         "@type": "Question",
         "name": "Como funciona o isolamento entre instituições?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Por Row Level Security do PostgreSQL em 60 tabelas: uma consulta que esqueça o filtro não enxerga a linha da outra instituição, em vez de vazar dado." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Cada instituição vê apenas o próprio dado, e quem garante isso é o banco, por Row Level Security do PostgreSQL em 60 tabelas. Uma consulta sem filtro não enxerga a linha da outra instituição, em vez de vazar o dado." }
       },
       {
         "@type": "Question",
         "name": "O atendimento pelo WhatsApp exige aplicativo?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Não. Identificação, consentimento, pré-triagem e senha na fila acontecem dentro da própria conversa. A web só aparece no link do vídeo." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. Identificação, consentimento, pré-triagem e senha na fila acontecem dentro da própria conversa. A única tela no navegador é a do vídeo." }
       },
       {
         "@type": "Question",
@@ -77,12 +77,12 @@
       {
         "@type": "Question",
         "name": "A equipe entra com a conta corporativa da instituição?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sim, por OpenID Connect contra o diretório do próprio cliente: Entra ID, Google Workspace, Okta e Keycloak. O provedor é configurado por instituição, e sem grupo reconhecido no mapa de diretório o login é recusado." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Sim, contra o diretório da própria instituição, por OpenID Connect: Entra ID, Google Workspace, Okta e Keycloak. O provedor é configurado por instituição, e sem grupo reconhecido no mapa do diretório o acesso é recusado." }
       },
       {
         "@type": "Question",
         "name": "O LarClínica integra com sistemas hospitalares existentes?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Há interfaces definidas para Tasy, TISS, PACS, LIS e RIS, e a RNDS opera com Registro de Atendimento Clínico em FHIR R4. A conexão efetiva depende de endpoint, credencial e homologação de cada fornecedor." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Há interface pronta para Tasy, TISS, PACS, LIS e RIS, e a RNDS já opera com Registro de Atendimento Clínico em FHIR R4. Ligar de fato cada fornecedor depende de endereço, credencial e homologação dele." }
       }
     ]
   }
@@ -130,6 +130,11 @@
     <li><a href="#seguranca">Segurança</a></li>
     <li><a href="#demonstracao" onclick="openLCModal();return false;">Demonstração</a></li>
   </ul>
+  <div class="lang-switcher">
+    <a href="/" class="lang-flag lang-flag--active" title="Português" aria-label="Português">🇧🇷</a>
+    <a href="/en" class="lang-flag" title="English" aria-label="English">🇺🇸</a>
+    <a href="/es" class="lang-flag" title="Español" aria-label="Español">🇪🇸</a>
+  </div>
   <button type="button" class="navbar-burger" id="navbar-burger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navbar-mobile-panel">
     <span class="navbar-burger-bar"></span>
   </button>

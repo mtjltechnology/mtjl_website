@@ -45,6 +45,8 @@ LARCLINICA_HOSTS = frozenset({"larclinicahealth.com", LARCLINICA_CANONICAL_HOST}
 # responderia 200 nos dois domínios, o que é conteúdo duplicado no índice.
 _LARCLINICA_ALLOWED_PATHS = frozenset({
     "/",
+    "/en",
+    "/es",
     "/larclinica",
     "/larclinica_contact",
     "/robots.txt",
@@ -57,11 +59,9 @@ _SITEMAP_PAGES = [
     {"slug": "", "en": "/en", "es": "/es"},
     {"slug": "relatify-beauty", "en": "/en/relatify-beauty", "es": "/es/relatify-beauty"},
     {"slug": "testes-de-software", "en": "/en/software-testing", "es": "/es/pruebas-de-software"},
-    # O PedeMarket não tem tradução real: en/es=None evita declarar hreflang
-    # alternado apontando pra a própria URL em pt (sitemap_xml só emite o bloco
-    # de alternates quando existe mais de uma variante). O LarClínica saiu daqui
-    # porque mora em larclinicahealth.com, que tem sitemap próprio.
-    {"slug": "pedemarket", "en": None, "es": None},
+    # O LarClínica não entra aqui porque mora em larclinicahealth.com, que tem
+    # sitemap próprio, montado no começo de sitemap_xml.
+    {"slug": "pedemarket", "en": "/en/pedemarket", "es": "/es/pedemarket"},
     {"slug": "pilotqa-ai", "en": "/en/pilotqa-ai", "es": "/es/pilotqa-ai"},
     {"slug": "desenvolvimento-de-software", "en": "/en/software-development", "es": "/es/desarrollo-de-software"},
     {"slug": "inteligencia-artificial", "en": "/en/artificial-intelligence", "es": "/es/inteligencia-artificial"},
@@ -155,12 +155,20 @@ def sitemap_xml(request: Request):
     lastmod = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     url_entries = []
 
-    # O domínio do LarClínica tem uma página só, a raiz, e nenhuma variante de
-    # idioma: o sitemap dele não passa por _SITEMAP_PAGES, que é do institucional.
+    # O domínio do LarClínica tem uma página, em três idiomas, e não passa por
+    # _SITEMAP_PAGES, que é do institucional.
     if is_larclinica_host(request):
-        loc = escape(LARCLINICA_BASE_URL + "/")
-        body = f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{lastmod}</lastmod>\n  </url>"
-        return Response(content=_sitemap_xml_document(body), media_type="application/xml")
+        lc_variants = {"pt-BR": "/", "en": "/en", "es": "/es"}
+        lc_alternates = "\n".join(
+            f'    <xhtml:link rel="alternate" hreflang="{alt_lang}" href="{escape(LARCLINICA_BASE_URL + alt_path)}" />'
+            for alt_lang, alt_path in lc_variants.items()
+        )
+        lc_alternates += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{escape(LARCLINICA_BASE_URL + "/")}" />'
+        blocks = [
+            f"  <url>\n    <loc>{escape(LARCLINICA_BASE_URL + path)}</loc>\n{lc_alternates}\n    <lastmod>{lastmod}</lastmod>\n  </url>"
+            for path in lc_variants.values()
+        ]
+        return Response(content=_sitemap_xml_document("\n".join(blocks)), media_type="application/xml")
 
     for page in _SITEMAP_PAGES:
         pt_path = f"/{page['slug']}" if page["slug"] else "/"
@@ -213,11 +221,23 @@ def home(request: Request, sent: bool = False, pq_sent: bool = False):
 
 @router.get("/en", response_class=HTMLResponse)
 def home_en(request: Request, sent: bool = False, pq_sent: bool = False):
+    if is_larclinica_host(request):
+        return templates.TemplateResponse("larclinica_en.html", {
+            "request": request,
+            "sent": sent,
+            "google_site_verification": settings.larclinica_google_site_verification,
+        })
     return templates.TemplateResponse("home_en.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
 
 
 @router.get("/es", response_class=HTMLResponse)
 def home_es(request: Request, sent: bool = False, pq_sent: bool = False):
+    if is_larclinica_host(request):
+        return templates.TemplateResponse("larclinica_es.html", {
+            "request": request,
+            "sent": sent,
+            "google_site_verification": settings.larclinica_google_site_verification,
+        })
     return templates.TemplateResponse("home_es.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
 
 
@@ -267,9 +287,11 @@ def larclinica_contact(
     message: str = Form(...),
     lang: str = Form(default="pt"),
 ):
-    # O formulário vive na raiz do domínio do LarClínica. Um POST vindo de outro
-    # host (página antiga em cache, por exemplo) volta para lá pela URL absoluta.
-    redirect_url = "/?sent=1" if is_larclinica_host(request) else f"{LARCLINICA_BASE_URL}/?sent=1"
+    # O formulário vive no domínio do LarClínica, em três idiomas. O POST volta
+    # para a página de onde saiu. Vindo de outro host (página antiga em cache,
+    # por exemplo), volta pela URL absoluta.
+    lc_path = {"en": "/en", "es": "/es"}.get(lang, "/")
+    redirect_url = f"{lc_path}?sent=1" if is_larclinica_host(request) else f"{LARCLINICA_BASE_URL}{lc_path}?sent=1"
     if _is_blocked_email(email):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Organização/Operadora: {organization}\n\n" if organization else ""
@@ -282,6 +304,16 @@ def pedemarket(request: Request, sent: bool = False):
     return templates.TemplateResponse("pedemarket.html", {"request": request, "sent": sent})
 
 
+@router.get("/en/pedemarket", response_class=HTMLResponse)
+def pedemarket_en(request: Request, sent: bool = False):
+    return templates.TemplateResponse("pedemarket_en.html", {"request": request, "sent": sent})
+
+
+@router.get("/es/pedemarket", response_class=HTMLResponse)
+def pedemarket_es(request: Request, sent: bool = False):
+    return templates.TemplateResponse("pedemarket_es.html", {"request": request, "sent": sent})
+
+
 @router.post("/pedemarket_contact")
 @limiter.limit("5/minute")
 def pedemarket_contact(
@@ -292,7 +324,7 @@ def pedemarket_contact(
     message: str = Form(...),
     lang: str = Form(default="pt"),
 ):
-    redirect_url = "/pedemarket?sent=1"
+    redirect_url = {"en": "/en/pedemarket", "es": "/es/pedemarket"}.get(lang, "/pedemarket") + "?sent=1"
     if _is_blocked_email(email):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Mercado: {organization}\n\n" if organization else ""

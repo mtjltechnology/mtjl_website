@@ -28,7 +28,7 @@
       {
         "@type": "Question",
         "name": "O teste do PilotQA AI quebra quando o layout da tela muda?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Não é o objetivo: o modelo de linguagem lê a página como uma pessoa leria e localiza o elemento pelo que ele é, não por um seletor CSS fixo, e replaneja depois de cada navegação." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Não é o objetivo. O modelo de linguagem lê a página como uma pessoa leria e localiza o elemento pelo que ele é, não por um seletor CSS fixo, e replaneja depois de cada navegação. É onde o time deixa de gastar sprint em manutenção." }
       },
       {
         "@type": "Question",
@@ -38,17 +38,17 @@
       {
         "@type": "Question",
         "name": "Em quais navegadores o PilotQA AI funciona?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Edge e Firefox, com a mesma API e o mesmo caso de teste nos dois motores." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Edge e Firefox, com a mesma API e o mesmo caso de teste nos dois motores, Chromium e Gecko." }
       },
       {
         "@type": "Question",
         "name": "Preciso instalar Node na máquina para usar o PilotQA AI?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Não. O aplicativo desktop, disponível para macOS, Windows e Linux, carrega o que precisa sozinho." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. O aplicativo desktop, para macOS, Windows e Linux, carrega o que precisa sozinho. Instalação de analista, não projeto de infraestrutura." }
       },
       {
         "@type": "Question",
         "name": "Como funciona a governança do PilotQA AI para time de QA?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Aprovação por quatro olhos, em que quem escreve o caso não aprova o próprio, cinco papéis de acesso por time, e trilha de auditoria com cadeia de verificação." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Aprovação por quatro olhos, em que quem escreve o caso não aprova o próprio, cinco papéis de acesso por time, e trilha de auditoria que denuncia registro alterado depois." }
       }
     ]
   }
@@ -99,8 +99,14 @@
     <li><a href="#ide">Aplicativo</a></li>
     <li><a href="#cobertura">Cobertura</a></li>
     <li><a href="#governanca">Governança</a></li>
+    <li><a href="#planos">Planos</a></li>
     <li><a href="#contato" onclick="openPilotqaModal();return false;">Contato</a></li>
   </ul>
+  <div class="lang-switcher">
+    <a href="/pilotqa-ai" class="lang-flag lang-flag--active" title="Português" aria-label="Português">🇧🇷</a>
+    <a href="/en/pilotqa-ai" class="lang-flag" title="English" aria-label="English">🇺🇸</a>
+    <a href="/es/pilotqa-ai" class="lang-flag" title="Español" aria-label="Español">🇪🇸</a>
+  </div>
   <button type="button" class="navbar-burger" id="navbar-burger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navbar-mobile-panel">
     <span class="navbar-burger-bar"></span>
   </button>
@@ -113,6 +119,7 @@
     <li><a href="#ide">Aplicativo</a></li>
     <li><a href="#cobertura">Cobertura</a></li>
     <li><a href="#governanca">Governança</a></li>
+    <li><a href="#planos">Planos</a></li>
     <li><a href="#contato" onclick="openPilotqaModal();return false;">Contato</a></li>
   </ul>
 </div>
@@ -318,6 +325,77 @@
   </div>
 </section>
 
+<!-- ── Planos ── -->
+<style>
+  .pq-plans{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem; max-width:1060px; margin:2rem auto 0; text-align:left; }
+  .pq-plan{ border:1px solid rgba(11,18,34,.10); border-radius:var(--r-lg); padding:1.6rem 1.5rem; background:var(--white); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; position:relative; }
+  .pq-plan--featured{ border-color:rgba(0,201,200,.55); box-shadow:var(--shadow-md); }
+  .pq-plan-badge{ position:absolute; top:-11px; left:1.5rem; background:var(--cyan); color:#04252b; font-size:.7rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:4px 10px; border-radius:var(--r-pill); }
+  .pq-plan-name{ font-weight:700; color:var(--ink); font-size:1.05rem; }
+  .pq-plan-price{ font-family:var(--font-sans); font-size:2.1rem; font-weight:700; color:var(--ink); margin:.35rem 0 .1rem; }
+  .pq-plan-price span{ font-size:.95rem; font-weight:500; color:var(--ink-3); }
+  .pq-plan-desc{ font-size:.88rem; color:var(--ink-2); margin:0 0 1rem; }
+  .pq-plan ul{ list-style:none; padding:0; margin:0 0 1.35rem; flex:1; }
+  .pq-plan li{ font-size:.9rem; color:var(--ink-2); padding:.34rem 0 .34rem 1.4em; position:relative; }
+  .pq-plan li::before{ content:'\2713'; position:absolute; left:0; color:var(--cyan); font-weight:700; }
+  .pq-plan li.muted{ color:var(--ink-3); opacity:.6; }
+  .pq-plan li.muted::before{ content:'\2715'; color:var(--ink-3); }
+  .pq-plan-btn{ display:block; width:100%; text-align:center; padding:.8rem 1rem; border-radius:var(--r-pill); font-family:inherit; font-size:.92rem; font-weight:600; cursor:pointer; }
+</style>
+<section id="planos" class="services-section">
+  <span class="section-tag">Planos</span>
+  <h2 class="section-title">Comece grátis. Escale quando a suíte crescer.</h2>
+  <p class="section-sub">Quatorze dias grátis, sem cartão. Tempo suficiente para migrar a suíte que mais quebra e comparar com o que a manutenção custa hoje.</p>
+
+  <div class="pq-plans">
+    <div class="pq-plan">
+      <div class="pq-plan-name">Free</div>
+      <div class="pq-plan-price">R$&nbsp;0<span>/14 dias</span></div>
+      <p class="pq-plan-desc">Teste sem cartão e sem compromisso</p>
+      <ul>
+        <li>14 dias de teste</li>
+        <li>Execução em navegador de verdade</li>
+        <li>Caso de teste em linguagem natural</li>
+        <li>Agente de IA incluído</li>
+        <li class="muted">Execução em paralelo</li>
+        <li class="muted">Suporte prioritário</li>
+      </ul>
+      <button type="button" onclick="openPilotqaModal()" class="btn-outline pq-plan-btn">Começar grátis →</button>
+    </div>
+
+    <div class="pq-plan pq-plan--featured">
+      <div class="pq-plan-badge">Mais popular</div>
+      <div class="pq-plan-name">Pro</div>
+      <div class="pq-plan-price">R$&nbsp;197<span>/mês</span></div>
+      <p class="pq-plan-desc">Para time com suíte já rodando em produção</p>
+      <ul>
+        <li>100 execuções por dia</li>
+        <li>Execução em navegador de verdade</li>
+        <li>Caso de teste em linguagem natural</li>
+        <li>Agente de IA incluído</li>
+        <li>Execução em paralelo</li>
+        <li>Suporte prioritário por e-mail</li>
+      </ul>
+      <button type="button" onclick="openSubscribeModal('pro')" class="btn-primary pq-plan-btn" style="border:none;">Assinar o Pro →</button>
+    </div>
+
+    <div class="pq-plan">
+      <div class="pq-plan-name">Enterprise</div>
+      <div class="pq-plan-price">R$&nbsp;697<span>/mês</span></div>
+      <p class="pq-plan-desc">Para time grande, com demanda alta</p>
+      <ul>
+        <li>500 execuções por dia</li>
+        <li>SLA garantido</li>
+        <li>Integração dedicada com CI/CD</li>
+        <li>Treinamento e onboarding</li>
+        <li>Suporte 24/7</li>
+        <li>Contrato personalizado</li>
+      </ul>
+      <button type="button" onclick="openSubscribeModal('enterprise')" class="btn-outline pq-plan-btn">Assinar o Enterprise →</button>
+    </div>
+  </div>
+</section>
+
 <!-- ── FAQ ── -->
 <style>
   .faq-item{ border-top:1px solid rgba(11,18,34,.08); padding:16px 0; }
@@ -402,11 +480,48 @@
   </div>
 </div>
 
+<!-- ── Modal de assinatura ── -->
+<div class="pqmodal-backdrop" id="subscribe-backdrop" onclick="closeSubscribeModal()"></div>
+<div class="pqmodal" id="subscribe-modal" role="dialog" aria-modal="true">
+  <div class="pqmodal-header">
+    <div>
+      <p class="pqmodal-tag">PilotQA AI</p>
+      <h3 class="pqmodal-title" id="subscribe-modal-title">Assinar um plano</h3>
+    </div>
+    <button class="pqmodal-close" onclick="closeSubscribeModal()" aria-label="Fechar">✕</button>
+  </div>
+  <div class="pqmodal-body">
+    <form method="POST" action="/pilotqa_ai/subscribe" class="pqmodal-form">
+      <input type="hidden" name="plan" id="subscribe-plan-input" value="pro" />
+      <label>Nome completo<input type="text" name="name" placeholder="Seu nome completo" required /></label>
+      <label>E-mail<input type="email" name="email" placeholder="seu@email.com" required /></label>
+      <label>CPF ou CNPJ<input type="text" name="cpf_cnpj" placeholder="Necessário para emitir a cobrança" required /></label>
+      <button type="submit" id="subscribe-btn">Ir para o pagamento →</button>
+    </form>
+    <p style="text-align:center;font-size:.78rem;color:var(--ink-3);margin-top:12px">Pagamento por PIX, boleto ou cartão de crédito. Cancele quando quiser.</p>
+  </div>
+</div>
+
 <script>
   function openPilotqaModal()  { document.getElementById('pilotqa-modal').classList.add('open'); document.getElementById('pilotqa-modal-backdrop').classList.add('open'); }
   function closePilotqaModal() { document.getElementById('pilotqa-modal').classList.remove('open'); document.getElementById('pilotqa-modal-backdrop').classList.remove('open'); }
 
   {% if pq_sent %}window.addEventListener('load', openPilotqaModal);{% endif %}
+
+  const planLabels = { pro: 'Assinar o Pro. R$ 197/mês', enterprise: 'Assinar o Enterprise. R$ 697/mês' };
+  const planTitles = { pro: 'Assinar o plano Pro', enterprise: 'Assinar o plano Enterprise' };
+
+  function openSubscribeModal(plan) {
+    document.getElementById('subscribe-plan-input').value = plan;
+    document.getElementById('subscribe-modal-title').textContent = planTitles[plan];
+    document.getElementById('subscribe-btn').textContent = planLabels[plan] + ' →';
+    document.getElementById('subscribe-modal').classList.add('open');
+    document.getElementById('subscribe-backdrop').classList.add('open');
+  }
+  function closeSubscribeModal() {
+    document.getElementById('subscribe-modal').classList.remove('open');
+    document.getElementById('subscribe-backdrop').classList.remove('open');
+  }
 
   // Menu hambúrguer mobile
   (function () {
@@ -432,7 +547,7 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { closePanel(); closePilotqaModal(); }
+      if (e.key === 'Escape') { closePanel(); closePilotqaModal(); closeSubscribeModal(); }
     });
   })();
 </script>
