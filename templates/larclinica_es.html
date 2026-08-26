@@ -76,7 +76,7 @@
       {
         "@type": "Question",
         "name": "¿Cualquier persona puede entrar a urgencias virtuales?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Entra solo el beneficiario ya registrado en atención domiciliaria, con acceso habilitado por el equipo. Es una decisión de producto, no una limitación técnica." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. La conversación empieza pidiendo el documento o el número de credencial, verificados contra el registro de esa institución, y entra solo quien ya es beneficiario con acceso habilitado por el equipo. Cinco intentos equivocados bloquean la identificación. Es una decisión de producto, no una limitación técnica." }
       },
       {
         "@type": "Question",
@@ -314,7 +314,8 @@
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#compass"/></svg></div>
       <h3 style="justify-content:flex-start">Recorrido del beneficiario</h3>
       <ul class="lc-check-list">
-        <li>Entra sin contraseña, con un código enviado por WhatsApp</li>
+        <li>La atención empieza en el primer mensaje de WhatsApp, sin aplicación, identificado por documento o número de credencial verificado contra el registro</li>
+        <li>El área del beneficiario en la web entra sin contraseña, con un código de seis dígitos enviado por WhatsApp</li>
         <li>Consentimiento LGPD registrado con el texto aceptado</li>
         <li>Página de agendamiento propia por institución</li>
         <li>Aviso por WhatsApp, correo y navegador</li>
@@ -377,7 +378,7 @@
         <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
         <div class="feature-text">
           <h3>Beneficiarios</h3>
-          <p>Acompaña a cualquier módulo contratado, y por eso no se vende aparte: registro único, entrada sin contraseña por código de WhatsApp, habilitación de acceso por el equipo, consentimiento LGPD por finalidad, agendamiento propio de la institución, historial de la conversación y aviso por WhatsApp, correo y navegador.</p>
+          <p>Acompaña a cualquier módulo contratado, y por eso no se vende aparte: registro único, identificación por documento o número de credencial en WhatsApp, entrada sin contraseña al área del beneficiario con un código de seis dígitos, habilitación de acceso por el equipo, consentimiento LGPD por finalidad, agendamiento propio de la institución, historial de la conversación y aviso por WhatsApp, correo y navegador.</p>
         </div>
       </div>
     </div>
@@ -435,12 +436,13 @@
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
       <h3>Del mensaje a la sala de video</h3>
       <ul class="lc-check-list">
-        <li>Quién está escribiendo se verifica contra el registro de la institución</li>
+        <li>La conversación abre pidiendo el documento o el número de credencial, verificados contra el registro de esa institución</li>
+        <li>Un registro sin acceso habilitado por el equipo no abre atención, y cinco intentos equivocados bloquean la identificación</li>
         <li>Consentimiento LGPD aceptado en la conversación, con registro del texto exacto</li>
-        <li>Pretriaje dentro del mismo diálogo</li>
-        <li>Un síntoma grave termina las preguntas, prioriza el caso y llama a enfermería al instante</li>
-        <li>Número de fila y enlace del video entregados al final de la conversación</li>
-        <li>Entrada sin contraseña, con el código enviado en la propia conversación</li>
+        <li>Pretriaje en el mismo diálogo, cinco preguntas como máximo</li>
+        <li>Un síntoma grave termina las preguntas antes del final, pone el caso al frente de la fila y llama a enfermería al instante</li>
+        <li>Número de fila entregado al terminar el triaje, y el enlace del video cuando llega su turno</li>
+        <li>Una sola sala, desde la primera llamada de video hasta el final de la atención</li>
       </ul>
     </div>
     <div class="service-card">
@@ -458,7 +460,8 @@
   </div>
 
   <div class="lc-note">
-    <p><strong>Sobre la activación del canal.</strong> Enviar y recibir mensajes son dos configuraciones distintas. Con la primera, el sistema ya manda código de acceso y avisos. La conversación de atención depende de la segunda, y la pantalla de integraciones muestra los dos estados por separado, para que nadie crea que activó el canal completo.</p>
+    <p><strong>Sobre la identificación.</strong> El teléfono de quien escribe no tiene que coincidir con el registro, y eso es una decisión de producto: quien se siente mal puede estar en el celular de un vecino o de un hijo, y exigir el número registrado dejaría afuera justamente a quien más necesita atención. La divergencia de teléfono queda registrada para auditoría. Solo abre atención un documento o credencial de beneficiario de esa institución con acceso habilitado, el mensaje de error es el mismo para los dos motivos de rechazo, y el control final es humano: la atención es por video, con el profesional viendo con quién habla.</p>
+    <p><strong>Sobre la activación del canal.</strong> Enviar y recibir mensajes son dos configuraciones distintas. Con la primera, el sistema ya manda los avisos y el código de acceso del área del beneficiario. La conversación de atención depende de la segunda, y la pantalla de integraciones muestra los dos estados por separado, para que nadie crea que activó el canal completo.</p>
   </div>
 </section>
 
@@ -905,7 +908,7 @@
     </details>
     <details class="faq-item">
       <summary>¿Cualquier persona puede entrar a urgencias virtuales?</summary>
-      <p class="faq-answer">No. Entra solo el beneficiario ya registrado en atención domiciliaria, con acceso habilitado por el equipo. Es una decisión de producto, no una limitación técnica.</p>
+      <p class="faq-answer">No. La conversación empieza pidiendo el documento o el número de credencial, verificados contra el registro de esa institución, y entra solo quien ya es beneficiario con acceso habilitado por el equipo. Cinco intentos equivocados bloquean la identificación. Es una decisión de producto, no una limitación técnica.</p>
     </details>
     <details class="faq-item">
       <summary>¿El equipo entra con la cuenta corporativa de la institución?</summary>

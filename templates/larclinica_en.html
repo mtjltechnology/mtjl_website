@@ -76,7 +76,7 @@
       {
         "@type": "Question",
         "name": "Can anyone enter virtual urgent care?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Only members already registered in home care get in, with access released by the team. That is a product decision, not a technical limitation." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The conversation starts by asking for the national ID or member card number, checked against that institution's registry, and only an existing member with access released by the team gets in. Five wrong attempts lock the identification. That is a product decision, not a technical limitation." }
       },
       {
         "@type": "Question",
@@ -314,7 +314,8 @@
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#compass"/></svg></div>
       <h3 style="justify-content:flex-start">Member journey</h3>
       <ul class="lc-check-list">
-        <li>Signs in without a password, using a code sent on WhatsApp</li>
+        <li>Care starts on the first WhatsApp message, with no app, identified by national ID or member card checked against the registry</li>
+        <li>The member web area signs in without a password, using a six-digit code sent on WhatsApp</li>
         <li>LGPD consent recorded with the exact text accepted</li>
         <li>Public scheduling page per institution</li>
         <li>Notifications by WhatsApp, email and browser</li>
@@ -377,7 +378,7 @@
         <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
         <div class="feature-text">
           <h3>Members</h3>
-          <p>It comes with any contracted module, which is why it is not sold separately: a single registry, passwordless sign-in by WhatsApp code, access released by the team, LGPD consent per purpose, the institution's own scheduling page, conversation history, and notifications by WhatsApp, email and browser.</p>
+          <p>It comes with any contracted module, which is why it is not sold separately: a single registry, identification by national ID or member card on WhatsApp, passwordless sign-in to the member area with a six-digit code, access released by the team, LGPD consent per purpose, the institution's own scheduling page, conversation history, and notifications by WhatsApp, email and browser.</p>
         </div>
       </div>
     </div>
@@ -435,12 +436,13 @@
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
       <h3>From the message to the video room</h3>
       <ul class="lc-check-list">
-        <li>Whoever is writing is checked against the institution's registry</li>
+        <li>The conversation opens by asking for the national ID or member card number, checked against that institution's registry</li>
+        <li>A registry without access released by the team opens no encounter, and five wrong attempts lock the identification</li>
         <li>LGPD consent accepted in the conversation, with the exact text on record</li>
-        <li>Pre-triage inside the same dialogue</li>
-        <li>A red-flag symptom ends the questions, prioritises the case and calls nursing right away</li>
-        <li>Queue ticket and video link delivered at the end of the conversation</li>
-        <li>Passwordless sign-in, with the code sent in the conversation itself</li>
+        <li>Pre-triage in the same dialogue, five questions at most</li>
+        <li>A red-flag symptom ends the questions early, moves the case to the front of the queue and calls nursing right away</li>
+        <li>Queue ticket delivered as triage ends, and the video link when their turn comes</li>
+        <li>One room only, from the first video call to the end of the encounter</li>
       </ul>
     </div>
     <div class="service-card">
@@ -458,7 +460,8 @@
   </div>
 
   <div class="lc-note">
-    <p><strong>About switching the channel on.</strong> Sending and receiving messages are two different settings. With the first one, the system already sends access codes and notifications. The care conversation depends on the second, and the integrations screen reports both states separately, so nobody assumes the whole channel is live.</p>
+    <p><strong>About identification.</strong> The phone number writing in does not have to match the registry, and that is a product decision: someone who feels unwell may be on a neighbour's or a child's phone, and demanding the registered number would lock out exactly the people who need care most. A phone mismatch is recorded for audit. Only a national ID or member card belonging to a member of that institution, with access released, opens an encounter; the error message is the same for both refusal reasons; and the final control is human: the encounter is on video, with the clinician seeing who they are talking to.</p>
+    <p><strong>About switching the channel on.</strong> Sending and receiving messages are two different settings. With the first one, the system already sends notifications and the member area's access code. The care conversation depends on the second, and the integrations screen reports both states separately, so nobody assumes the whole channel is live.</p>
   </div>
 </section>
 
@@ -905,7 +908,7 @@
     </details>
     <details class="faq-item">
       <summary>Can anyone enter virtual urgent care?</summary>
-      <p class="faq-answer">No. Only members already registered in home care get in, with access released by the team. That is a product decision, not a technical limitation.</p>
+      <p class="faq-answer">No. The conversation starts by asking for the national ID or member card number, checked against that institution's registry, and only an existing member with access released by the team gets in. Five wrong attempts lock the identification. That is a product decision, not a technical limitation.</p>
     </details>
     <details class="faq-item">
       <summary>Does the team sign in with the institution's corporate account?</summary>

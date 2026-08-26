@@ -72,7 +72,7 @@
       {
         "@type": "Question",
         "name": "Qualquer pessoa pode entrar no PA Virtual?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Não. Entra apenas o beneficiário já cadastrado no Home Care, com acesso liberado pela equipe. É decisão de produto, não limitação técnica." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. A conversa começa pedindo CPF ou número da carteirinha, conferidos contra o cadastro daquela instituição, e só entra quem já é beneficiário com acesso liberado pela equipe. Cinco tentativas erradas travam a identificação. É decisão de produto, não limitação técnica." }
       },
       {
         "@type": "Question",
@@ -310,7 +310,8 @@
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#compass"/></svg></div>
       <h3 style="justify-content:flex-start">Jornada do beneficiário</h3>
       <ul class="lc-check-list">
-        <li>Entra sem senha, com código enviado no WhatsApp</li>
+        <li>Atendimento começa na primeira mensagem do WhatsApp, sem aplicativo, com CPF ou carteirinha conferidos no cadastro</li>
+        <li>Área do beneficiário na web entra sem senha, por código de seis dígitos enviado no WhatsApp</li>
         <li>Consentimento LGPD registrado com o texto aceito</li>
         <li>Agendamento público por instituição</li>
         <li>Aviso por WhatsApp, e-mail e navegador</li>
@@ -373,7 +374,7 @@
         <div class="feature-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#users"/></svg></div>
         <div class="feature-text">
           <h3>Beneficiários</h3>
-          <p>Acompanha qualquer módulo contratado, e por isso não é vendida à parte: cadastro único, entrada sem senha por código no WhatsApp, liberação de acesso pela equipe, consentimento LGPD por finalidade, agendamento próprio da instituição, histórico da conversa e aviso por WhatsApp, e-mail e navegador.</p>
+          <p>Acompanha qualquer módulo contratado, e por isso não é vendida à parte: cadastro único, identificação por CPF ou carteirinha no WhatsApp, entrada sem senha na área do beneficiário por código de seis dígitos, liberação de acesso pela equipe, consentimento LGPD por finalidade, agendamento próprio da instituição, histórico da conversa e aviso por WhatsApp, e-mail e navegador.</p>
         </div>
       </div>
     </div>
@@ -431,12 +432,13 @@
       <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="/static/website/icons.svg#chat"/></svg></div>
       <h3>Da mensagem à sala de vídeo</h3>
       <ul class="lc-check-list">
-        <li>Quem está falando é conferido contra o cadastro da instituição</li>
+        <li>A conversa abre pedindo CPF ou número da carteirinha, conferidos contra o cadastro daquela instituição</li>
+        <li>Cadastro sem acesso liberado pela equipe não abre atendimento, e cinco tentativas erradas travam a identificação</li>
         <li>Consentimento LGPD aceito na conversa, com registro do texto exato</li>
-        <li>Pré-triagem dentro do mesmo diálogo</li>
-        <li>Sintoma grave encerra as perguntas, prioriza o caso e chama a enfermagem na hora</li>
-        <li>Senha da fila e link do vídeo entregues no fim da conversa</li>
-        <li>Entrada sem senha, com código enviado na própria conversa</li>
+        <li>Pré-triagem no mesmo diálogo, no máximo cinco perguntas</li>
+        <li>Sintoma grave encerra as perguntas antes do fim, põe o caso na frente da fila e chama a enfermagem na hora</li>
+        <li>Senha da fila entregue ao fim da triagem, e o link do vídeo quando chega a vez</li>
+        <li>Uma sala só, do primeiro toque de vídeo até o fim do atendimento</li>
       </ul>
     </div>
     <div class="service-card">
@@ -454,7 +456,8 @@
   </div>
 
   <div class="lc-note">
-    <p><strong>Sobre a ativação do canal.</strong> Enviar e receber mensagem são duas configurações diferentes. Com a primeira, o sistema já manda código de acesso e aviso. A conversa de atendimento depende da segunda, e a tela de integrações mostra os dois estados separados, para ninguém achar que ligou o canal inteiro.</p>
+    <p><strong>Sobre a identificação.</strong> O telefone de quem escreve não precisa bater com o cadastro, e isso é decisão de produto: quem está passando mal pode estar no celular de um vizinho ou de um filho, e exigir o número cadastrado trancaria fora justamente quem mais precisa. A divergência de telefone fica registrada para auditoria. Só abre atendimento CPF ou carteirinha de beneficiário daquela instituição com acesso liberado, a mensagem de erro é a mesma para os dois motivos de recusa, e o controle final é humano: o atendimento é por vídeo, com o profissional vendo com quem fala.</p>
+    <p><strong>Sobre a ativação do canal.</strong> Enviar e receber mensagem são duas configurações diferentes. Com a primeira, o sistema já manda os avisos e o código de acesso da área do beneficiário. A conversa de atendimento depende da segunda, e a tela de integrações mostra os dois estados separados, para ninguém achar que ligou o canal inteiro.</p>
   </div>
 </section>
 
@@ -901,7 +904,7 @@
     </details>
     <details class="faq-item">
       <summary>Qualquer pessoa pode entrar no PA Virtual?</summary>
-      <p class="faq-answer">Não. Entra apenas o beneficiário já cadastrado no Home Care, com acesso liberado pela equipe. É decisão de produto, não limitação técnica.</p>
+      <p class="faq-answer">Não. A conversa começa pedindo CPF ou número da carteirinha, conferidos contra o cadastro daquela instituição, e só entra quem já é beneficiário com acesso liberado pela equipe. Cinco tentativas erradas travam a identificação. É decisão de produto, não limitação técnica.</p>
     </details>
     <details class="faq-item">
       <summary>A equipe entra com a conta corporativa da instituição?</summary>
