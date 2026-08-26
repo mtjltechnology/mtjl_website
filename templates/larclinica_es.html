@@ -239,25 +239,43 @@
 </div>
 
 <!-- ── Números ── -->
+<style>
+  /* O card de número ganhou uma linha de título: o número sozinho ficava
+     ambíguo ("1" lido como um beneficiário só) e a legenda precisava caber a
+     lista do que o número conta. */
+  .lc-stat-title{ font-size:.95rem; font-weight:600; color:var(--ink, #0B1222); margin-top:.55rem; text-wrap:balance; }
+  .lc-stat-title + .stat-label{ margin-top:.3rem; }
+  /* A legenda virou frase, e a mono de .7rem do padrão empilha linha demais num
+     card de um quarto de largura. :nth-child(n) só para ganhar do seletor com
+     :nth-child(2)/(3) do CSS global, sem precisar de !important. */
+  .lc-stats-grid .stat-card:nth-child(n) .stat-label{
+    font-family:var(--font-sans); font-size:.8rem; letter-spacing:0; line-height:1.6;
+  }
+</style>
 <section id="numeros">
   <span class="section-tag">En números</span>
-  <h2 class="section-title">Qué entra en el contrato</h2>
+  <h2 class="section-title">Qué existe en la plataforma</h2>
+  <p class="section-sub">Los módulos pueden adquirirse por separado, y no como paquete cerrado. Este es el conjunto del que tu institución elige.</p>
   <div class="lc-stats-grid">
     <div class="stat-card">
       <div class="stat-value">4</div>
-      <div class="stat-label">Módulos contratados por institución</div>
+      <div class="lc-stat-title">Módulos</div>
+      <div class="stat-label">Atención domiciliaria, urgencias virtuales, inteligencia artificial y analítica.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">1</div>
-      <div class="stat-label">Registro de beneficiario compartido por todos los módulos</div>
+      <div class="lc-stat-title">Registro por paciente</div>
+      <div class="stat-label">El mismo registro atraviesa urgencias virtuales, atención domiciliaria e historia clínica. Nadie vuelve a registrar en cada módulo.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">7</div>
-      <div class="stat-label">Capacidades de IA, activadas una a una por la gestión</div>
+      <div class="lc-stat-title">Capacidades de IA clínica</div>
+      <div class="stat-label">Transcribe la consulta, escribe la nota SOAP, resume el historial, sugiere código diagnóstico y estudios, conduce el pretriaje, predice internación y señala fraude.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">5</div>
-      <div class="stat-label">Escalas clínicas validadas dentro del seguimiento</div>
+      <div class="lc-stat-title">Escalas clínicas validadas</div>
+      <div class="stat-label">Braden, Morse, escala visual analógica de dolor, PHQ-9 y GAD-7, aplicadas dentro del seguimiento.</div>
     </div>
   </div>
 </section>

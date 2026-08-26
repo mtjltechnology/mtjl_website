@@ -235,25 +235,43 @@
 </div>
 
 <!-- ── Números ── -->
+<style>
+  /* O card de número ganhou uma linha de título: o número sozinho ficava
+     ambíguo ("1" lido como um beneficiário só) e a legenda precisava caber a
+     lista do que o número conta. */
+  .lc-stat-title{ font-size:.95rem; font-weight:600; color:var(--ink, #0B1222); margin-top:.55rem; text-wrap:balance; }
+  .lc-stat-title + .stat-label{ margin-top:.3rem; }
+  /* A legenda virou frase, e a mono de .7rem do padrão empilha linha demais num
+     card de um quarto de largura. :nth-child(n) só para ganhar do seletor com
+     :nth-child(2)/(3) do CSS global, sem precisar de !important. */
+  .lc-stats-grid .stat-card:nth-child(n) .stat-label{
+    font-family:var(--font-sans); font-size:.8rem; letter-spacing:0; line-height:1.6;
+  }
+</style>
 <section id="numeros">
   <span class="section-tag">Em números</span>
-  <h2 class="section-title">O que entra no contrato</h2>
+  <h2 class="section-title">O que existe na plataforma</h2>
+  <p class="section-sub">Os módulos podem ser adquiridos separadamente, e não como pacote fechado. Este é o conjunto de onde a sua instituição escolhe.</p>
   <div class="lc-stats-grid">
     <div class="stat-card">
       <div class="stat-value">4</div>
-      <div class="stat-label">Módulos contratados por instituição</div>
+      <div class="lc-stat-title">Módulos</div>
+      <div class="stat-label">Home Care, PA Virtual, Inteligência Artificial e Analytics.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">1</div>
-      <div class="stat-label">Cadastro de beneficiário para todos os módulos</div>
+      <div class="lc-stat-title">Cadastro por paciente</div>
+      <div class="stat-label">O mesmo registro atravessa PA Virtual, Home Care e prontuário. Ninguém recadastra em cada módulo.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">7</div>
-      <div class="stat-label">Capacidades de IA, ligadas uma a uma pela gestão</div>
+      <div class="lc-stat-title">Capacidades de IA clínica</div>
+      <div class="stat-label">Transcreve a consulta, escreve o SOAP, resume o histórico, sugere CID e exame, conduz a pré-triagem, prevê internação e aponta fraude.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">5</div>
-      <div class="stat-label">Escalas clínicas validadas dentro do acompanhamento</div>
+      <div class="lc-stat-title">Escalas clínicas validadas</div>
+      <div class="stat-label">Braden, Morse, EVA, PHQ-9 e GAD-7, aplicadas dentro do acompanhamento.</div>
     </div>
   </div>
 </section>

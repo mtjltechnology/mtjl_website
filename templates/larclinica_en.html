@@ -239,25 +239,43 @@
 </div>
 
 <!-- ── Números ── -->
+<style>
+  /* O card de número ganhou uma linha de título: o número sozinho ficava
+     ambíguo ("1" lido como um beneficiário só) e a legenda precisava caber a
+     lista do que o número conta. */
+  .lc-stat-title{ font-size:.95rem; font-weight:600; color:var(--ink, #0B1222); margin-top:.55rem; text-wrap:balance; }
+  .lc-stat-title + .stat-label{ margin-top:.3rem; }
+  /* A legenda virou frase, e a mono de .7rem do padrão empilha linha demais num
+     card de um quarto de largura. :nth-child(n) só para ganhar do seletor com
+     :nth-child(2)/(3) do CSS global, sem precisar de !important. */
+  .lc-stats-grid .stat-card:nth-child(n) .stat-label{
+    font-family:var(--font-sans); font-size:.8rem; letter-spacing:0; line-height:1.6;
+  }
+</style>
 <section id="numeros">
   <span class="section-tag">In numbers</span>
-  <h2 class="section-title">What the contract covers</h2>
+  <h2 class="section-title">What exists in the platform</h2>
+  <p class="section-sub">Modules can be purchased separately, not as a closed bundle. This is the set your institution chooses from.</p>
   <div class="lc-stats-grid">
     <div class="stat-card">
       <div class="stat-value">4</div>
-      <div class="stat-label">Modules contracted per institution</div>
+      <div class="lc-stat-title">Modules</div>
+      <div class="stat-label">Home care, virtual urgent care, artificial intelligence and analytics.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">1</div>
-      <div class="stat-label">Member registry shared by every module</div>
+      <div class="lc-stat-title">Registry per patient</div>
+      <div class="stat-label">The same record runs through virtual urgent care, home care and the clinical record. Nobody re-registers per module.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">7</div>
-      <div class="stat-label">AI capabilities, switched on one by one by management</div>
+      <div class="lc-stat-title">Clinical AI capabilities</div>
+      <div class="stat-label">It transcribes the visit, writes the SOAP note, summarises the history, suggests diagnosis codes and tests, runs the pre-triage, predicts admission risk and flags fraud.</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">5</div>
-      <div class="stat-label">Validated clinical scales inside the follow-up</div>
+      <div class="lc-stat-title">Validated clinical scales</div>
+      <div class="stat-label">Braden, Morse, visual analogue pain scale, PHQ-9 and GAD-7, applied inside the follow-up.</div>
     </div>
   </div>
 </section>
