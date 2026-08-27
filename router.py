@@ -14,6 +14,7 @@ from limiter import limiter
 from models import PilotQASubscriber
 from services.asaas import PLANS, create_customer, create_subscription, get_subscription_payment_link, update_customer
 from services.email import LARCLINICA_CONTACT_TO, send_contact_email, send_pilotqa_contact_email, send_pilotqa_token_email
+from services.recaptcha import is_human
 from services.token import generate_pilotqa_token
 
 router = APIRouter()
@@ -28,6 +29,10 @@ def _to_brt(dt):
 
 
 templates.env.filters["brt"] = _to_brt
+
+# Chave pública do reCAPTCHA v3, usada pelos formulários em todos os templates.
+RECAPTCHA_SITE_KEY = "6Lda4PwsAAAAAOl9PtGMUv5qzfivP3PgqAjQgufx"
+templates.env.globals["recaptcha_site_key"] = RECAPTCHA_SITE_KEY
 
 
 SITE_BASE_URL = "https://mtjltechnology.com"
@@ -96,6 +101,55 @@ def _is_blocked_email(email: str) -> bool:
     if _BLOCKED_EMAIL_LOCAL_PATTERN.match(local):
         return True
     return False
+
+
+# ── Descarte de submissão de bot ───────────────────────────────────────────────
+# Os formulários vinham recebendo dezenas de envios por dia de bot de link
+# building (XRumer e parecidos). O rate limit por IP não pega: o bot usa IP
+# diferente a cada envio e manda um só. O que todos têm em comum é o corpo:
+# HTML ou BBCode de link no texto, e alfabeto que o site não atende.
+
+_SPAM_TEXT_PATTERN = re.compile(
+    r"<\s*a[\s>]"          # <a href=...>
+    r"|href\s*="            # href= solto, típico de BBCode quebrado
+    r"|\[/?url"             # [url=...] / [/url]
+    r"|\[/?link"
+    r"|xrumer"              # assinatura do software de spam
+    r"|[\u0400-\u04ff]",    # cirílico: site atende pt/en/es
+    re.IGNORECASE,
+)
+
+_URL_PATTERN = re.compile(r"https?://|\bwww\.", re.IGNORECASE)
+
+
+def _is_spam_submission(
+    request: Request,
+    email: str,
+    text: str,
+    website: str = "",
+    recaptcha_token: str = "",
+) -> bool:
+    """Se a submissão deve ser descartada em silêncio.
+
+    `website` é o honeypot: campo invisível no formulário, que só bot preenche.
+    O texto recebido é nome + mensagem concatenados, porque o bot espalha o link
+    pelos dois campos.
+
+    O reCAPTCHA fica por último de propósito: as checagens acima são locais e
+    resolvem a maioria dos envios, então a chamada de rede ao Google só acontece
+    para o que passou por elas."""
+    if website:
+        return True
+    if _is_blocked_email(email):
+        return True
+    if _SPAM_TEXT_PATTERN.search(text):
+        return True
+    # Um lead real cita no máximo um endereço (o site da empresa dele).
+    if len(_URL_PATTERN.findall(text)) >= 2:
+        return True
+    # Pega o bot que posta direto no endpoint, sem texto suspeito e sem rodar o
+    # JavaScript da página, e por isso sem token.
+    return not is_human(recaptcha_token, _client_ip(request))
 
 
 def _client_ip(request: Request):
@@ -286,13 +340,15 @@ def larclinica_contact(
     organization: str = Form(default=""),
     message: str = Form(...),
     lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     # O formulário vive no domínio do LarClínica, em três idiomas. O POST volta
     # para a página de onde saiu. Vindo de outro host (página antiga em cache,
     # por exemplo), volta pela URL absoluta.
     lc_path = {"en": "/en", "es": "/es"}.get(lang, "/")
     redirect_url = f"{lc_path}?sent=1" if is_larclinica_host(request) else f"{LARCLINICA_BASE_URL}{lc_path}?sent=1"
-    if _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Organização/Operadora: {organization}\n\n" if organization else ""
     send_contact_email(name, email, f"[LarClínica] {org_line}{message}", to=LARCLINICA_CONTACT_TO)
@@ -323,9 +379,11 @@ def pedemarket_contact(
     organization: str = Form(default=""),
     message: str = Form(...),
     lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     redirect_url = {"en": "/en/pedemarket", "es": "/es/pedemarket"}.get(lang, "/pedemarket") + "?sent=1"
-    if _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Mercado: {organization}\n\n" if organization else ""
     send_contact_email(name, email, f"[PedeMarket] {org_line}{message}")
@@ -346,13 +404,15 @@ def desenvolvimento_contact(
     organization: str = Form(default=""),
     message: str = Form(...),
     lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     redirect_url = "/desenvolvimento-de-software?sent=1"
     if lang == "en":
         redirect_url = "/en/software-development?sent=1"
     elif lang == "es":
         redirect_url = "/es/desarrollo-de-software?sent=1"
-    if _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Empresa: {organization}\n\n" if organization else ""
     send_contact_email(name, email, f"[Desenvolvimento] {org_line}{message}")
@@ -373,13 +433,15 @@ def inteligencia_artificial_contact(
     organization: str = Form(default=""),
     message: str = Form(...),
     lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     redirect_url = "/inteligencia-artificial?sent=1"
     if lang == "en":
         redirect_url = "/en/artificial-intelligence?sent=1"
     elif lang == "es":
         redirect_url = "/es/inteligencia-artificial?sent=1"
-    if _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect_url, status_code=303)
     org_line = f"Empresa: {organization}\n\n" if organization else ""
     send_contact_email(name, email, f"[Inteligência Artificial] {org_line}{message}")
@@ -544,11 +606,13 @@ def contact(
     email: str = Form(...),
     message: str = Form(...),
     lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     prefix = f"/{lang}" if lang in ("en", "es") else ""
     redirect_url = f"{prefix}/?sent=1" if prefix else "/?sent=1"
     # E-mails de domínios de teste/descartáveis: fingimos sucesso sem enviar
-    if _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect_url, status_code=303)
     send_contact_email(name, email, message)
     return RedirectResponse(redirect_url, status_code=303)
@@ -619,11 +683,12 @@ def booking_beauty_contact(
     message: str = Form(...),
     lang: str = Form(default="pt"),
     website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     prefix = f"/{lang}" if lang in ("en", "es") else ""
     redirect_url = f"{prefix}/relatify-beauty?bb_sent=1"
     # Honeypot preenchido ou e-mail de domínio bloqueado: fingimos sucesso silenciosamente
-    if website or _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect_url, status_code=303)
     send_contact_email(name, email, f"[Booking AI Beauty] WhatsApp: {whatsapp}\n\n{message}")
     return RedirectResponse(redirect_url, status_code=303)
@@ -637,6 +702,8 @@ def testes_software_contact(
     email: str = Form(...),
     message: str = Form(...),
     lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     if lang == "en":
         redirect_url = "/en/software-testing?sent=1"
@@ -644,7 +711,7 @@ def testes_software_contact(
         redirect_url = "/es/pruebas-de-software?sent=1"
     else:
         redirect_url = "/testes-de-software?sent=1"
-    if _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect_url, status_code=303)
     send_contact_email(name, email, f"[Testes de Software] {message}")
     return RedirectResponse(redirect_url, status_code=303)
@@ -659,6 +726,8 @@ def pilotqa_contact(
     message: str = Form(...),
     origin: str = Form(default="home"),
     lang: str = Form(default="pt"),
+    website: str = Form(default=""),
+    recaptcha_token: str = Form(default=""),
 ):
     prefix = f"/{lang}" if lang in ("en", "es") else ""
     page = "/pilotqa-ai" if origin == "pilotqa" else "/"
@@ -666,7 +735,7 @@ def pilotqa_contact(
         redirect = f"{prefix}/?pq_sent=1" if prefix else "/?pq_sent=1"
     else:
         redirect = f"{prefix}{page}?pq_sent=1"
-    if _is_blocked_email(email):
+    if _is_spam_submission(request, email, f"{name}\n{message}", website, recaptcha_token):
         return RedirectResponse(redirect, status_code=303)
     send_pilotqa_contact_email(name, email, message)
     return RedirectResponse(redirect, status_code=303)

@@ -53,6 +53,19 @@ def _reset_rate_limiter():
     limiter.reset()
 
 
+@pytest.fixture(autouse=True)
+def _recaptcha_desligado(monkeypatch):
+    """Desliga a verificação de reCAPTCHA por padrão.
+
+    O .env da máquina pode ter RECAPTCHA_SECRET_KEY preenchido, e aí todo teste
+    que espera envio de e-mail falharia por falta de token, e o resultado passaria
+    a depender do ambiente local. Os testes que exercitam o reCAPTCHA ligam a
+    chave de propósito, pelo fixture `recaptcha_on`."""
+    from config import settings
+    monkeypatch.setattr(settings, "recaptcha_secret_key", "")
+    yield
+
+
 @pytest.fixture(name="db_session")
 def db_session_fixture():
     with Session(_TEST_ENGINE) as session:

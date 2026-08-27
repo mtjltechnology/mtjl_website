@@ -62,6 +62,8 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18180637831"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18180637831');</script>
+  <!-- reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
 </head>
 <body>
 <a class="skip-link" href="#inicio">Saltar al contenido</a>
@@ -351,7 +353,10 @@
   {% endif %}
 
   <div class="contact-card">
-    <form class="contact-form" method="POST" action="/contact">
+    <form data-recaptcha="contact" class="contact-form" method="POST" action="/contact">
+      <input type="hidden" name="recaptcha_token" />
+      <!-- honeypot: invisível para humanos, preenchido por bots -->
+      <input type="text" name="website" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;" tabindex="-1" autocomplete="off" aria-hidden="true">
       <input type="hidden" name="lang" value="es" />
       <label>
         Nombre
@@ -454,5 +459,27 @@
   })();
 </script>
 <script src="/static/website/mtjl.js?v=2" defer></script>
+<script>
+/* reCAPTCHA v3 nos formulários de contato.
+   Delegado no document: pega qualquer form[data-recaptcha] da página, sem
+   depender de id. O flag data-recaptcha-done evita laço infinito, porque
+   form.submit() dispara o submit de novo.
+   Sem grecaptcha disponível (script bloqueado, offline), o envio segue sem
+   token: quem decide é o servidor. */
+document.addEventListener('submit', function(e) {
+  var form = e.target.closest && e.target.closest('form[data-recaptcha]');
+  if (!form || form.dataset.recaptchaDone) return;
+  e.preventDefault();
+  function send() { form.dataset.recaptchaDone = '1'; form.submit(); }
+  if (typeof grecaptcha === 'undefined') { send(); return; }
+  grecaptcha.ready(function() {
+    grecaptcha.execute('{{ recaptcha_site_key }}', {action: form.dataset.recaptcha}).then(function(token) {
+      var field = form.querySelector('input[name="recaptcha_token"]');
+      if (field) field.value = token;
+      send();
+    }).catch(send);
+  });
+}, true);
+</script>
 </body>
 </html>
