@@ -189,4 +189,4 @@ def send_contact_email(name: str, email: str, message: str, to: str | None = Non
 </html>""",
         })
     except Exception as exc:
-        print(f"[email] Erro ao enviar send_contact_email para {email}: {exc}")
+        print(f"[email] Erro ao enviar send_contact_email: {exc}")

@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LarClínica · Plataforma de Gestão do Cuidado</title>
-  <meta name="description" content="PA Virtual, Home Care, telemonitoramento e prontuário sobre o mesmo cadastro de beneficiário. O paciente é atendido pelo WhatsApp, sem aplicativo. A IA sugere e o profissional decide, e o dado de cada instituição fica separado dos outros pelo próprio banco." />
+  <meta name="description" content="PA Virtual, Home Care, telemonitoramento e prontuário no mesmo cadastro de beneficiário. Via WhatsApp, sem app. A IA sugere, o profissional decide." />
   <link rel="canonical" href="https://www.larclinicahealth.com/" />
   {% if google_site_verification %}<meta name="google-site-verification" content="{{ google_site_verification }}" />{% endif %}
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LarClínica · Plataforma de Gestão do Cuidado" />
-  <meta property="og:description" content="PA Virtual, Home Care, telemonitoramento e prontuário sobre o mesmo cadastro de beneficiário. O paciente é atendido pelo WhatsApp, sem aplicativo. A IA sugere e o profissional decide, e o dado de cada instituição fica separado dos outros pelo próprio banco." />
+  <meta property="og:description" content="PA Virtual, Home Care, telemonitoramento e prontuário no mesmo cadastro de beneficiário. Via WhatsApp, sem app. A IA sugere, o profissional decide." />
   <meta property="og:image" content="https://www.larclinicahealth.com/static/brand/larclinica-logo.png" />
   <meta property="og:url" content="https://www.larclinicahealth.com/" />
   <meta property="og:locale" content="pt_BR" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="LarClínica · Plataforma de Gestão do Cuidado" />
-  <meta name="twitter:description" content="PA Virtual, Home Care, telemonitoramento e prontuário sobre o mesmo cadastro de beneficiário. O paciente é atendido pelo WhatsApp, sem aplicativo. A IA sugere e o profissional decide, e o dado de cada instituição fica separado dos outros pelo próprio banco." />
+  <meta name="twitter:description" content="PA Virtual, Home Care, telemonitoramento e prontuário no mesmo cadastro de beneficiário. Via WhatsApp, sem app. A IA sugere, o profissional decide." />
   <meta name="twitter:image" content="https://www.larclinicahealth.com/static/brand/larclinica-logo.png" />
   <script type="application/ld+json">
   {
@@ -87,13 +87,7 @@
     ]
   }
   </script>
-  <!-- Meta Pixel -->
-  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1132342796628104');fbq('track','PageView');</script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1132342796628104&ev=PageView&noscript=1"/></noscript>
-  <!-- End Meta Pixel -->
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18180637831"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18180637831');</script>
+  {% include '_tracking.html' %}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
@@ -939,6 +933,8 @@
     <a href="#modulos">Módulos</a>
     <a href="#integracoes">Integrações</a>
     <a href="#seguranca">Segurança</a>
+    <a href="https://mtjltechnology.com/politica-de-privacidade">Privacidade</a>
+    <a href="#" data-cookie-prefs>Cookies</a>
     <a href="https://www.linkedin.com/company/mtjl-technology/" target="_blank" rel="noopener">LinkedIn</a>
   </nav>
   <p class="footer-copy">© 2026 MTJL Technology. Todos os direitos reservados. Curitiba, Paraná, Brasil.</p>
@@ -966,7 +962,7 @@
       <label>Nome<input type="text" name="name" placeholder="Seu nome" required /></label>
       <label>E-mail<input type="email" name="email" placeholder="seu@email.com" required /></label>
       <label>Instituição de saúde<input type="text" name="organization" placeholder="Operadora, cooperativa ou instituição de saúde" /></label>
-      <label>Como podemos ajudar?<textarea name="message" placeholder="Conte um pouco sobre o contexto da sua instituição" rows="4" required></textarea></label>
+      <label>Como podemos ajudar?<textarea name="message" placeholder="Conte o contexto da sua instituição. Não inclua dados de pacientes." rows="4" required></textarea></label>
       <button type="submit">Enviar mensagem →</button>
     </form>
   </div>
@@ -977,15 +973,6 @@
   function closeLCModal() { document.getElementById('lc-modal').classList.remove('open'); document.getElementById('lc-modal-backdrop').classList.remove('open'); }
   {% if sent %}
   window.addEventListener('load', openLCModal);
-  // Lead confirmado: o formulário só volta com sent=1 depois do POST aceito.
-  // O Meta conta como Lead direto pelo pixel. No Google Ads o generate_lead
-  // sozinho não vira conversão: é preciso importá-lo ou trocar por
-  // gtag('event','conversion',{send_to:'AW-18180637831/<rótulo>'}) com o rótulo
-  // da ação de conversão do LarClínica.
-  window.addEventListener('load', function () {
-    if (typeof fbq === 'function') { fbq('track', 'Lead', {content_name: 'LarClinica'}); }
-    if (typeof gtag === 'function') { gtag('event', 'generate_lead', {value: 0, currency: 'BRL'}); }
-  });
   {% endif %}
 
   // Menu hambúrguer mobile

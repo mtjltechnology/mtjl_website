@@ -1,0 +1,7 @@
+  <!-- Cookies de medição/publicidade: negados até o aceite (static/website/consent.js) -->
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',analytics_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});</script>
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('consent',(function(){try{return localStorage.getItem('mtjl_consent')==='yes'?'grant':'revoke'}catch(e){return 'revoke'}})());fbq('init','1132342796628104');fbq('track','PageView');</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18180637831"></script>
+  <script>gtag('js',new Date());gtag('config','AW-18180637831');</script>
+  <script src="/static/website/consent.js" defer></script>
+  {% if sent or pq_sent or bb_sent %}<script>fbq('track','Lead');gtag('event','generate_lead',{value:0,currency:'BRL'});</script>{% endif %}

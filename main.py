@@ -3,14 +3,16 @@ from pathlib import Path
 
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.exception_handlers import http_exception_handler
 from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from config import settings
 from db import create_db_and_tables
 from limiter import limiter
-from router import is_larclinica_host, larclinica_host_redirect_target, router
+from router import is_larclinica_host, larclinica_host_redirect_target, router, templates
 
 
 @asynccontextmanager
@@ -26,6 +28,23 @@ app = FastAPI(lifespan=lifespan, docs_url=_docs, redoc_url=_redoc, openapi_url=_
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+_404_TEXT = {
+    "pt": {"title": "Página não encontrada", "text": "O link está quebrado ou a página mudou de endereço.", "home": "Voltar ao início", "contact": "Fale com a gente"},
+    "en": {"title": "Page not found", "text": "The link is broken or the page has moved.", "home": "Back to home", "contact": "Contact us"},
+    "es": {"title": "Página no encontrada", "text": "El enlace está roto o la página cambió de dirección.", "home": "Volver al inicio", "contact": "Contáctanos"},
+}
+
+
+@app.exception_handler(StarletteHTTPException)
+async def not_found_page(request: Request, exc: StarletteHTTPException):
+    # Só navegador recebe a página; API, imagem e fetch seguem com o JSON padrão.
+    if exc.status_code == 404 and "text/html" in request.headers.get("accept", ""):
+        lang = request.url.path.split("/")[1] if request.url.path[:4] in ("/en/", "/es/") or request.url.path in ("/en", "/es") else "pt"
+        lang = lang if lang in ("en", "es") else "pt"
+        home = "/" if lang == "pt" else f"/{lang}"
+        return templates.TemplateResponse("404.html", {"request": request, "lang": lang, "t": _404_TEXT[lang], "home": home}, status_code=404)
+    return await http_exception_handler(request, exc)
 
 
 # As respostas HTML não declaram política de cache, então o navegador aplica

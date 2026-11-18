@@ -235,8 +235,8 @@ def test_evento_de_lead_dispara_so_depois_do_envio(client):
     sem_envio = client.get("/", headers=LC_HEADERS)
     com_envio = client.get("/?sent=1", headers=LC_HEADERS)
 
-    assert "fbq('track', 'Lead'" not in sem_envio.text
-    assert "fbq('track', 'Lead'" in com_envio.text
+    assert "fbq('track','Lead')" not in sem_envio.text
+    assert "fbq('track','Lead')" in com_envio.text
     assert "generate_lead" in com_envio.text
 
 

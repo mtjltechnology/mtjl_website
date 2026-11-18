@@ -70,6 +70,7 @@ _SITEMAP_PAGES = [
     {"slug": "pilotqa-ai", "en": "/en/pilotqa-ai", "es": "/es/pilotqa-ai"},
     {"slug": "desenvolvimento-de-software", "en": "/en/software-development", "es": "/es/desarrollo-de-software"},
     {"slug": "inteligencia-artificial", "en": "/en/artificial-intelligence", "es": "/es/inteligencia-artificial"},
+    {"slug": "politica-de-privacidade", "en": "/en/privacy-policy", "es": "/es/politica-de-privacidad"},
 ]
 
 
@@ -293,6 +294,21 @@ def home_es(request: Request, sent: bool = False, pq_sent: bool = False):
             "google_site_verification": settings.larclinica_google_site_verification,
         })
     return templates.TemplateResponse("home_es.html", {"request": request, "sent": sent, "pq_sent": pq_sent})
+
+
+@router.get("/politica-de-privacidade", response_class=HTMLResponse)
+def privacy_pt(request: Request):
+    return templates.TemplateResponse("privacidade.html", {"request": request, "lang": "pt"})
+
+
+@router.get("/en/privacy-policy", response_class=HTMLResponse)
+def privacy_en(request: Request):
+    return templates.TemplateResponse("privacidade.html", {"request": request, "lang": "en"})
+
+
+@router.get("/es/politica-de-privacidad", response_class=HTMLResponse)
+def privacy_es(request: Request):
+    return templates.TemplateResponse("privacidade.html", {"request": request, "lang": "es"})
 
 
 @router.get("/pilotqa-ai", response_class=HTMLResponse)
